@@ -271,33 +271,42 @@
             <source src="https://www.youtube.com/watch?v=HC3uzKfE6_Y" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <p>Status: <span class="badge badge-approved">Accepted</span></p>
+        <p>Status: <span class="badge badge-approved">Completed</span></p>
     </div>
 </div>
 
 <div id="upload" class="container tab-content">
-    <h2>Retrieve Video</h2>
+    <h2>Upload Video</h2>
     <div class="card">
-        <form id="retrieve-form">
-            <label for="case-number">Case Number:</label>
-            <input type="text" id="case-number" name="case-number" required>
-            <button type="submit">Retrieve Video</button>
+        <form id="upload-form" enctype="multipart/form-data">
+            <label for="upload-case-number">Case Number:</label>
+            <input type="text" id="upload-case-number" name="case-number" required>
+
+            <label for="video-file">Video File:</label>
+            <input type="file" id="video-file" name="video-file" accept="video/*" required>
+
+            <button type="submit">Upload Video</button>
         </form>
     </div>
 </div>
 
 <div id="requests" class="container tab-content">
-    <h2>Video Evidence Requests</h2>
+    <h2>Submit Evidence Request</h2>
     <div class="card">
         <form id="request-form">
-            <label for="case-number-request">Case Number:</label>
-            <input type="text" id="case-number-request" name="case-number" required>
+            <label for="request-case-number">Case Number:</label>
+            <input type="text" id="request-case-number" name="case-number" required>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+
             <label for="priority">Priority:</label>
             <select id="priority" name="priority" class="priority-select">
                 <option value="high">High</option>
                 <option value="medium">Medium</option>
                 <option value="low">Low</option>
             </select>
+
             <button type="submit">Submit Request</button>
         </form>
     </div>
@@ -311,6 +320,7 @@
                 <tr>
                     <th>Case Number</th>
                     <th>Description</th>
+                    <th>Priority</th> <!-- New Priority column -->
                     <th>Status</th>
                     <th>Last Updated</th>
                     <th>Actions</th>
@@ -320,13 +330,15 @@
                 <tr data-case="ICA-2023-007" data-description="Unauthorized Exit Incident">
                     <td>ICA-2023-007</td>
                     <td>Unauthorized Exit Incident</td>
-                    <td><span class="badge badge-approved">Accepted</span></td>
+                    <td><span class="badge badge-high">High</span></td> <!-- Priority Badge -->
+                    <td><span class="badge badge-approved">Completed</span></td>
                     <td>2023-04-20</td>
                     <td><button onclick="viewCase('ICA-2023-007')">View Details</button></td>
                 </tr>
                 <tr data-case="ICA-2023-008" data-description="Security Breach Investigation">
                     <td>ICA-2023-008</td>
                     <td>Security Breach Investigation</td>
+                    <td><span class="badge badge-medium">Medium</span></td> <!-- Priority Badge -->
                     <td><span class="badge badge-pending">Pending</span></td>
                     <td>2023-05-01</td>
                     <td><button onclick="viewCase('ICA-2023-008')">View Details</button></td>
@@ -334,6 +346,7 @@
                 <tr data-case="ICA-2023-009" data-description="Access Control Failure">
                     <td>ICA-2023-009</td>
                     <td>Access Control Failure</td>
+                    <td><span class="badge badge-low">Low</span></td> <!-- Priority Badge -->
                     <td><span class="badge badge-rejected">Rejected</span></td>
                     <td>2023-03-28</td>
                     <td><button onclick="viewCase('ICA-2023-009')">View Details</button></td>
