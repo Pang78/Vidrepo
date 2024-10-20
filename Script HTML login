@@ -268,7 +268,7 @@
         <h3>Case: Unauthorized Exit Incident</h3>
         <p>Case Number: ICA-2023-008</p>
         <video controls>
-            <source src="https://www.youtube.com/watch?v=HC3uzKfE6_Y" type="video/mp4">
+            <source src="videoplayback.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
         <p>Status: <span class="badge badge-approved">Completed</span></p>
