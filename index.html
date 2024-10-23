@@ -521,6 +521,49 @@
             event.preventDefault();
             const email = document.getElementById('user-email').value;
             alert(`User ${email} added successfully.`);
+        document.addEventListener('DOMContentLoaded', () => {
+    const table = document.querySelector('table');
+    const headers = table.querySelectorAll('th');
+    const tbody = table.querySelector('tbody');
+
+    const enableTableSorting = () => {
+        headers.forEach((header, headerIndex) => {
+            header.addEventListener('click', () => {
+                const rowsArray = Array.from(tbody.querySelectorAll('tr'));
+                const isAsc = header.getAttribute('data-sort') !== 'asc';
+
+                // Toggle sorted class for styling
+                headers.forEach(h => h.classList.remove('sorted-asc', 'sorted-desc'));
+                header.classList.add(isAsc ? 'sorted-asc' : 'sorted-desc');
+
+                rowsArray.sort((a, b) => {
+                    const aText = a.children[headerIndex].textContent.trim();
+                    const bText = b.children[headerIndex].textContent.trim();
+
+                    // Check if the content is numeric
+                    const aValue = isNaN(aText) ? aText : parseFloat(aText);
+                    const bValue = isNaN(bText) ? bText : parseFloat(bText);
+
+                    if (typeof aValue === 'number' && typeof bValue === 'number') {
+                        return isAsc ? aValue - bValue : bValue - aValue;
+                    } else {
+                        return isAsc ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+                    }
+                });
+
+                // Clear and re-append rows in sorted order
+                tbody.innerHTML = '';
+                rowsArray.forEach(row => tbody.appendChild(row));
+
+                // Update sort direction attribute
+                header.setAttribute('data-sort', isAsc ? 'asc' : 'desc');
+            });
+        });
+    };
+
+    enableTableSorting();
+});
+
         });
     });
 </script>
