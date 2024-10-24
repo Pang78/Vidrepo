@@ -312,33 +312,7 @@
     </style>
 </head>
 <body>
-    <!-- Add this right after <body> -->
-<div id="login-page" class="login-container">
-    <div class="login-logo">
-        <img src="https://file.go.gov.sg/icalogo.png" alt="ICA Logo">
-        <h2>ICA VESP Dashboard</h2>
-    </div>
-    <form id="login-form" onsubmit="return handleLogin(event)">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <div class="form-group">
-            <label for="department">Department</label>
-            <select id="department" name="department" required>
-                <option value="">Select Department</option>
-                <option value="operations">Operations</option>
-                <option value="enforcement">Enforcement</option>
-                <option value="admin">Administration</option>
-            </select>
-        </div>
-        <button type="submit" class="login-btn">Login</button>
-    </form>
-</div>
+
 <header>
     <div class="container header-content">
         <div class="logo-container">
@@ -546,7 +520,24 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', () => {
+        const user = sessionStorage.getItem('user');
+        if (!user || !JSON.parse(user).loggedIn) {
+            window.location.href = 'login.html'; // Redirect if not logged in
+        } else {
+            // Display the main dashboard content
+            document.querySelector('header').style.display = 'block';
+            document.getElementById('dashboard').classList.add('active');
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Assuming the logout link has the ID "logout"
+        document.getElementById('logout').addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent the default anchor action
+            sessionStorage.removeItem('user'); // Remove user data from session storage
+            window.location.href = 'login.html'; // Redirect to the login page
+
         // Function to handle tab switching
         function showSection(event) {
             event.preventDefault();
