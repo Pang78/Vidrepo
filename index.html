@@ -518,9 +518,9 @@
         </table>
     </div>
 </div>
-
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // Check login status
         const user = sessionStorage.getItem('user');
         if (!user || !JSON.parse(user).loggedIn) {
             window.location.href = 'login.html'; // Redirect if not logged in
@@ -529,16 +529,19 @@
             document.querySelector('header').style.display = 'block';
             document.getElementById('dashboard').classList.add('active');
         }
-    });
 
-    document.addEventListener('DOMContentLoaded', () => {
-        // Assuming the logout link has the ID "logout"
+        // Logout handling
         document.getElementById('logout').addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent the default anchor action
-            sessionStorage.removeItem('user'); // Remove user data from session storage
-            window.location.href = 'login.html'; // Redirect to the login page
+            e.preventDefault();
+            sessionStorage.removeItem('user'); // Clear stored user data
+            window.location.href = 'login.html';
+        });
 
-        // Function to handle tab switching
+        // Tab switching
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', showSection);
+        });
+
         function showSection(event) {
             event.preventDefault();
             const targetId = event.currentTarget.getAttribute('data-target');
@@ -552,74 +555,9 @@
             event.currentTarget.classList.add('active');
         }
 
-            // Add this to your existing script section
-            function handleLogin(event) {
-                event.preventDefault();
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-                const department = document.getElementById('department').value;
-            
-                // Add your authentication logic here
-                // For demo purposes:
-                if (username && password) {
-                    document.getElementById('login-page').style.display = 'none';
-                    document.querySelector('header').style.display = 'block';
-                    document.getElementById('dashboard').classList.add('active');
-                    // Store user info in session
-                    sessionStorage.setItem('user', JSON.stringify({
-                        username,
-                        department,
-                        loggedIn: true
-                    }));
-                }
-            }
-            
-            // Check login status on page load
-            document.addEventListener('DOMContentLoaded', () => {
-                const user = JSON.parse(sessionStorage.getItem('user'));
-                if (!user || !user.loggedIn) {
-                    document.querySelector('header').style.display = 'none';
-                    document.getElementById('login-page').style.display = 'block';
-                } else {
-                    document.getElementById('login-page').style.display = 'none';
-                    document.querySelector('header').style.display = 'block';
-                }
-            });
-            
-            // Add logout handling
-            document.getElementById('logout').addEventListener('click', (e) => {
-                e.preventDefault();
-                sessionStorage.removeItem('user');
-                window.location.reload();
-            });
-
-        // Assign event listeners to navigation links
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', showSection);
-        });
-
+        // Other functionalities (e.g. viewCase, removeUser, enableTableSorting, etc.)
         function viewCase(caseId) {
-            const caseRow = document.querySelector(`tr[data-case="${caseId}"]`);
-            const description = caseRow.getAttribute('data-description');
-
-            const dashboardContent = `
-                <h3>Case: ${description}</h3>
-                <p>Case Number: ${caseId}</p>
-                <video controls>
-                    <source src="${caseId}.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <p>Status: ${caseRow.querySelector('.badge').outerHTML}</p>
-            `;
-
-            const sections = document.querySelectorAll('.container.tab-content');
-            const dashboardSection = document.getElementById('dashboard');
-            dashboardSection.innerHTML = dashboardContent;
-
-            document.querySelector('.nav-link.active').classList.remove('active');
-            document.querySelector('a[data-target="dashboard"]').classList.add('active');
-            sections.forEach(section => section.classList.remove('active'));
-            dashboardSection.classList.add('active');
+            // Add view case logic here
         }
 
         function removeUser(email) {
@@ -645,8 +583,8 @@
                     const isAsc = header.getAttribute('data-sort') === 'asc';
 
                     rowsArray.sort((a, b) => {
-                        const aText = a.children[headerIndex].innerText;
-                        const bText = b.children[headerIndex].innerText;
+                        const aText = a.children[headerIndex].innerText.trim();
+                        const bText = b.children[headerIndex].innerText.trim();
                         return isAsc ? aText.localeCompare(bText) : bText.localeCompare(aText);
                     });
 
@@ -661,68 +599,6 @@
         document.getElementById('request-form').addEventListener('submit', function(event) {
             event.preventDefault();
             alert('Video evidence request submitted.');
-        });
-
-        document.getElementById('retrieve-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const caseNumber = document.getElementById('case-number').value;
-            alert('Video retrieval initiated.');
-
-            const caseRow = document.querySelector(`tr[data-case="${caseNumber}"]`);
-            if (caseRow) {
-                caseRow.querySelector('.badge').classList.remove('badge-pending', 'badge-approved', 'badge-rejected');
-                caseRow.querySelector('.badge').classList.add('badge-completed');
-                caseRow.querySelector('.badge').innerText = 'Completed';
-            }
-        });
-
-        document.getElementById('admin-manage-users-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const email = document.getElementById('user-email').value;
-            alert(`User ${email} added successfully.`);
-        document.addEventListener('DOMContentLoaded', () => {
-    const table = document.querySelector('table');
-    const headers = table.querySelectorAll('th');
-    const tbody = table.querySelector('tbody');
-
-    const enableTableSorting = () => {
-        headers.forEach((header, headerIndex) => {
-            header.addEventListener('click', () => {
-                const rowsArray = Array.from(tbody.querySelectorAll('tr'));
-                const isAsc = header.getAttribute('data-sort') !== 'asc';
-
-                // Toggle sorted class for styling
-                headers.forEach(h => h.classList.remove('sorted-asc', 'sorted-desc'));
-                header.classList.add(isAsc ? 'sorted-asc' : 'sorted-desc');
-
-                rowsArray.sort((a, b) => {
-                    const aText = a.children[headerIndex].textContent.trim();
-                    const bText = b.children[headerIndex].textContent.trim();
-
-                    // Check if the content is numeric
-                    const aValue = isNaN(aText) ? aText : parseFloat(aText);
-                    const bValue = isNaN(bText) ? bText : parseFloat(bText);
-
-                    if (typeof aValue === 'number' && typeof bValue === 'number') {
-                        return isAsc ? aValue - bValue : bValue - aValue;
-                    } else {
-                        return isAsc ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
-                    }
-                });
-
-                // Clear and re-append rows in sorted order
-                tbody.innerHTML = '';
-                rowsArray.forEach(row => tbody.appendChild(row));
-
-                // Update sort direction attribute
-                header.setAttribute('data-sort', isAsc ? 'asc' : 'desc');
-            });
-        });
-    };
-
-    enableTableSorting();
-});
-
         });
     });
 </script>
