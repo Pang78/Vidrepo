@@ -423,6 +423,95 @@
     </tbody>
 </table>
 
+<html>
+<head>
+    <style>
+        .form-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .readonly-field {
+            background-color: #ffffcc !important;
+            cursor: not-allowed;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 4px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .button-group {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        button[onclick="rejectRequest()"] {
+            background-color: #f44336;
+            color: white;
+        }
+
+        button[onclick="searchForVideo()"] {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div id="overlay" class="overlay"></div>
+
+</body>
+</html>
+****
 <div id="form-container-ICA-2023-007" class="form-container">
     <h2>Request Data for Case: ICA-2023-007</h2>
     <form>
@@ -827,6 +916,84 @@ h3 {
             event.preventDefault();
             alert('Video evidence request submitted.');
         });
+
+            <script>
+        // Dummy data for demonstration
+        const dummyData = {
+            'ICA-2023-007': {
+                email: 'john.doe@agency.gov.sg',
+                nric: 'S9812345A',
+                justification: 'Investigation of suspicious activity near checkpoint',
+                agency: 'Immigration & Checkpoints Authority',
+                date: '2023-12-15',
+                startTime: '14:30',
+                endTime: '15:30'
+            }
+            // Add more cases as needed
+        };
+
+        function showForm(caseId) {
+            // Show overlay and form
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById(`form-container-${caseId}`).style.display = 'block';
+
+            // Get the data for this case
+            const data = dummyData[caseId];
+
+            // Populate and lock fields
+            const fields = ['email', 'nric', 'justification', 'agency'];
+            fields.forEach(field => {
+                const element = document.getElementById(field);
+                element.value = data[field];
+                element.readOnly = true;
+                element.classList.add('readonly-field');
+            });
+
+            // Set date and time fields
+            document.getElementById('date').value = data.date;
+            document.getElementById('date').readOnly = true;
+            document.getElementById('date').classList.add('readonly-field');
+
+            document.getElementById('start-time').value = data.startTime;
+            document.getElementById('start-time').readOnly = true;
+            document.getElementById('start-time').classList.add('readonly-field');
+
+            document.getElementById('end-time').value = data.endTime;
+            document.getElementById('end-time').readOnly = true;
+            document.getElementById('end-time').classList.add('readonly-field');
+        }
+
+        function closeForm(caseId) {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById(`form-container-${caseId}`).style.display = 'none';
+        }
+
+        // Add close button to form
+        document.querySelectorAll('.form-container').forEach(container => {
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '×';
+            closeBtn.className = 'close-btn';
+            closeBtn.onclick = () => closeForm(container.id.replace('form-container-', ''));
+            container.insertBefore(closeBtn, container.firstChild);
+        });
+
+        // Close form when clicking overlay
+        document.getElementById('overlay').onclick = () => {
+            document.querySelectorAll('.form-container').forEach(container => {
+                container.style.display = 'none';
+            });
+            document.getElementById('overlay').style.display = 'none';
+        };
+
+        function rejectRequest() {
+            alert('Request rejected');
+            // Add your rejection logic here
+        }
+
+        function searchForVideo() {
+            alert('Searching for video...');
+            // Add your search logic here
+        }
     });
 </script>
 </body>
