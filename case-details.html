@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICA VESP - Case Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark-blue: #00264d;
+            --primary-red: #ED1C24;
+            --secondary-white: #FFFFFF;
+            --background-color: #F0F4F8;
+            --text-color: #333333;
+            --border-radius: 10px;
+            --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--secondary-white);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        h1, h2 {
+            color: var(--primary-dark-blue);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .locked-field {
+            background-color: #ffffd1;
+            border: 1px solid #e6e600;
+            padding: 10px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .locked-field::before {
+            content: "🔒";
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .video-upload {
+            margin-top: 20px;
+        }
+
+        .button-group {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .approve {
+            background-color: #28a745;
+        }
+
+        .reject {
+            background-color: var(--primary-red);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Case Details</h1>
+        <form id="caseDetailsForm">
+            <div class="form-group">
+                <label for="caseId">Case ID:</label>
+                <div class="locked-field" id="caseId"></div>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <div class="locked-field" id="description"></div>
+            </div>
+            <div class="form-group">
+                <label for="requestorEmail">Requestor Email:</label>
+                <div class="locked-field" id="requestorEmail"></div>
+            </div>
+            <div class="form-group">
+                <label for="requestDate">Request Date:</label>
+                <div class="locked-field" id="requestDate"></div>
+            </div>
+            <div class="form-group">
+                <label for="priority">Priority:</label>
+                <div class="locked-field" id="priority"></div>
+            </div>
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <div class="locked-field" id="status"></div>
+            </div>
+            <div class="form-group">
+                <label for="additionalInfo">Additional Information:</label>
+                <textarea id="additionalInfo" rows="4"></textarea>
+            </div>
+            <div class="video-upload">
+                <label for="videoUpload">Upload Video Evidence:</label>
+                <input type="file" id="videoUpload" accept="video/*">
+            </div>
+            <div class="button-group">
+                <button type="button" class="approve" onclick="approveRequest()">Approve Request</button>
+                <button type="button" class="reject" onclick="rejectRequest()">Reject Request</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const caseId = urlParams.get('id');
+
+            // Dummy data (replace with actual data fetching in a real application)
+            const caseData = {
+                'ICA-2024-001': {
+                    description: 'Unauthorized Exit Incident',
+                    requestorEmail: 'Adam@ica.gov.sg',
+                    requestDate: '2024-10-18',
+                    priority: 'High',
+                    status: 'Completed'
+                }
+            };
+
+            if (caseData[caseId]) {
+                document.getElementById('caseId').textContent = caseId;
+                document.getElementById('description').textContent = caseData[caseId].description;
+                document.getElementById('requestorEmail').textContent = caseData[caseId].requestorEmail;
+                document.getElementById('requestDate').textContent = caseData[caseId].requestDate;
+                document.getElementById('priority').textContent = caseData[caseId].priority;
+                document.getElementById('status').textContent = caseData[caseId].status;
+            } else {
+                alert('Case not found');
+            }
+        });
+
+        function approveRequest() {
+            // Implement approval logic here
+            alert('Request approved');
+        }
+
+        function rejectRequest() {
+            // Implement rejection logic here
+            alert('Request rejected');
+        }
+    </script>
+</body>
+</html>
