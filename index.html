@@ -296,7 +296,7 @@
             }
             
             /* Enhanced Form Styles */
-.form-section {
+	.form-section {
             margin-bottom: 25px;
             padding: 20px;
             background: #f8f9fa;
@@ -353,12 +353,12 @@
             <span class="logo-text">ICA Video Enterprise Sharing Platform</span>
         </div>
         <nav>
-            <ul>
-                <li><a href="#" class="nav-link active" data-target="dashboard">Dashboard</a></li>
-                <li><a href="#" class="nav-link" data-target="analytics">Analytics</a></li>
-                <li><a href="#" class="nav-link" data-target="admin">Admin</a></li>
-                <li><a href="#" id="logout">Logout</a></li>
-            </ul>
+		<ul>
+                    <li><a href="#" class="nav-link active" data-target="dashboard">Dashboard</a></li>
+                    <li><a href="#" class="nav-link" data-target="analytics">Analytics</a></li>
+                    <li><a href="#" class="nav-link" data-target="admin">Admin</a></li>
+                    <li><a href="#" id="logout">Logout</a></li>
+                </ul>
         </nav>
     </div>
 </header>
@@ -669,107 +669,131 @@ h3 {
     </div>
 </div>
 <script>
-	 document.addEventListener('DOMContentLoaded', () => {
+        // Check if login page exists
+        if (!document.getElementById('login-form')) {
+            const loginHTML = `
+                <div id="login-container" class="login-container" style="display: block;">
+                    <div class="login-logo">
+                        <img src="https://file.go.gov.sg/icalogo.png" alt="ICA Logo">
+                    </div>
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('afterbegin', loginHTML);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.querySelector('header');
+            const loginContainer = document.getElementById('login-container');
+            const mainContent = document.querySelectorAll('.tab-content');
+
+            // Handle login
+            document.getElementById('login-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+
+                // Simple validation - in practice, you'd want to verify credentials with a server
+                if (email && password) {
+                    // Store login state
+                    sessionStorage.setItem('user', JSON.stringify({ 
+                        loggedIn: true, 
+                        email: email 
+                    }));
+
+                    // Show dashboard
+                    loginContainer.style.display = 'none';
+                    header.style.display = 'block';
+                    document.getElementById('dashboard').classList.add('active');
+                    mainContent.forEach(content => content.style.display = 'block');
+                }
+            });
+
             // Check login status
             const user = sessionStorage.getItem('user');
-            if (!user || !JSON.parse(user).loggedIn) {
-                window.location.href = 'login.html'; // Redirect if not logged in
-            } else {
-                // Display the main dashboard content
-                document.querySelector('header').style.display = 'block';
+            if (user && JSON.parse(user).loggedIn) {
+                loginContainer.style.display = 'none';
+                header.style.display = 'block';
                 document.getElementById('dashboard').classList.add('active');
+                mainContent.forEach(content => content.style.display = 'block');
             }
 
-            // Logout handling
+            // Handle logout
             document.getElementById('logout').addEventListener('click', (e) => {
                 e.preventDefault();
-                sessionStorage.removeItem('user'); // Clear stored user data
-                window.location.href = 'login.html';
+                sessionStorage.removeItem('user');
+                loginContainer.style.display = 'block';
+                header.style.display = 'none';
+                mainContent.forEach(content => content.style.display = 'none');
             });
 
             // Tab switching
             document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', showSection);
-            });
-
-            function showSection(event) {
-                event.preventDefault();
-                const targetId = event.currentTarget.getAttribute('data-target');
-                const sections = document.querySelectorAll('.container.tab-content');
-                const navLinks = document.querySelectorAll('.nav-link');
-
-                sections.forEach(section => section.classList.remove('active'));
-                navLinks.forEach(link => link.classList.remove('active'));
-
-                document.getElementById(targetId).classList.add('active');
-                event.currentTarget.classList.add('active');
-            }
-
-            // Other functionalities (e.g. viewCase, removeUser, enableTableSorting, etc.)
-            function viewCase(caseId) {
-                // Add view case logic here
-                console.log(`Viewing case: ${caseId}`);
-            }
-
-            function removeUser(email) {
-                const confirmRemoval = confirm(`Are you sure you want to remove the user with email: ${email}?`);
-                if (confirmRemoval) {
-                    alert(`User ${email} removed successfully.`);
-                    const rows = document.querySelectorAll('#user-list tr');
-                    rows.forEach(row => {
-                        if (row.textContent.includes(email)) {
-                            row.remove();
-                        }
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = e.currentTarget.getAttribute('data-target');
+                    
+                    // Hide all sections and remove active class
+                    document.querySelectorAll('.tab-content').forEach(section => {
+                        section.classList.remove('active');
+                        section.style.display = 'none';
                     });
-                }
-            }
-
-            const enableTableSorting = () => {
-                document.querySelectorAll('th').forEach(header => {
-                    header.addEventListener('click', function() {
-                        const table = header.closest('table');
-                        const tbody = table.querySelector('tbody');
-                        const rowsArray = Array.from(tbody.querySelectorAll('tr'));
-                        const headerIndex = Array.from(header.parentNode.children).indexOf(header);
-                        const isAsc = header.getAttribute('data-sort') === 'asc';
-
-                        rowsArray.sort((a, b) => {
-                            const aText = a.children[headerIndex].innerText.trim();
-                            const bText = b.children[headerIndex].innerText.trim();
-                            return isAsc ? aText.localeCompare(bText) : bText.localeCompare(aText);
-                        });
-
-                        rowsArray.forEach(row => tbody.appendChild(row));
-                        header.setAttribute('data-sort', isAsc ? 'desc' : 'asc');
+                    document.querySelectorAll('.nav-link').forEach(navLink => {
+                        navLink.classList.remove('active');
                     });
+
+                    // Show selected section and add active class
+                    document.getElementById(targetId).style.display = 'block';
+                    document.getElementById(targetId).classList.add('active');
+                    e.currentTarget.classList.add('active');
                 });
-            };
-
-            enableTableSorting();
-
-            document.getElementById('request-form').addEventListener('submit', function(event) {
-                event.preventDefault();
-                alert('Video evidence request submitted.');
             });
 
-            // Add form submission handling for user management
-            document.getElementById('admin-manage-users-form').addEventListener('submit', function(event) {
+            // Initialize the dashboard as active
+            if (document.getElementById('dashboard')) {
+                document.getElementById('dashboard').style.display = 'block';
+            }
+        });
+
+        // Your existing functions
+        function viewCase(caseId) {
+            console.log(`Viewing case: ${caseId}`);
+        }
+
+        function removeUser(email) {
+            const confirmRemoval = confirm(`Are you sure you want to remove the user with email: ${email}?`);
+            if (confirmRemoval) {
+                const row = document.querySelector(`tr[data-email="${email}"]`);
+                if (row) row.remove();
+                alert(`User ${email} removed successfully.`);
+            }
+        }
+
+        // Add form submission handling for user management
+        const adminForm = document.getElementById('admin-manage-users-form');
+        if (adminForm) {
+            adminForm.addEventListener('submit', function(event) {
                 event.preventDefault();
                 const name = document.getElementById('user-name').value;
                 const email = document.getElementById('user-email').value;
                 const role = document.getElementById('user-role').value;
                 
-                // Here you would typically send this data to a server
                 console.log(`New user added: ${name}, ${email}, ${role}`);
                 alert('New user added successfully.');
                 
-                // Clear the form
                 this.reset();
-
-        });
-    });
-</script>
+            });
+        }
+    </script>
 </body>
 </html>
-
-
