@@ -293,24 +293,29 @@
     </div>
 
     <div id="analytics" class="container tab-content">
-        <h2>Analytics</h2>
-        <div class="analytics-grid">
-            <div class="metric-card">
-                <p>Total Cases</p>
-                <p class="metric-value">45</p>
-            </div>
-            <div class="metric-card">
-                <p>Pending Cases</p>
-                <p class="metric-value">12</p>
-            </div>
-            <div class="metric-card">
-                <p>Completed Cases</p>
-                <p class="metric-value">30</p>
-            </div>
+    <h2>Analytics</h2>
+    <div class="analytics-grid">
+        <div class="metric-card">
+            <p>Total Cases</p>
+            <p class="metric-value">3</p>
         </div>
-        <div class="chart-container">
-            <p>Charts and analytics data</p>
+        <div class="metric-card">
+            <p>Pending Cases</p>
+            <p class="metric-value">1</p>
         </div>
+        <div class="metric-card">
+            <p>Completed Cases</p>
+            <p class="metric-value">1</p>
+        </div>
+        <div class="metric-card">
+            <p>Rejected Cases</p>
+            <p class="metric-value">1</p>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="casePieChart" width="400" height="400"></canvas>
+        <canvas id="caseBarChart" width="400" height="400" style="margin-top: 20px;"></canvas>
     </div>
 
     <div id="admin" class="container tab-content">
@@ -340,6 +345,60 @@
         document.getElementById("logout").addEventListener("click", function() {
             alert("Logging out...");
         });
+            // Data for the charts
+    const caseData = {
+        labels: ['Pending Cases', 'Completed Cases', 'Rejected Cases'],
+        datasets: [{
+            label: 'Case Distribution',
+            data: [1, 1, 1], // Corresponding data for each case category
+            backgroundColor: ['#FFA500', '#28A745', '#ED1C24'],
+            borderColor: ['#FFA500', '#28A745', '#ED1C24'],
+            borderWidth: 1
+        }]
+    };
+
+    // Configurations for the Pie Chart
+    const pieConfig = {
+        type: 'pie',
+        data: caseData,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            }
+        }
+    };
+
+    // Configurations for the Bar Chart
+    const barConfig = {
+        type: 'bar',
+        data: caseData,
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Number of Cases'
+                    }
+                }
+            }
+        }
+    };
+
+    // Render the charts
+    const casePieChart = new Chart(
+        document.getElementById('casePieChart'),
+        pieConfig
+    );
+
+    const caseBarChart = new Chart(
+        document.getElementById('caseBarChart'),
+        barConfig
+    );
     </script>
 </body>
 </html>
