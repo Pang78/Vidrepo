@@ -104,12 +104,23 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
-        .tab-content {
-            display: none;
+        h1, h2, h3 {
+            color: var(--primary-dark-blue);
+            margin-bottom: 15px;
         }
 
-        .tab-content.active {
-            display: block;
+        .case-details {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        video {
+            width: 100%;
+            border-radius: var(--border-radius);
+            margin-top: 10px;
+            box-shadow: var(--box-shadow);
         }
 
         table {
@@ -125,12 +136,16 @@
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
+            cursor: pointer;
         }
 
         th {
             background-color: var(--primary-dark-blue);
             color: var(--secondary-white);
-            cursor: pointer;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
         }
 
         .badge {
@@ -139,16 +154,29 @@
             font-size: 12px;
             font-weight: bold;
             text-transform: uppercase;
-            color: var(--secondary-white);
         }
 
-        .badge-pending { background-color: #FFA500; }
-        .badge-approved { background-color: #28A745; }
-        .badge-rejected { background-color: var(--primary-red); }
-        .badge-completed { background-color: #5bc0de; }
-        .badge-high { background-color: #d9534f; }
-        .badge-medium { background-color: #f0ad4e; }
-        .badge-low { background-color: #5bc0de; }
+        .badge-pending { background-color: #FFA500; color: var(--secondary-white); }
+        .badge-approved { background-color: #28A745; color: var(--secondary-white); }
+        .badge-rejected { background-color: var(--primary-red); color: var(--secondary-white); }
+        .badge-completed { background-color: #5bc0de; color: var(--secondary-white); }
+        .badge-high { background-color: #d9534f; color: var(--secondary-white); }
+        .badge-medium { background-color: #f0ad4e; color: var(--secondary-white); }
+        .badge-low { background-color: #5bc0de; color: var(--secondary-white); }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
 
         button {
             background-color: var(--primary-dark-blue);
@@ -158,41 +186,42 @@
             border-radius: var(--border-radius);
             cursor: pointer;
             font-size: 14px;
-            transition: background-color 0.3s, transform 0.3s;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
         }
 
         button:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
             background-color: #001f3d;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        .analytics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .metric-card {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .metric-value {
-            font-size: 24px;
-            font-weight: bold;
+        button.secondary {
+            background-color: var(--secondary-white);
             color: var(--primary-dark-blue);
-            margin: 10px 0;
+            border: 1px solid var(--primary-dark-blue);
         }
 
-        .chart-container {
-            height: 300px;
-            margin: 20px 0;
-            background: #f8f9fa;
-            border-radius: 4px;
-            padding: 15px;
+        button.secondary:hover {
+            background-color: #e0e0e0;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary-dark-blue);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .priority-select {
+            width: auto;
+            display: inline-block;
         }
 
         @media (max-width: 768px) {
@@ -203,203 +232,562 @@
 
             nav ul {
                 margin-top: 10px;
-                flex-wrap: wrap;
             }
 
             nav li {
-                margin: 5px 10px 5px 0;
+                margin-left: 0;
+                margin-right: 20px;
             }
-
+                        /* Login Page Styles */
+            .login-container {
+                max-width: 400px;
+                margin: 100px auto;
+                padding: 30px;
+                background: var(--secondary-white);
+                border-radius: var(--border-radius);
+                box-shadow: var(--box-shadow);
+                display: none; /* Hidden by default */
+            }
+            
+            .login-logo {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            
+            .login-logo img {
+                height: 60px;
+            }
+            
+            .form-group {
+                margin-bottom: 20px;
+            }
+            
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: 500;
+            }
+            
+            /* Enhanced Analytics Styles */
             .analytics-grid {
-                grid-template-columns: 1fr;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+                margin-bottom: 30px;
+            }
+            
+            .metric-card {
+                background: var(--secondary-white);
+                padding: 20px;
+                border-radius: var(--border-radius);
+                box-shadow: var(--box-shadow);
+            }
+            
+            .metric-value {
+                font-size: 24px;
+                font-weight: bold;
+                color: var(--primary-dark-blue);
+                margin: 10px 0;
+            }
+            
+            .chart-container {
+                height: 300px;
+                margin: 20px 0;
+            }
+            
+            /* Enhanced Form Styles */
+            .form-section {
+                margin-bottom: 25px;
+                padding: 20px;
+                background: #f8f9fa;
+                border-radius: var(--border-radius);
+            }
+            
+            .form-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container header-content">
-            <div class="logo-container">
-                <img src="/api/placeholder/40/40" alt="ICA Logo" class="logo-image">
-                <span class="logo-text">ICA Video Platform</span>
+
+<header>
+    <div class="container header-content">
+        <div class="logo-container">
+            <img src="https://file.go.gov.sg/icalogo.png" alt="ICA Logo" class="logo-image">
+            <span class="logo-text">ICA Video Platform</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="nav-link active" data-target="dashboard">Dashboard</a></li>
+                <li><a href="#" class="nav-link" data-target="upload">Upload</a></li>
+                <li><a href="#" class="nav-link" data-target="requests">Requests</a></li>
+                <li><a href="#" class="nav-link" data-target="cases">Cases</a></li>
+                <li><a href="#" class="nav-link" data-target="analytics">Analytics</a></li>
+                <li><a href="#" class="nav-link" data-target="admin">Admin</a></li>
+                <li><a href="#" id="logout">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div id="dashboard" class="container tab-content active">
+    <h1>Dashboard Overview</h1>
+    <div class="case-details">
+        <h3>Case: Unauthorized Exit Incident</h3>
+        <p>Case Number: ICA-2023-007</p>
+        <video controls>
+            <source src="videoplayback.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p>Status: <span class="badge badge-approved">Completed</span></p>
+    </div>
+</div>
+
+<div id="upload" class="container tab-content">
+    <h2>Upload Video</h2>
+    <div class="card">
+        <form id="upload-form" enctype="multipart/form-data">
+            <label for="upload-case-number">Case Number:</label>
+            <input type="text" id="upload-case-number" name="case-number" required>
+
+            <label for="video-file">Video File:</label>
+            <input type="file" id="video-file" name="video-file" accept="video/*" required>
+
+            <button type="submit">Upload Video</button>
+        </form>
+    </div>
+</div>
+
+<div id="requests" class="container tab-content">
+    <h2>Submit Evidence Request</h2>
+    <div class="card">
+        <form id="request-form">
+            <div class="form-section">
+                <h3>Officer Information</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="officer-name">Officer Name</label>
+                        <input 
+                            type="text" 
+                            id="officer-name" 
+                            name="officer-name" 
+                            required 
+                            class="form-control" 
+                            placeholder="Enter officer's name"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="officer-id">Officer ID</label>
+                        <input type="text" id="officer-id" name="officer-id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <select id="department" name="department" required>
+                            <option value="">Select Department</option>
+                            <option value="operations">Operations</option>
+                            <option value="enforcement">Enforcement</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="nav-link active" data-target="dashboard">Dashboard</a></li>
-                    <li><a href="#" class="nav-link" data-target="cases">Cases</a></li>
-                    <li><a href="#" class="nav-link" data-target="analytics">Analytics</a></li>
-                    <li><a href="#" class="nav-link" data-target="admin">Admin</a></li>
-                    <li><a href="#" id="logout">Logout</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <div id="dashboard" class="container tab-content active">
-        <h1>Dashboard Overview</h1>
-        <div class="case-details">
-            <h3>Case: Unauthorized Exit Incident</h3>
-            <p>Case Number: ICA-2023-007</p>
-            <video controls>
-                <source src="/api/placeholder/400/320" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <p>Status: <span class="badge badge-approved">Completed</span></p>
-        </div>
+            <!-- Rest of the form sections... -->
+        </form>
     </div>
+</div>
 
-    <div id="cases" class="container tab-content">
-        <h2>Active Cases</h2>
-        <div class="card">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Case Number</th>
-                        <th>Description</th>
-                        <th>Priority</th>
-                        <th>Status</th>
-                        <th>Last Updated</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>ICA-2023-007</td>
-                        <td>Unauthorized Exit Incident</td>
-                        <td><span class="badge badge-high">High</span></td>
-                        <td><span class="badge badge-approved">Completed</span></td>
-                        <td>2023-04-20</td>
-                        <td><button onclick="showForm('ICA-2023-007')">View Details</button></td>
-                    </tr>
-                    <tr>
-                        <td>ICA-2023-008</td>
-                        <td>Security Breach Investigation</td>
-                        <td><span class="badge badge-medium">Medium</span></td>
-                        <td><span class="badge badge-pending">Pending</span></td>
-                        <td>2023-05-01</td>
-                        <td><button onclick="viewCase('ICA-2023-008')">View Details</button></td>
-                    </tr>
-                    <tr>
-                        <td>ICA-2023-009</td>
-                        <td>Unauthorized Document Access</td>
-                        <td><span class="badge badge-low">Low</span></td>
-                        <td><span class="badge badge-rejected">Rejected</span></td>
-                        <td>2023-05-15</td>
-                        <td><button onclick="viewCase('ICA-2023-009')">View Details</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+<div id="cases" class="container tab-content">
+    <h2>Active Cases</h2>
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th>Case Number</th>
+                    <th>Description</th>
+                    <th>Priority</th> <!-- New Priority column -->
+                    <th>Status</th>
+                    <th>Last Updated</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-case="ICA-2023-007" data-description="Unauthorized Exit Incident">
+                    <td>ICA-2023-007</td>
+                    <td>Unauthorized Exit Incident</td>
+                    <td><span class="badge badge-high">High</span></td> <!-- Priority Badge -->
+                    <td><span class="badge badge-approved">Completed</span></td>
+                    <td>2023-04-20</td>
+                    <td><button onclick="viewCase('ICA-2023-008')">View Details</button></td>
+                </tr>
+                <tr data-case="ICA-2023-008" data-description="Security Breach Investigation">
+                    <td>ICA-2023-008</td>
+                    <td>Security Breach Investigation</td>
+                    <td><span class="badge badge-medium">Medium</span></td> <!-- Priority Badge -->
+                    <td><span class="badge badge-pending">Pending</span></td>
+                    <td>2023-05-01</td>
+                    <td><button onclick="viewCase('ICA-2023-008')">View Details</button></td>
+                </tr>
+                <tr data-case="ICA-2023-009" data-description="Access Control Failure">
+                    <td>ICA-2023-009</td>
+                    <td>Access Control Failure</td>
+                    <td><span class="badge badge-low">Low</span></td> <!-- Priority Badge -->
+                    <td><span class="badge badge-rejected">Rejected</span></td>
+                    <td>2023-03-28</td>
+                    <td><button onclick="viewCase('ICA-2023-009')">View Details</button></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+</div>
 
-    <div id="analytics" class="container tab-content">
-    <h2>Analytics</h2>
+<div id="analytics" class="container tab-content">
+    <h2>Analytics Dashboard</h2>
     <div class="analytics-grid">
         <div class="metric-card">
-            <p>Total Cases</p>
-            <p class="metric-value">3</p>
+            <h3>Video Processing</h3>
+            <div class="metric-value">124</div>
+            <p>Videos processed this month</p>
+            <div class="chart-container" id="videoProcessingChart">
+                <div class="dummy-data">
+                    <ul>
+                        <li>Jan: 85 videos</li>
+                        <li>Feb: 102 videos</li>
+                        <li>Mar: 124 videos</li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="metric-card">
-            <p>Pending Cases</p>
-            <p class="metric-value">1</p>
+            <h3>Request Response Time</h3>
+            <div class="metric-value">85%</div>
+            <p>SLA compliance rate</p>
+            <div class="chart-container" id="slaChart">
+                <div class="dummy-data">
+                    <ul>
+                        <li>Q1: 82%</li>
+                        <li>Q2: 85%</li>
+                        <li>Q3: 88%</li>
+                        <li>Q4: 85%</li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="metric-card">
-            <p>Completed Cases</p>
-            <p class="metric-value">1</p>
+            <h3>Case Priority Distribution</h3>
+            <div class="chart-container" id="priorityChart">
+                <div class="dummy-data">
+                    <ul>
+                        <li>High: 35%</li>
+                        <li>Medium: 45%</li>
+                        <li>Low: 20%</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="metric-card">
-            <p>Rejected Cases</p>
-            <p class="metric-value">1</p>
-        </div>
     </div>
-
-    <div class="chart-container">
-        <canvas id="casePieChart" width="400" height="400"></canvas>
-        <canvas id="caseBarChart" width="400" height="400" style="margin-top: 20px;"></canvas>
+    
+    <div class="card">
+        <h3>Department Performance</h3>
+        <table id="performance-table">
+            <thead>
+                <tr>
+                    <th>Department</th>
+                    <th>Cases Handled</th>
+                    <th>Avg. Response Time</th>
+                    <th>SLA Compliance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Customer Support</td>
+                    <td>458</td>
+                    <td>2.5 hours</td>
+                    <td>92%</td>
+                </tr>
+                <tr>
+                    <td>Technical Support</td>
+                    <td>325</td>
+                    <td>3.2 hours</td>
+                    <td>88%</td>
+                </tr>
+                <tr>
+                    <td>Billing Support</td>
+                    <td>275</td>
+                    <td>1.8 hours</td>
+                    <td>95%</td>
+                </tr>
+                <tr>
+                    <td>Product Support</td>
+                    <td>312</td>
+                    <td>2.7 hours</td>
+                    <td>90%</td>
+                </tr>
+                <tr>
+                    <td>Sales Support</td>
+                    <td>289</td>
+                    <td>2.1 hours</td>
+                    <td>93%</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+</div>
 
-    <div id="admin" class="container tab-content">
-        <h2>Admin Settings</h2>
-        <p>Admin settings and configurations here.</p>
+<style>
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.metric-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.metric-card h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+}
+
+.metric-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #2196F3;
+    margin-bottom: 10px;
+}
+
+.chart-container {
+    height: 200px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    padding: 15px;
+}
+
+.dummy-data ul {
+    list-style: none;
+    padding: 0;
+}
+
+.dummy-data li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    color: #666;
+}
+
+.dummy-data li:last-child {
+    border-bottom: none;
+}
+
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#performance-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+#performance-table th,
+#performance-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+#performance-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #333;
+}
+
+#performance-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+#performance-table tr:last-child td {
+    border-bottom: none;
+}
+
+h2 {
+    margin: 0 0 20px 0;
+    color: #333;
+    font-size: 24px;
+}
+
+h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    #performance-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+</style>
+
+<div id="admin" class="container tab-content">
+    <h2>Admin Panel</h2>
+    <div class="card">
+        <h3>Manage Users</h3>
+        <form id="admin-manage-users-form">
+             <label for="Name">Name of Officer:</label>
+            <input type="Name" id="user-name" name="user-name" required>
+            
+            <label for="user-email">Email Address:</label>
+            <input type="email" id="user-email" name="user-email" required>
+
+            <label for="user-role">Role:</label>
+            <select id="user-role" name="user-role">
+                <option value="ops-officer">Ops Officer</option>
+                <option value="enforcement-officer">Enforcement Officer</option>
+                <option value="admin">Admin</option>
+            </select>
+
+            <button type="submit">Add User</button>
+        </form>
     </div>
+    <div class="card">
+        <h3>Current Users</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="user-list">
+                <tr>
+                    <td>Alice</td>
+                    <td>alice@ica.gov.sg</td>
+                    <td>Ops Officer</td>
+                    <td><button onclick="removeUser('alice@ica.gov.sg')">Remove</button></td>
+                </tr>
+                <tr>
+                    <td>Bob</td>
+                    <td>bob@ica.gov.sg</td>
+                    <td>Enforcement Officer</td>
+                    <td><button onclick="removeUser('bob@ica.gov.sg')">Remove</button></td>
+                </tr>
+                <tr>
+                    <td>Charles</td>
+                    <td>Charles@ica.gov.sg</td>
+                    <td>Admin</td>
+                    <td><button onclick="removeUser('bob@ica.gov.sg')">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Check login status
+        const user = sessionStorage.getItem('user');
+        if (!user || !JSON.parse(user).loggedIn) {
+            window.location.href = 'login.html'; // Redirect if not logged in
+        } else {
+            // Display the main dashboard content
+            document.querySelector('header').style.display = 'block';
+            document.getElementById('dashboard').classList.add('active');
+        }
 
-    <script>
-        document.querySelectorAll(".nav-link").forEach(link => {
-            link.addEventListener("click", function(event) {
-                event.preventDefault();
-                document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
-                document.querySelectorAll(".nav-link").forEach(nav => nav.classList.remove("active"));
-                this.classList.add("active");
-                document.getElementById(this.dataset.target).classList.add("active");
-            });
+        // Logout handling
+        document.getElementById('logout').addEventListener('click', (e) => {
+            e.preventDefault();
+            sessionStorage.removeItem('user'); // Clear stored user data
+            window.location.href = 'login.html';
         });
 
-        function showForm(caseNumber) {
-            alert(`Form for case: ${caseNumber}`);
-        }
-
-        function viewCase(caseNumber) {
-            alert(`Viewing case: ${caseNumber}`);
-        }
-
-        document.getElementById("logout").addEventListener("click", function() {
-            alert("Logging out...");
+        // Tab switching
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', showSection);
         });
-            // Data for the charts
-    const caseData = {
-        labels: ['Pending Cases', 'Completed Cases', 'Rejected Cases'],
-        datasets: [{
-            label: 'Case Distribution',
-            data: [1, 1, 1], // Corresponding data for each case category
-            backgroundColor: ['#FFA500', '#28A745', '#ED1C24'],
-            borderColor: ['#FFA500', '#28A745', '#ED1C24'],
-            borderWidth: 1
-        }]
-    };
 
-    // Configurations for the Pie Chart
-    const pieConfig = {
-        type: 'pie',
-        data: caseData,
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top'
-                }
-            }
+        function showSection(event) {
+            event.preventDefault();
+            const targetId = event.currentTarget.getAttribute('data-target');
+            const sections = document.querySelectorAll('.container.tab-content');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            sections.forEach(section => section.classList.remove('active'));
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            document.getElementById(targetId).classList.add('active');
+            event.currentTarget.classList.add('active');
         }
-    };
 
-    // Configurations for the Bar Chart
-    const barConfig = {
-        type: 'bar',
-        data: caseData,
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Number of Cases'
+        // Other functionalities (e.g. viewCase, removeUser, enableTableSorting, etc.)
+        function viewCase(caseId) {
+            // Add view case logic here
+        }
+
+        function removeUser(email) {
+            const confirmRemoval = confirm(`Are you sure you want to remove the user with email: ${email}?`);
+            if (confirmRemoval) {
+                alert(`User ${email} removed successfully.`);
+                const rows = document.querySelectorAll('#user-list tr');
+                rows.forEach(row => {
+                    if (row.textContent.includes(email)) {
+                        row.remove();
                     }
-                }
+                });
             }
         }
-    };
 
-    // Render the charts
-    const casePieChart = new Chart(
-        document.getElementById('casePieChart'),
-        pieConfig
-    );
+        const enableTableSorting = () => {
+            document.querySelectorAll('th').forEach(header => {
+                header.addEventListener('click', function() {
+                    const table = header.closest('table');
+                    const tbody = table.querySelector('tbody');
+                    const rowsArray = Array.from(tbody.querySelectorAll('tr'));
+                    const headerIndex = Array.from(header.parentNode.children).indexOf(header);
+                    const isAsc = header.getAttribute('data-sort') === 'asc';
 
-    const caseBarChart = new Chart(
-        document.getElementById('caseBarChart'),
-        barConfig
-    );
-    </script>
+                    rowsArray.sort((a, b) => {
+                        const aText = a.children[headerIndex].innerText.trim();
+                        const bText = b.children[headerIndex].innerText.trim();
+                        return isAsc ? aText.localeCompare(bText) : bText.localeCompare(aText);
+                    });
+
+                    rowsArray.forEach(row => tbody.appendChild(row));
+                    header.setAttribute('data-sort', isAsc ? 'desc' : 'asc');
+                });
+            });
+        };
+
+        enableTableSorting();
+
+        document.getElementById('request-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Video evidence request submitted.');
+        });
+    });
+</script>
 </body>
 </html>
 
