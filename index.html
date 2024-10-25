@@ -393,8 +393,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Rest of the form sections... -->
         </form>
     </div>
 </div>
@@ -420,8 +418,38 @@
                     <td><span class="badge badge-high">High</span></td> <!-- Priority Badge -->
                     <td><span class="badge badge-approved">Completed</span></td>
                     <td>2023-04-20</td>
-                    <td><button onclick="viewCase('ICA-2023-008')">View Details</button></td>
-                </tr>
+                         <td><button onclick="showForm('ICA-2023-007')">View Details</button></td>
+        </tr>
+    </tbody>
+</table>
+
+<div id="form-container-ICA-2023-007" class="form-container">
+    <h2>Request Data for Case: ICA-2023-007</h2>
+    <form>
+        <label for="email">Requestor Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="nric">Subject NRIC:</label><br>
+        <input type="text" id="nric" name="nric" required><br><br>
+
+        <label for="justification">Justification:</label><br>
+        <textarea id="justification" name="justification" required></textarea><br><br>
+
+        <label for="agency">Agency of Requestor:</label><br>
+        <input type="text" id="agency" name="agency" required><br><br>
+
+        <label for="date">Date of Incident:</label><br>
+        <input type="date" id="date" name="date" required><br><br>
+
+        <label for="time-range">Time Range of Incident:</label><br>
+        <input type="time" id="start-time" name="start-time"> to
+        <input type="time" id="end-time" name="end-time"><br><br>
+
+        <button type="submit">Complete</button>
+        <button type="button" onclick="rejectRequest()">Reject</button>
+        <button type="button" onclick="searchForVideo()">Search for Video</button>
+    </form>
+</div>
 
 export default CaseDetailsForm;
                 <tr data-case="ICA-2023-008" data-description="Security Breach Investigation">
@@ -760,6 +788,17 @@ h3 {
                 });
             }
         }
+         function showForm(caseId) {
+        document.getElementById(`form-container-${caseId}`).style.display = 'block';
+            }
+
+        function rejectRequest() {
+        alert("Request Rejected.");
+            }
+
+    function searchForVideo() {
+        alert("Searching for video...");
+    }
 
         const enableTableSorting = () => {
             document.querySelectorAll('th').forEach(header => {
