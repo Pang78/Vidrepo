@@ -422,6 +422,162 @@
                     <td>2023-04-20</td>
                     <td><button onclick="viewCase('ICA-2023-008')">View Details</button></td>
                 </tr>
+                import React, { useState } from 'react';
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Search } from 'lucide-react';
+
+const CaseDetailsForm = () => {
+  const [formData, setFormData] = useState({
+    requestorEmail: '',
+    subjectNric: '',
+    justification: '',
+    requestorAgency: '',
+    incidentDate: '',
+    timeRangeStart: '',
+    timeRangeEnd: ''
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleComplete = () => {
+    console.log('Form completed:', formData);
+    // Add your completion logic here
+  };
+
+  const handleReject = () => {
+    console.log('Form rejected');
+    // Add your rejection logic here
+  };
+
+  const handleSearchVideo = () => {
+    console.log('Searching video with params:', formData);
+    // Add your video search logic here
+  };
+
+  return (
+    <Card className="w-full max-w-2xl mx-auto">
+      <CardHeader>
+        <CardTitle className="text-xl font-bold">Case Details: ICA-2023-007</CardTitle>
+        <p className="text-sm text-gray-500">Unauthorized Exit Incident</p>
+      </CardHeader>
+      
+      <CardContent className="space-y-4">
+        <div className="grid grid-cols-1 gap-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Requestor Email</label>
+            <Input
+              name="requestorEmail"
+              type="email"
+              placeholder="Enter email address"
+              value={formData.requestorEmail}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Subject NRIC</label>
+            <Input
+              name="subjectNric"
+              placeholder="Enter NRIC"
+              value={formData.subjectNric}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Agency of Requestor</label>
+            <Input
+              name="requestorAgency"
+              placeholder="Enter agency name"
+              value={formData.requestorAgency}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Justification</label>
+            <Textarea
+              name="justification"
+              placeholder="Enter justification for request"
+              value={formData.justification}
+              onChange={handleInputChange}
+              className="min-h-[100px]"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Date of Incident</label>
+            <Input
+              name="incidentDate"
+              type="date"
+              value={formData.incidentDate}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Time Range Start</label>
+              <Input
+                name="timeRangeStart"
+                type="time"
+                value={formData.timeRangeStart}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Time Range End</label>
+              <Input
+                name="timeRangeEnd"
+                type="time"
+                value={formData.timeRangeEnd}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+        </div>
+      </CardContent>
+
+      <CardFooter className="flex flex-col gap-4">
+        <Button 
+          className="w-full flex items-center justify-center gap-2"
+          onClick={handleSearchVideo}
+        >
+          <Search className="w-4 h-4" />
+          Search Video
+        </Button>
+        
+        <div className="flex gap-4 w-full">
+          <Button
+            variant="destructive"
+            className="w-1/2"
+            onClick={handleReject}
+          >
+            Reject
+          </Button>
+          <Button
+            variant="default"
+            className="w-1/2"
+            onClick={handleComplete}
+          >
+            Complete
+          </Button>
+        </div>
+      </CardFooter>
+    </Card>
+  );
+};
+
+export default CaseDetailsForm;
                 <tr data-case="ICA-2023-008" data-description="Security Breach Investigation">
                     <td>ICA-2023-008</td>
                     <td>Security Breach Investigation</td>
