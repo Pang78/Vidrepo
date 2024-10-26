@@ -507,7 +507,7 @@
             });
         }
 
-                function viewCase(caseId) {
+        function viewCase(caseId) {
                 const modal = document.createElement('div');
                 modal.className = 'modal';
                 modal.innerHTML = `
@@ -567,48 +567,48 @@
                 let currentStep = 1;
                 const totalSteps = 5;
             
-                function updateUI() {
-                    modal.querySelector('.progress-bar-fill').style.width = `${(currentStep / totalSteps) * 100}%`;
-                    for (let i = 1; i <= totalSteps; i++) {
-                        modal.querySelector(`#step-${i}`).classList.toggle('hidden', i !== currentStep);
-                    }
-                    modal.querySelector('#prev-button').disabled = currentStep === 1;
-                    modal.querySelector('#next-button').style.display = currentStep === totalSteps ? 'none' : 'inline-block';
+        function updateUI() {
+                modal.querySelector('.progress-bar-fill').style.width = `${(currentStep / totalSteps) * 100}%`;
+                for (let i = 1; i <= totalSteps; i++) {
+                    modal.querySelector(`#step-${i}`).classList.toggle('hidden', i !== currentStep);
+                }
+                modal.querySelector('#prev-button').disabled = currentStep === 1;
+                modal.querySelector('#next-button').style.display = currentStep === totalSteps ? 'none' : 'inline-block';
                 }
             
-                function nextStep() {
-                    if (currentStep < totalSteps) {
-                        currentStep++;
-                        updateUI();
-                    }
-                }
-            
-                function previousStep() {
-                    if (currentStep > 1) {
-                        currentStep--;
-                        updateUI();
-                    }
-                }
-            
-                function toggleEditing() {
-                    // Implement video editing logic
-                }
-            
-                function approveRequest() {
-                    alert('Request approved');
-                    modal.remove();
-                }
-            
-                function rejectRequest() {
-                    alert('Request rejected');
-                    modal.remove();
-                }
-            
-                modal.querySelector('#next-button').addEventListener('click', nextStep);
-                modal.querySelector('#prev-button').addEventListener('click', previousStep);
-            
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
                 updateUI();
+                }
             }
+            
+        function previousStep() {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateUI();
+                }
+            }
+            
+        function toggleEditing() {
+                // Implement video editing logic
+                }
+            
+        function approveRequest() {
+             alert('Request approved');
+             modal.remove();
+        }
+            
+        function rejectRequest() {
+            alert('Request rejected');
+            modal.remove();
+        }
+            
+            modal.querySelector('#next-button').addEventListener('click', nextStep);
+            modal.querySelector('#prev-button').addEventListener('click', previousStep);
+            
+            updateUI();
+        }
 
 
         }
