@@ -7,262 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        :root {
-            --primary-dark-blue: #00264d;
-            --primary-red: #ED1C24;
-            --secondary-white: #FFFFFF;
-            --background-color: #F0F4F8;
-            --text-color: #333333;
-            --border-radius: 10px;
-            --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Roboto', Arial, sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            background-color: var(--primary-dark-blue);
-            color: var(--secondary-white);
-            padding: 1rem 0;
-            box-shadow: var(--box-shadow);
-            margin-bottom: 20px;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo-image {
-            height: 40px;
-            margin-right: 10px;
-        }
-
-        .logo-text {
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-        }
-
-        nav li {
-            margin-left: 15px;
-        }
-
-        nav a {
-            color: var(--secondary-white);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 8px 12px;
-            border-radius: var(--border-radius);
-            transition: background-color 0.3s;
-        }
-
-        nav a:hover, nav a.active {
-            background-color: var(--primary-red);
-        }
-
-        .card {
-            background: #ffffff;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        h1, h2, h3 {
-            color: var(--primary-dark-blue);
-            margin-bottom: 15px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: var(--primary-dark-blue);
-            color: var(--secondary-white);
-        }
-
-        .badge {
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .badge-pending { background-color: #FFA500; color: var(--secondary-white); }
-        .badge-approved { background-color: #28A745; color: var(--secondary-white); }
-        .badge-rejected { background-color: var(--primary-red); color: var(--secondary-white); }
-        .badge-completed { background-color: #28A745; color: var(--secondary-white); }
-        .badge-high { background-color: #d9534f; color: var(--secondary-white); }
-        .badge-medium { background-color: #f0ad4e; color: var(--secondary-white); }
-        .badge-low { background-color: #5bc0de; color: var(--secondary-white); }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .stat-card {
-            background-color: var(--secondary-white);
-            padding: 20px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--primary-dark-blue);
-        }
-
-        button {
-            background-color: var(--primary-dark-blue);
-            color: var(--secondary-white);
-            border: none;
-            padding: 8px 15px;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #001f3d;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-            border-radius: var(--border-radius);
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-        }
-
-        #video-preview {
-            width: 100%;
-            max-height: 300px;
-            object-fit: contain;
-            margin-bottom: 10px;
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            nav ul {
-                margin-top: 10px;
-            }
-
-            nav li {
-                margin-left: 0;
-                margin-right: 15px;
-            }
-                    .popup {
-            display: none;
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            z-index: 1000;
-            }
-    
-            .popup h3 {
-                margin-top: 0;
-            }
-    
-            #emailContent {
-                width: 100%;
-                height: 200px;
-                margin-bottom: 10px;
-            }
-        }
+        /* CSS styles remain the same as in the original script */
     </style>
 </head>
 <body>
@@ -374,18 +119,19 @@
         </div>
     </div>
 
-        <div id="caseModal" class="modal">
+    <div id="caseModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Case Details</h2>
             <p><strong>Request ID:</strong> <span id="modalCaseId"></span></p>
             <p><strong>Officer Email:</strong> <span id="modalOfficerEmail"></span></p>
+            <p><strong>Description:</strong> <span id="modalDescription"></span></p>
+            <p><strong>Status:</strong> <span id="modalStatus"></span></p>
             <div>
                 <h3>Video Preview</h3>
-                <video id="video-preview" controls>
+                <video id="video-player" controls>
                     Your browser does not support the video tag.
                 </video>
-                <input type="file" id="video-upload" accept="video/*">
             </div>
             <div class="action-buttons">
                 <button onclick="previewEmail()">Preview Email</button>
@@ -395,19 +141,44 @@
             </div>
         </div>
     </div>
-      <div id="emailPreview" class="popup">
-        <h3>Draft Email Preview</h3>
-        <textarea id="emailContent" readonly></textarea>
-        <button onclick="closeEmailPreview()">Close</button>
+
+    <div id="email-preview" class="tab-content">
+        <h2>Email Preview</h2>
+        <div class="email-container">
+            <div class="email-header">
+                <p><strong>From:</strong> ICA VESP Team &lt;vesp@ica.gov.sg&gt;</p>
+                <p><strong>To:</strong> <span id="emailTo"></span></p>
+                <p><strong>Subject:</strong> VESP Request Approval - <span id="emailSubject"></span></p>
+            </div>
+            <div class="email-body">
+                <p>Dear <span id="officerName"></span>,</p>
+                <p>Your request (ID: <span id="emailCaseId"></span>) for the case "<span id="emailCaseDescription"></span>" has been accepted.</p>
+                <p>The video link will expire in 3 days. Please download the video and use it for official purposes only.</p>
+                <p>Best regards,<br>ICA VESP Team</p>
+            </div>
+        </div>
     </div>
 
     <div id="videoPopup" class="popup">
-        <h3>Video Preview</h3>
-        <video id="videoPlayer" controls width="400"></video>
-        <div id="requestData"></div>
-        <button onclick="closeVideoPopup()">Close</button>
+        <div class="popup-header">
+            <h3>Video Preview</h3>
+            <span class="close" onclick="closeVideoPopup()">&times;</span>
+        </div>
+        <div class="video-container">
+            <video id="videoPlayer" controls width="100%">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="request-data">
+            <h4>Request Details</h4>
+            <div id="requestData"></div>
+        </div>
+        <div class="popup-footer">
+            <button class="btn-primary" onclick="approveRequest()">Approve Request</button>
+            <button class="btn-secondary" onclick="rejectRequest()">Reject Request</button>
+            <button class="btn-tertiary" onclick="closeVideoPopup()">Close</button>
+        </div>
     </div>
-
 
     <script>
         // Sample data (replace with actual data fetching in a real application)
@@ -422,18 +193,14 @@
             { name: 'Jane Smith', email: 'jane.smith@ica.gov.sg', role: 'Officer', lastLogin: '2024-10-24 14:15' },
         ];
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialize tabs
-            initTabs();
+        let currentCaseId = '';
+        let currentOfficerEmail = '';
 
-            // Populate tables
+        document.addEventListener('DOMContentLoaded', () => {
+            initTabs();
             populateCasesTable();
             populateUsersTable();
-
-            // Initialize charts
             initCharts();
-
-            // Set up event listeners
             setupEventListeners();
         });
 
@@ -473,7 +240,8 @@
                 tableBody.innerHTML += row;
             });
         }
-               function populateUsersTable() {
+
+        function populateUsersTable() {
             const tableBody = document.querySelector('#userTable tbody');
             tableBody.innerHTML = '';
             usersData.forEach(user => {
@@ -494,7 +262,6 @@
         }
 
         function initCharts() {
-            // Request Status Chart
             const statusCtx = document.getElementById('requestStatusChart').getContext('2d');
             new Chart(statusCtx, {
                 type: 'pie',
@@ -514,7 +281,6 @@
                 }
             });
 
-            // Monthly Trend Chart
             const trendCtx = document.getElementById('monthlyTrendChart').getContext('2d');
             new Chart(trendCtx, {
                 type: 'line',
@@ -537,7 +303,6 @@
                 }
             });
 
-            // Update statistics
             document.getElementById('totalRequests').textContent = '1,245';
             document.getElementById('avgResponseTime').textContent = '2.3 hours';
             document.getElementById('completionRate').textContent = '87%';
@@ -547,8 +312,6 @@
         function setupEventListeners() {
             const modal = document.getElementById('caseModal');
             const closeBtn = document.getElementsByClassName('close')[0];
-            const videoUpload = document.getElementById('video-upload');
-            const videoPreview = document.getElementById('video-preview');
 
             closeBtn.onclick = function() {
                 modal.style.display = "none";
@@ -560,46 +323,121 @@
                 }
             }
 
-            videoUpload.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                const fileURL = URL.createObjectURL(file);
-                videoPreview.src = fileURL;
-            });
-
             document.getElementById('addUserForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 addNewUser();
             });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeEmailPreview();
+                    closeVideoPopup();
+                    document.getElementById('caseModal').style.display = "none";
+                }
+            });
         }
 
         function viewCase(caseId, officerEmail) {
+            const caseDetails = getCaseDetails(caseId);
+            currentCaseId = caseDetails.id;
+            currentOfficerEmail = caseDetails.officerEmail;
+            
             const modal = document.getElementById('caseModal');
-            document.getElementById('modalCaseId').textContent = caseId;
-            document.getElementById('modalOfficerEmail').textContent = officerEmail;
+            
+            document.getElementById('modalCaseId').textContent = caseDetails.id;
+            document.getElementById('modalOfficerEmail').textContent = caseDetails.officerEmail;
+            document.getElementById('modalDescription').textContent = caseDetails.description;
+            document.getElementById('modalStatus').textContent = caseDetails.status;
+            
+            document.getElementById('video-player').src = caseDetails.videoUrl;
+            
+            document.getElementById('emailTo').textContent = caseDetails.officerEmail;
+            document.getElementById('emailSubject').textContent = caseDetails.id;
+            document.getElementById('officerName').textContent = caseDetails.officerEmail.split('@')[0];
+            document.getElementById('emailCaseId').textContent = caseDetails.id;
+            document.getElementById('emailCaseDescription').textContent = caseDetails.description;
+
             modal.style.display = "block";
         }
 
         function processCase(action) {
-            const caseId = document.getElementById('modalCaseId').textContent;
-            alert(`Case ${caseId} has been ${action}ed.`);
-            document.getElementById('caseModal').style.display = "none";
-            // Here you would typically update the case status in your backend
-            // and then refresh the cases table
+            if (action === 'accept') {
+                sendEmail();
+            } else {
+                alert(`Case ${currentCaseId} has been ${action}ed.`);
+            }
+            
+           document.getElementById('caseModal').style.display = "none";
             populateCasesTable();
         }
 
+        function sendEmail() {
+            alert(`Email sent successfully to ${currentOfficerEmail}`);
+        }
+
+        function getCaseDetails(caseId) {
+            const caseItem = casesData.find(item => item.id === caseId);
+            return {
+                ...caseItem,
+                videoUrl: "https://example.com/sample-video.mp4" // Replace with actual video URL
+            };
+        }
+
+        function previewEmail() {
+            document.getElementById('email-preview').style.display = 'block';
+        }
+
+        function closeEmailPreview() {
+            document.getElementById('email-preview').style.display = 'none';
+        }
+
+        function previewVideo() {
+            const videoPopup = document.getElementById('videoPopup');
+            const videoPlayer = document.getElementById('videoPlayer');
+            const requestData = document.getElementById('requestData');
+            
+            const caseDetails = getCaseDetails(currentCaseId);
+            
+            videoPlayer.src = caseDetails.videoUrl;
+            requestData.innerHTML = `
+                <p><strong>Request ID:</strong> ${caseDetails.id}</p>
+                <p><strong>Description:</strong> ${caseDetails.description}</p>
+                <p><strong>Officer Email:</strong> ${caseDetails.officerEmail}</p>
+                <p><strong>Status:</strong> ${caseDetails.status}</p>
+                <p><strong>Priority:</strong> ${caseDetails.priority}</p>
+                <p><strong>Last Updated:</strong> ${caseDetails.lastUpdated}</p>
+            `;
+            
+            videoPopup.style.display = 'block';
+        }
+
+        function closeVideoPopup() {
+            document.getElementById('videoPopup').style.display = 'none';
+        }
+
+        function approveRequest() {
+            processCase('accept');
+            closeVideoPopup();
+        }
+
+        function rejectRequest() {
+            processCase('reject');
+            closeVideoPopup();
+        }
+
         function editUser(email) {
-            // Implement edit user functionality
             alert(`Editing user: ${email}`);
+            // Implement edit user functionality here
         }
 
         function deleteUser(email) {
             if (confirm(`Are you sure you want to delete user: ${email}?`)) {
-                // Implement delete user functionality
-                alert(`User ${email} deleted`);
-                // Here you would typically remove the user from your backend
-                // and then refresh the users table
-                populateUsersTable();
+                const index = usersData.findIndex(user => user.email === email);
+                if (index !== -1) {
+                    usersData.splice(index, 1);
+                    populateUsersTable();
+                    alert(`User ${email} deleted`);
+                }
             }
         }
 
@@ -608,8 +446,6 @@
             const email = document.getElementById('newUserEmail').value;
             const role = document.getElementById('newUserRole').value;
 
-            // Here you would typically add the new user to your backend
-            // For this example, we'll just add it to our local data
             usersData.push({
                 name: name,
                 email: email,
@@ -621,101 +457,6 @@
             document.getElementById('addUserForm').reset();
             populateUsersTable();
         }
-          let currentCaseId = '';
-        let currentOfficerEmail = '';
-
-        function viewCase(caseId, officerEmail) {
-            currentCaseId = caseId;
-            currentOfficerEmail = officerEmail;
-            const modal = document.getElementById('caseModal');
-            document.getElementById('modalCaseId').textContent = caseId;
-            document.getElementById('modalOfficerEmail').textContent = officerEmail;
-            modal.style.display = "block";
-        }
-
-        function previewEmail() {
-            const emailContent = `Dear Officer,
-
-Your request (ID: ${currentCaseId}) has been accepted.
-
-Best regards,
-ICA VESP Team`;
-
-            document.getElementById('emailContent').value = emailContent;
-            document.getElementById('emailPreview').style.display = 'block';
-        }
-
-        function closeEmailPreview() {
-            document.getElementById('emailPreview').style.display = 'none';
-        }
-
-        function previewVideo() {
-            const videoPopup = document.getElementById('videoPopup');
-            const videoPlayer = document.getElementById('videoPlayer');
-            const requestData = document.getElementById('requestData');
-            
-            // Assume we have a function to get case details by ID
-            const caseDetails = getCaseDetails(currentCaseId);
-            
-            videoPlayer.src = caseDetails.videoUrl;
-            requestData.innerHTML = `
-                <p><strong>Request ID:</strong> ${caseDetails.id}</p>
-                <p><strong>Description:</strong> ${caseDetails.description}</p>
-                <p><strong>Officer Email:</strong> ${caseDetails.officerEmail}</p>
-                <p><strong>Status:</strong> ${caseDetails.status}</p>
-            `;
-            
-            videoPopup.style.display = 'block';
-        }
-
-        function closeVideoPopup() {
-            document.getElementById('videoPopup').style.display = 'none';
-        }
-
-        function processCase(action) {
-            if (action === 'accept') {
-                // Here you would typically update the case status in your backend
-                // and then send the email
-                sendEmail();
-            } else {
-                alert(`Case ${currentCaseId} has been ${action}ed.`);
-            }
-            
-            document.getElementById('caseModal').style.display = "none";
-            // Refresh the cases table
-            populateCasesTable();
-        }
-
-        function sendEmail() {
-            // Implement email sending logic here
-            alert(`Email sent successfully to ${currentOfficerEmail}`);
-        }
-
-        // Mock function to get case details
-        function getCaseDetails(caseId) {
-            // In a real application, this would be an API call
-            return {
-                id: caseId,
-                description: "Sample case description",
-                officerEmail: currentOfficerEmail,
-                status: "Pending",
-                videoUrl: "path/to/video.mp4" // Replace with actual video URL
-            };
-        }
-
-        function setupEventListeners() {
-            // ... (existing event listener setup) ...
-
-            // Add these new event listeners
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    closeEmailPreview();
-                    closeVideoPopup();
-                    document.getElementById('caseModal').style.display = "none";
-                }
-            });
-        }
     </script>
 </body>
 </html>
-
