@@ -549,6 +549,7 @@
             casesData.forEach(caseItem => {
                 const row = `
                     <tr>
+		    	<td>${caseItem.id}</td>
                         <td>${caseItem.description}</td>
                         <td><span class="badge badge-${caseItem.priority.toLowerCase()}">${caseItem.priority}</span></td>
                         <td><span class="badge badge-${caseItem.status.toLowerCase()}">${caseItem.status}</span></td>
@@ -651,90 +652,93 @@
 	
 	        // Case Management
 	function viewCase(caseId) {
-	    const modal = document.createElement('div');
-	    modal.className = 'modal';
-	    modal.style.display = 'block';
-	    
-	    const caseDetails = casesData.find(c => c.id === caseId);
-	    if (!caseDetails) return;
+		const modal = document.createElement('div');
+		modal.className = 'modal';
+		modal.style.display = 'block';
+		    
+		const caseDetails = casesData.find(c => c.id === caseId);
+		if (!caseDetails) return;
+		
+		modal.innerHTML = `
+			<div class="modal-content card">
+		            <span class="close">&times;</span>
+		            <h2>Case Details - ${caseId}</h2>
+		            <div class="progress-bar">
+		                <div class="progress-bar-fill" style="width: 20%"></div>
+		            </div>
+		            <div class="steps">
+		                <div id="step-1" class="step-content">
+		                    <h3>User Story</h3>
+		                    <div class="details-grid">
+		                        <div><strong>Requestor:</strong> John Tan</div>
+		                        <div><strong>NRIC:</strong> S1234567A</div>
+		                        <div><strong>Department:</strong> Immigration & Checkpoints Authority</div>
+		                        <div><strong>Reason for Request:</strong> Investigation of unauthorised exit incident</div>
+		                    </div>
+		                    <h3>Case Details</h3>
+		                    <div class="details-grid">
+		                        <div><strong>Description:</strong> ${caseDetails.description}</div>
+		                        <div><strong>Priority:</strong> ${caseDetails.priority}</div>
+		                        <div><strong>Status:</strong> ${caseDetails.status}</div>
+		                        <div><strong>Officer:</strong> ${caseDetails.officerEmail}</div>
+		                        <div><strong>Last Updated:</strong> ${caseDetails.lastUpdated}</div>
+		                    </div>
+		                </div>
+		                <div id="step-2" class="step-content hidden">
+		                    <h3>Upload Video</h3>
+		                    <div class="upload-area">
+		                        <input type="file" accept="video/*" id="video-upload" class="file-input">
+		                        <label for="video-upload" class="upload-label">
+		                            <i class="fas fa-cloud-upload-alt"></i>
+		                            <span>Click to upload or drag and drop</span>
+		                        </label>
+		                    </div>
+		                    <div id="upload-status"></div>
+		                </div>
+		                <div id="step-3" class="step-content hidden">
+		                    <h3>Preview & Edit</h3>
+		                    <div class="video-editor">
+		                        <video id="video-preview" controls></video>
+		                        <div class="editing-controls">
+		                            <button onclick="trimVideo()">Trim</button>
+		                            <input type="range" id="trim-start" min="0" max="100" value="0">
+		                            <input type="range" id="trim-end" min="0" max="100" value="100">
+		                        </div>
+		                    </div>
+		                </div>
+		                <div id="step-4" class="step-content hidden">
+		                    <h3>Email Review</h3>
+		                    <div class="email-content">
+		                        <p>Dear Officer,</p>
+		                        <p>This is your requested video for Case ${caseId}.</p>
+		                        <p>Please review the attached video and provide your approval or rejection.</p>
+		                        <p>Best regards,<br>ICA Video Enterprise Sharing Platform</p>
+		                    </div>
+		                </div>
+		                <div id="step-5" class="step-content hidden">
+		                    <h3>Approval</h3>
+		                    <div id="approval-video-container"></div>
+		                    <div class="approval-buttons">
+		                        <button onclick="approveCase('${caseId}')" class="approve-btn">Approve</button>
+		                        <button onclick="rejectCase('${caseId}')" class="reject-btn">Reject</button>
+		                    </div>
+		                    <div id="rejection-reason" class="hidden">
+		                        <h4>Reason for Rejection:</h4>
+		                        <textarea id="rejection-text" rows="4" cols="50"></textarea>
+		                        <button onclick="submitRejection('${caseId}')">Submit Rejection</button>
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="modal-footer">
+		                <button id="prev-step" class="nav-btn" disabled>&lt;</button>
+		                <button id="next-step" class="nav-btn">&gt;</button>
+		            </div>
+		        </div>
+		    `;
 
-	    modal.innerHTML = `
-	        <div class="modal-content card">
-	            <span class="close">&times;</span>
-	            <h2>Case Details - ${caseId}</h2>
-	            <div class="progress-bar">
-	                <div class="progress-bar-fill" style="width: 20%"></div>
-	            </div>
-	            <div class="steps">
-	                <div id="step-1" class="step-content">
-	                    <h3>User Story</h3>
-	                    <div class="details-grid">
-	                        <div><strong>Requestor:</strong> John Tan</div>
-	                        <div><strong>NRIC:</strong> S1234567A</div>
-	                        <div><strong>Department:</strong> Immigration & Checkpoints Authority</div>
-	                        <div><strong>Reason for Request:</strong> Investigation of unauthorized exit incident</div>
-	                    </div>
-	                    <h3>Case Details</h3>
-	                    <div class="details-grid">
-	                        <div><strong>Description:</strong> ${caseDetails.description}</div>
-	                        <div><strong>Priority:</strong> ${caseDetails.priority}</div>
-	                        <div><strong>Status:</strong> ${caseDetails.status}</div>
-	                        <div><strong>Officer:</strong> ${caseDetails.officerEmail}</div>
-	                        <div><strong>Last Updated:</strong> ${caseDetails.lastUpdated}</div>
-	                    </div>
-	                </div>
-	                <div id="step-2" class="step-content hidden">
-	                    <h3>Upload Video</h3>
-	                    <div class="upload-area">
-	                        <input type="file" accept="video/*" id="video-upload" class="file-input">
-	                        <label for="video-upload" class="upload-label">
-	                            <i class="fas fa-cloud-upload-alt"></i>
-	                            <span>Click to upload or drag and drop</span>
-	                        </label>
-	                    </div>
-	                    <div id="upload-status"></div>
-	                </div>
-	                <div id="step-3" class="step-content hidden">
-	                    <h3>Preview & Edit</h3>
-	                    <div class="video-editor">
-	                        <video id="video-preview" controls></video>
-	                        <div class="editing-controls">
-	                            <button onclick="trimVideo()">Trim</button>
-	                            <input type="range" id="trim-start" min="0" max="100" value="0">
-	                            <input type="range" id="trim-end" min="0" max="100" value="100">
-	                        </div>
-	                    </div>
-	                </div>
-	                <div id="step-4" class="step-content hidden">
-	                    <h3>Email Review</h3>
-	                    <div class="email-content">
-	                        <p>Dear Officer,</p>
-	                        <p>This is your requested video for Case ${caseId}.</p>
-	                        <p>Please review the attached video and provide your approval or rejection.</p>
-	                        <p>Best regards,<br>ICA Video Enterprise Sharing Platform</p>
-	                    </div>
-	                </div>
-	                <div id="step-5" class="step-content hidden">
-	                    <h3>Approval</h3>
-	                    <div id="approval-video-container"></div>
-	                    <div class="approval-buttons">
-	                        <button onclick="approveCase('${caseId}')" class="approve-btn">Approve</button>
-	                        <button onclick="rejectCase('${caseId}')" class="reject-btn">Reject</button>
-	                    </div>
-	                    <div id="rejection-reason" class="hidden">
-	                        <h4>Reason for Rejection:</h4>
-	                        <textarea id="rejection-text" rows="4" cols="50"></textarea>
-	                        <button onclick="submitRejection('${caseId}')">Submit Rejection</button>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="modal-footer">
-	                <button id="prev-step" class="nav-btn" disabled>&lt;</button>
-	                <button id="next-step" class="nav-btn">&gt;</button>
-	            </div>
-	        </div>
-	
-	    document.body.appendChild(modal);
+		document.body.appendChild(modal);
+
+
 	
 	    // Modal Navigation Logic
 	    let currentStep = 1;
