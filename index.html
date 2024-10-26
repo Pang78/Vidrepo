@@ -16,27 +16,27 @@
             --border-radius: 10px;
             --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
- 
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
- 
+
         body {
             font-family: 'Roboto', Arial, sans-serif;
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
         }
- 
+
         .container {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
- 
+
         header {
             background-color: var(--primary-dark-blue);
             color: var(--secondary-white);
@@ -44,37 +44,37 @@
             box-shadow: var(--box-shadow);
             margin-bottom: 20px;
         }
- 
+
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
- 
+
         .logo-container {
             display: flex;
             align-items: center;
         }
- 
+
         .logo-image {
             height: 40px;
             margin-right: 10px;
         }
- 
+
         .logo-text {
             font-size: 20px;
             font-weight: 700;
         }
- 
+
         nav ul {
             list-style: none;
             display: flex;
         }
- 
+
         nav li {
             margin-left: 15px;
         }
- 
+
         nav a {
             color: var(--secondary-white);
             text-decoration: none;
@@ -83,11 +83,11 @@
             border-radius: var(--border-radius);
             transition: background-color 0.3s;
         }
- 
+
         nav a:hover, nav a.active {
             background-color: var(--primary-red);
         }
- 
+
         .card {
             background: #ffffff;
             border-radius: var(--border-radius);
@@ -96,34 +96,34 @@
             margin-bottom: 20px;
             transition: transform 0.3s, box-shadow 0.3s;
         }
- 
+
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
         }
- 
+
         h1, h2, h3 {
             color: var(--primary-dark-blue);
             margin-bottom: 15px;
         }
- 
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
- 
+
         th, td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
- 
+
         th {
             background-color: var(--primary-dark-blue);
             color: var(--secondary-white);
         }
- 
+
         .badge {
             padding: 5px 10px;
             border-radius: 20px;
@@ -131,7 +131,7 @@
             font-weight: bold;
             text-transform: uppercase;
         }
- 
+
         .badge-pending { background-color: #FFA500; color: var(--secondary-white); }
         .badge-approved { background-color: #28A745; color: var(--secondary-white); }
         .badge-rejected { background-color: var(--primary-red); color: var(--secondary-white); }
@@ -139,22 +139,22 @@
         .badge-high { background-color: #d9534f; color: var(--secondary-white); }
         .badge-medium { background-color: #f0ad4e; color: var(--secondary-white); }
         .badge-low { background-color: #5bc0de; color: var(--secondary-white); }
- 
+
         .tab-content {
             display: none;
         }
- 
+
         .tab-content.active {
             display: block;
         }
- 
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
             margin-bottom: 20px;
         }
- 
+
         .stat-card {
             background-color: var(--secondary-white);
             padding: 20px;
@@ -162,13 +162,13 @@
             box-shadow: var(--box-shadow);
             text-align: center;
         }
- 
+
         .stat-number {
             font-size: 24px;
             font-weight: bold;
             color: var(--primary-dark-blue);
         }
- 
+
         button {
             background-color: var(--primary-dark-blue);
             color: var(--secondary-white);
@@ -178,11 +178,11 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
- 
+
         button:hover {
             background-color: #001f3d;
         }
- 
+
         .modal {
             display: none;
             position: fixed;
@@ -194,7 +194,7 @@
             overflow: auto;
             background-color: rgba(0,0,0,0.4);
         }
- 
+
         .modal-content {
             background-color: #fefefe;
             margin: 15% auto;
@@ -204,7 +204,7 @@
             max-width: 600px;
             border-radius: var(--border-radius);
         }
- 
+
         .close {
             color: #aaa;
             float: right;
@@ -212,738 +212,39 @@
             font-weight: bold;
             cursor: pointer;
         }
- 
+
         .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
         }
- 
+
         #video-preview {
             width: 100%;
             max-height: 300px;
             object-fit: contain;
             margin-bottom: 10px;
         }
- 
+
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
                 align-items: flex-start;
             }
- 
+
             nav ul {
                 margin-top: 10px;
             }
- 
+
             nav li {
                 margin-left: 0;
                 margin-right: 15px;
             }
-                    .popup {
-            display: none;
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            z-index: 1000;
-            }
-    
-            .popup h3 {
-                margin-top: 0;
-            }
-    
-            .email-container {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #fff;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-            }
-             
-            .email-header {
-                border-bottom: 1px solid #eee;
-                padding-bottom: 10px;
-                margin-bottom: 20px;
-            }
-             
-            .email-header p {
-                margin: 5px 0;
-            }
-             
-            .email-body p {
-                margin: 10px 0;
-                    .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            overflow-y: auto;
         }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 20px auto;
-            padding: 25px;
-            border: 1px solid #888;
-            width: 90%;
-            max-width: 800px;
-            border-radius: var(--border-radius);
-            position: relative;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .modal-body {
-            margin-bottom: 20px;
-        }
-
-        .modal-section {
-            margin-bottom: 25px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: var(--border-radius);
-        }
-
-        .modal-section h3 {
-            margin-bottom: 15px;
-            color: var(--primary-dark-blue);
-        }
-
-        .close {
-            position: absolute;
-            right: 25px;
-            top: 20px;
-            color: #aaa;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 1;
-        }
-
-        .close:hover {
-            color: var(--text-color);
-        }
-
-        .video-container {
-            margin: 15px 0;
-            background-color: #000;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-        }
-
-        #video-player {
-            width: 100%;
-            max-height: 400px;
-            display: block;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            justify-content: flex-end;
-        }
-
-        .action-buttons button {
-            padding: 10px 20px;
-            border-radius: var(--border-radius);
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .btn-preview {
-            background-color: #6c757d;
-        }
-
-        .btn-approve {
-            background-color: #28a745;
-        }
-
-        .btn-reject {
-            background-color: var(--primary-red);
-        }
-
-        .case-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .case-detail-item {
-            background-color: #fff;
-            padding: 10px;
-            border-radius: var(--border-radius);
-            border: 1px solid #ddd;
-        }
-
-        .case-detail-item strong {
-            display: block;
-            margin-bottom: 5px;
-            color: var(--primary-dark-blue);
-        }
-
-        /* Email Preview Styles */
-        .email-preview {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .email-header {
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-            margin-bottom: 15px;
-        }
-
-        .email-body {
-            line-height: 1.6;
-        }
-
-        @media (max-width: 768px) {
-            .modal-content {
-                width: 95%;
-                margin: 10px auto;
-                padding: 15px;
-        }
-
-        .action-buttons {
-            flex-direction: column;
-        }
-
-        .action-buttons button {
-            width: 100%;
-        }
-
-        .case-details {
-            grid-template-columns: 1fr;
-        }
-            .workflow-modal {
-              display: none;
-              position: fixed;
-              top: 0;
-              left: 0;
-              width: 100%;
-              height: 100%;
-              background-color: rgba(0, 0, 0, 0.5);
-              z-index: 1000;
-            }
-            
-            .workflow-content {
-              position: relative;
-              background-color: #fff;
-              margin: 2% auto;
-              padding: 20px;
-              width: 90%;
-              max-width: 1000px;
-              border-radius: var(--border-radius);
-              max-height: 90vh;
-              overflow-y: auto;
-            }
-            
-            .workflow-close {
-              position: absolute;
-              right: 20px;
-              top: 10px;
-              font-size: 28px;
-              cursor: pointer;
-            }
-            
-            .step-indicator {
-              display: flex;
-              justify-content: space-between;
-              margin-bottom: 30px;
-              position: relative;
-            }
-            
-            .step-indicator::before {
-              content: '';
-              position: absolute;
-              top: 50%;
-              left: 0;
-              right: 0;
-              height: 2px;
-              background-color: #ddd;
-              z-index: 1;
-            }
-            
-            .step {
-              position: relative;
-              background-color: #fff;
-              padding: 10px 20px;
-              border-radius: 20px;
-              font-weight: 500;
-              z-index: 2;
-              border: 2px solid #ddd;
-            }
-            
-            .step.active {
-              background-color: var(--primary-dark-blue);
-              color: white;
-              border-color: var(--primary-dark-blue);
-            }
-            
-            .step.completed {
-              background-color: var(--primary-dark-blue);
-              color: white;
-              border-color: var(--primary-dark-blue);
-            }
-            
-            .workflow-body {
-              min-height: 400px;
-              padding: 20px;
-            }
-            
-            .workflow-footer {
-              display: flex;
-              justify-content: space-between;
-              padding-top: 20px;
-              border-top: 1px solid #ddd;
-            }
-            
-            .details-grid {
-              display: grid;
-              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-              gap: 20px;
-              margin-bottom: 20px;
-            }
-            
-            .detail-item {
-              padding: 15px;
-              background-color: #f8f9fa;
-              border-radius: var(--border-radius);
-            }
-            
-            .upload-section {
-              text-align: center;
-              padding: 40px;
-              border: 2px dashed #ddd;
-              border-radius: var(--border-radius);
-            }
-            
-            .video-editor {
-              display: flex;
-              flex-direction: column;
-              gap: 20px;
-            }
-            
-            .editing-controls {
-              display: flex;
-              gap: 10px;
-              justify-content: center;
-            }
-            
-            .draft-review {
-              display: grid;
-              grid-template-columns: 1fr 1fr;
-              gap: 20px;
-            }
-            
-            .email-preview,
-            .final-video-preview {
-              padding: 20px;
-              background-color: #f8f9fa;
-              border-radius: var(--border-radius);
-            }
-            
-            .approval-section {
-              text-align: center;
-            }
-            
-            .approval-buttons {
-              display: flex;
-              justify-content: center;
-              gap: 20px;
-              margin-top: 30px;
-            }
-            
-            @media (max-width: 768px) {
-              .draft-review {
-                grid-template-columns: 1fr;
-              }
-              
-              .step {
-                font-size: 12px;
-                padding: 8px 12px;
-              }
-            }
-            * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background: #f5f5f5;
-            padding: 2rem;
-        }
-
-        .card {
-            max-width: 64rem;
-            margin: 0 auto;
-            background: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .card-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid #e5e7eb;
-            background: var(--ica-blue);
-            color: white;
-            border-top-left-radius: 0.5rem;
-            border-top-right-radius: 0.5rem;
-        }
-
-        .card-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .step-count {
-            font-size: 0.875rem;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 0.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 0.25rem;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: var(--ica-orange);
-            transition: width 0.3s ease;
-        }
-
-        .card-content {
-            padding: 1.5rem;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .field {
-            margin-bottom: 1rem;
-        }
-
-        .field-label {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-            color: var(--ica-blue);
-        }
-
-        .field-value {
-            color: #4b5563;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            background: #dbeafe;
-            color: var(--ica-blue);
-            border-radius: 0.25rem;
-            font-size: 0.875rem;
-        }
-
-        .upload-area {
-            border: 2px dashed #e5e7eb;
-            border-radius: 0.5rem;
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .upload-area:hover {
-            border-color: var(--ica-orange);
-            background: #fff8f5;
-        }
-
-        .upload-icon {
-            font-size: 2rem;
-            color: var(--ica-orange);
-            margin-bottom: 0.5rem;
-        }
-
-        .preview-container {
-            aspect-ratio: 16/9;
-            background: #f3f4f6;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            margin-bottom: 1rem;
-            position: relative;
-        }
-
-        .preview-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .editing-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 48, 135, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .editing-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-            font-weight: 500;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s ease;
-        }
-
-        .button-primary {
-            background: var(--ica-blue);
-            color: white;
-        }
-
-        .button-primary:hover {
-            background: var(--ica-blue-light);
-        }
-
-        .button-outline {
-            background: white;
-            border: 1px solid #e5e7eb;
-            color: var(--ica-blue);
-        }
-
-        .button-outline:hover {
-            border-color: var(--ica-blue);
-            background: #f8fafc;
-        }
-
-        .button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .button-destructive {
-            background: #dc2626;
-            color: white;
-        }
-
-        .button-destructive:hover {
-            background: #b91c1c;
-        }
-
-        .card-footer {
-            padding: 1.5rem;
-            border-top: 1px solid #e5e7eb;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .alert {
-            background: #fff8f5;
-            border: 1px solid var(--ica-orange);
-            padding: 1rem;
-            border-radius: 0.375rem;
-            margin-bottom: 1rem;
-            color: var(--ica-orange);
-        }
-
-        .email-preview {
-            border: 1px solid #e5e7eb;
-            padding: 1rem;
-            border-radius: 0.375rem;
-        }
-
-        /* Upload progress styles */
-        .upload-progress-container {
-            margin-top: 1rem;
-        }
-
-        .upload-progress-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            color: var(--ica-blue);
-        }
- 
     </style>
 </head>
 <body>
     <header>
-            <div class="card">
-        <div class="card-header">
-            <div class="card-title">
-                <span id="step-title">View Request Details</span>
-                <div class="step-count">Step <span id="current-step">1</span> of 5</div>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-bar-fill" style="width: 20%"></div>
-            </div>
-        </div>
-
-        <div class="card-content">
-            <!-- Step 1: View Details -->
-            <div id="step-1" class="step-content">
-                <div class="grid">
-                    <div class="field">
-                        <div class="field-label">Request ID</div>
-                        <div class="field-value">REQ-2024-001</div>
-                    </div>
-                    <div class="field">
-                        <div class="field-label">Status</div>
-                        <div class="status-badge">In Progress</div>
-                    </div>
-                    <div class="field">
-                        <div class="field-label">Requester</div>
-                        <div class="field-value">John Smith</div>
-                    </div>
-                    <div class="field">
-                        <div class="field-label">Department</div>
-                        <div class="field-value">Field Operations</div>
-                    </div>
-                    <div class="field">
-                        <div class="field-label">Submission Date</div>
-                        <div class="field-value">2024-10-26</div>
-                    </div>
-                    <div class="field">
-                        <div class="field-label">Deadline</div>
-                        <div class="field-value">2024-11-15</div>
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="field-label">Description</div>
-                    <div class="field-value">Update required for field operations training video to include new safety protocols</div>
-                </div>
-            </div>
-
-            <!-- Step 2: Upload -->
-            <div id="step-2" class="step-content hidden">
-                <div class="upload-area" onclick="document.getElementById('file-upload').click()">
-                    <div class="upload-icon">⬆️</div>
-                    <div>Click to upload or drag and drop video files</div>
-                    <div style="font-size: 0.875rem; color: #6b7280;">MP4, MOV up to 2GB</div>
-                </div>
-                <input type="file" id="file-upload" accept="video/*" style="display: none" onchange="handleFileUpload(event)">
-                <div id="upload-progress" class="hidden upload-progress-container">
-                    <div class="upload-progress-header">
-                        <span id="filename"></span>
-                        <span id="progress-text">0%</span>
-                    </div>
-                    <div class="progress-bar" style="background: #e5e7eb;">
-                        <div id="upload-progress-bar" class="progress-bar-fill" style="width: 0%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Step 3: Preview & Edit -->
-            <div id="step-3" class="step-content hidden">
-                <div class="preview-container">
-                    <img src="/api/placeholder/800/450" alt="Video preview" class="preview-img">
-                    <div id="editing-overlay" class="editing-overlay">
-                        <div style="text-align: center;">
-                            ✂️
-                            <p>Editing Mode</p>
-                        </div>
-                    </div>
-                </div>
-                <button class="button button-outline" onclick="toggleEditing()">
-                    ✂️ <span id="edit-button-text">Edit Video</span>
-                </button>
-            </div>
-
-            <!-- Step 4: Draft Review -->
-            <div id="step-4" class="step-content hidden">
-                <div class="email-preview">
-                    <h3 style="font-weight: 600; margin-bottom: 0.5rem; color: var(--ica-blue);">Email Draft Preview</h3>
-                    <div style="color: #4b5563;">
-                        <p><strong>To:</strong> John Smith</p>
-                        <p><strong>Subject:</strong> Video Update for Training Video Update Request</p>
-                        <div style="border-top: 1px solid #e5e7eb; margin-top: 0.5rem; padding-top: 0.5rem;">
-                            Dear John Smith,<br><br>
-                            The requested video update has been processed and is ready for your review.
-                            Please find the updated video attached to this email.<br><br>
-                            Best regards,<br>
-                            Video Management Team
-                        </div>
-                    </div>
-                </div>
-                <div class="preview-container" style="margin-top: 1rem;">
-                    <img src="/api/placeholder/800/450" alt="Final video preview" class="preview-img">
-                </div>
-            </div>
-
-            <!-- Step 5: Approval -->
-            <div id="step-5" class="step-content hidden">
-                <div class="alert">
-                    Please review all details carefully before making your final decision.
-                </div>
-                <div class="grid">
-                    <button class="button button-primary" onclick="handleApprove()">
-                        ✓ Approve Request
-                    </button>
-                    <button class="button button-destructive" onclick="handleReject()">
-                        ✕ Reject Request
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="card-footer">
-            <button id="prev-button" class="button button-outline" onclick="previousStep()" disabled>
-                ← Previous
-            </button>
-            <button id="next-button" class="button button-primary" onclick="nextStep()">
-                Next →
-            </button>
-        </div>
-    </div>
         <div class="container header-content">
             <div class="logo-container">
                 <img src="https://file.go.gov.sg/icalogo.png" alt="ICA Logo" class="logo-image">
@@ -1051,92 +352,7 @@
         </div>
     </div>
 
-
-
     <script>
-                let currentStep = 1;
-        let isEditing = false;
-        let uploadProgress = 0;
-
-        function updateUI() {
-            // Update progress bar
-            document.querySelector('.progress-bar-fill').style.width = `${(currentStep / 5) * 100}%`;
-            
-            // Update step counter
-            document.getElementById('current-step').textContent = currentStep;
-            
-            // Update step title
-            const titles = [
-                "View Request Details",
-                "Upload Video",
-                "Preview & Edit Video",
-                "Review Draft",
-                "Final Approval"
-            ];
-            document.getElementById('step-title').textContent = titles[currentStep - 1];
-            
-            // Show/hide step content
-            document.querySelectorAll('.step-content').forEach((el, index) => {
-                el.classList.toggle('hidden', index + 1 !== currentStep);
-            });
-            
-            // Update buttons
-            document.getElementById('prev-button').disabled = currentStep === 1;
-            const nextButton = document.getElementById('next-button');
-            nextButton.style.display = currentStep === 5 ? 'none' : 'inline-flex';
-        }
-
-        function nextStep() {
-            if (currentStep < 5) {
-                currentStep++;
-                updateUI();
-            }
-        }
-
-        function previousStep() {
-            if (currentStep > 1) {
-                currentStep--;
-                updateUI();
-            }
-        }
-
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                document.getElementById('upload-progress').classList.remove('hidden');
-                document.getElementById('filename').textContent = file.name;
-                
-                // Simulate upload progress
-                let progress = 0;
-                const interval = setInterval(() => {
-                    progress += 5;
-                    document.getElementById('progress-text').textContent = `${progress}%`;
-                    document.getElementById('upload-progress-bar').style.width = `${progress}%`;
-                    if (progress >= 100) {
-                        clearInterval(interval);
-                    }
-                }, 200);
-            }
-        }
-
-        function toggleEditing() {
-            isEditing = !isEditing;
-            const overlay = document.getElementById('editing-overlay');
-            overlay.classList.toggle('active', isEditing);
-            document.getElementById('edit-button-text').textContent = isEditing ? 'Exit Editing' : 'Edit Video';
-        }
-
-        function handleApprove() {
-            alert('Request approved successfully!');
-        }
-
-        function handleReject() {
-            alert('Request rejected');
-        }
-
-        // Initialize UI
-        updateUI();
-        
         // Sample data (replace with actual data fetching in a real application)
         const casesData = [
             { id: 'ICA-2024-001', description: 'Unauthorized Exit Incident', priority: 'High', status: 'Completed', lastUpdated: '2024-10-20', officerEmail: 'officer1@ica.gov.sg' },
@@ -1148,9 +364,6 @@
             { name: 'John Doe', email: 'john.doe@ica.gov.sg', role: 'Admin', lastLogin: '2024-10-25 09:30' },
             { name: 'Jane Smith', email: 'jane.smith@ica.gov.sg', role: 'Officer', lastLogin: '2024-10-24 14:15' },
         ];
-
-        let currentCaseId = '';
-        let currentOfficerEmail = '';
 
         document.addEventListener('DOMContentLoaded', () => {
             initTabs();
@@ -1179,10 +392,6 @@
             });
         }
 
-        function viewCase(caseId) {
-          workflow.startWorkflow(caseId);
-        }
-
         function populateCasesTable() {
             const tableBody = document.querySelector('#casesTable tbody');
             tableBody.innerHTML = '';
@@ -1194,7 +403,7 @@
                         <td><span class="badge badge-${caseItem.priority.toLowerCase()}">${caseItem.priority}</span></td>
                         <td><span class="badge badge-${caseItem.status.toLowerCase()}">${caseItem.status}</span></td>
                         <td>${caseItem.lastUpdated}</td>
-                        <td><button onclick="viewCase('${caseItem.id}', '${caseItem.officerEmail}')">View Details</button></td>
+                        <td><button onclick="viewCase('${caseItem.id}')">View Details</button></td>
                     </tr>
                 `;
                 tableBody.innerHTML += row;
@@ -1226,7 +435,7 @@
             new Chart(statusCtx, {
                 type: 'pie',
                 data: {
-                    labels: ['Completed', 'Pending', 'Rejected'],
+                                       labels: ['Completed', 'Pending', 'Rejected'],
                     datasets: [{
                         data: [65, 25, 10],
                         backgroundColor: ['#28A745', '#FFA500', '#DC3545']
@@ -1270,41 +479,25 @@
         }
 
         function setupEventListeners() {
-            const modal = document.getElementById('caseModal');
-            const closeBtn = document.getElementsByClassName('close')[0];
-
-            closeBtn.onclick = function() {
-                modal.style.display = "none";
-            }
-
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-
             document.getElementById('addUserForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 addNewUser();
             });
 
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    closeEmailPreview();
-                    closeVideoPopup();
-                    document.getElementById('caseModal').style.display = "none";
-                }
+            document.getElementById('logout').addEventListener('click', function(e) {
+                e.preventDefault();
+                logout();
             });
         }
 
-        function toggleEmailPreview() {
-            const emailPreview = document.getElementById('emailPreviewSection');
-            emailPreview.style.display = emailPreview.style.display === 'none' ? 'block' : 'none';
+        function viewCase(caseId) {
+            // Implement case viewing functionality
+            console.log(`Viewing case: ${caseId}`);
         }
-  
+
         function editUser(email) {
-            alert(`Editing user: ${email}`);
-            // Implement edit user functionality here
+            // Implement user editing functionality
+            console.log(`Editing user: ${email}`);
         }
 
         function deleteUser(email) {
@@ -1333,487 +526,16 @@
             alert('New user added successfully');
             document.getElementById('addUserForm').reset();
             populateUsersTable();
-
-   
-                  updateDashboard(status) {
-                    // Update the cases table with new status
-                    const caseRow = document.querySelector(`tr[data-case-id="${this.currentRequest.id}"]`);
-                    if (caseRow) {
-                      const statusCell = caseRow.querySelector('.status-badge');
-                      statusCell.className = `badge badge-${status}`;
-                      statusCell.textContent = status.charAt(0).toUpperCase() + status.slice(1);
-                    }
-                  }
-                
-                  closeWorkflow() {
-                    this.modal.style.display = 'none';
-                    this.currentRequest = null;
-                    this.currentStep = WORKFLOW_STEPS.VIEW_DETAILS;
-                  }
-                }
-                
-                // Initialize workflow
-                const workflow = new RequestWorkflow();
-                document.addEventListener('DOMContentLoaded', () => workflow.init());
-        </script>
-    </body>  
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Request Workflow</title>
-    <style>
-        :root {
-            --ica-blue: #003087;
-            --ica-orange: #FF671F;
-            --ica-blue-light: #1a4498;
-            --ica-orange-light: #ff8142;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        function logout() {
+            // Implement logout functionality
+            console.log('Logging out...');
+            // Redirect to login page or perform other logout actions
         }
-
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background: #f5f5f5;
-            padding: 2rem;
-        }
-
-        .card {
-            max-width: 64rem;
-            margin: 0 auto;
-            background: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .card-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid #e5e7eb;
-            background: var(--ica-blue);
-            color: white;
-            border-top-left-radius: 0.5rem;
-            border-top-right-radius: 0.5rem;
-        }
-
-        .card-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .step-count {
-            font-size: 0.875rem;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 0.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 0.25rem;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: var(--ica-orange);
-            transition: width 0.3s ease;
-        }
-
-        .card-content {
-            padding: 1.5rem;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .field {
-            margin-bottom: 1rem;
-        }
-
-        .field-label {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-            color: var(--ica-blue);
-        }
-
-        .field-value {
-            color: #4b5563;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            background: #dbeafe;
-            color: var(--ica-blue);
-            border-radius: 0.25rem;
-            font-size: 0.875rem;
-        }
-
-        .upload-area {
-            border: 2px dashed #e5e7eb;
-            border-radius: 0.5rem;
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .upload-area:hover {
-            border-color: var(--ica-orange);
-            background: #fff8f5;
-        }
-
-        .upload-icon {
-            font-size: 2rem;
-            color: var(--ica-orange);
-            margin-bottom: 0.5rem;
-        }
-
-        .preview-container {
-            aspect-ratio: 16/9;
-            background: #f3f4f6;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            margin-bottom: 1rem;
-            position: relative;
-        }
-
-        .preview-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .editing-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 48, 135, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .editing-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-            font-weight: 500;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s ease;
-        }
-
-        .button-primary {
-            background: var(--ica-blue);
-            color: white;
-        }
-
-        .button-primary:hover {
-            background: var(--ica-blue-light);
-        }
-
-        .button-outline {
-            background: white;
-            border: 1px solid #e5e7eb;
-            color: var(--ica-blue);
-        }
-
-        .button-outline:hover {
-            border-color: var(--ica-blue);
-            background: #f8fafc;
-        }
-
-        .button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .button-destructive {
-            background: #dc2626;
-            color: white;
-        }
-
-        .button-destructive:hover {
-            background: #b91c1c;
-        }
-
-        .card-footer {
-            padding: 1.5rem;
-            border-top: 1px solid #e5e7eb;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .alert {
-            background: #fff8f5;
-            border: 1px solid var(--ica-orange);
-            padding: 1rem;
-            border-radius: 0.375rem;
-            margin-bottom: 1rem;
-            color: var(--ica-orange);
-        }
-
-        .email-preview {
-            border: 1px solid #e5e7eb;
-            padding: 1rem;
-            border-radius: 0.375rem;
-        }
-
-        /* Upload progress styles */
-        .upload-progress-container {
-            margin-top: 1rem;
-        }
-
-        .upload-progress-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            color: var(--ica-blue);
-        }
-    </style>
-</head>
-<body>
-    <div class="card">
-        <div class="card-header">
-            <div class="card-title">
-                <span id="step-title">View Request Details</span>
-                <div class="step-count">Step <span id="current-step">1</span> of 5</div>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-bar-fill" style="width: 20%"></div>
-            </div>
-        </div>
-
-        <div class="card-content">
-            <!-- Step 1: View Details -->
-            <div id="step-1" class="step-content">
-                <div class="grid">
-                    <div class="field">
-                        <div class="field-label">Request ID</div>
-                        <div class="field-value">REQ-2024-001</div>
-                    </div>
-                    <div class="field">
-                        <div class="field-label">Status</div>
-                        <div class="status-badge">In Progress</div>
-                    </div>
-                    <div class="field">
-                        <div class="field-label">Requester</div>
-                        <div class="field-value">John Smith</div>
-                    </div>
-                    <div class="field">
-                        <div class="field-label">Department</div>
-                        <div class="field-value">Field Operations</div>
-                    </div>
-                    <div class="field">
-                        <div class="field-label">Submission Date</div>
-                        <div class="field-value">2024-10-26</div>
-                    </div>
-                    <div class="field">
-                        <div class="field-label">Deadline</div>
-                        <div class="field-value">2024-11-15</div>
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="field-label">Description</div>
-                    <div class="field-value">Update required for field operations training video to include new safety protocols</div>
-                </div>
-            </div>
-
-            <!-- Step 2: Upload -->
-            <div id="step-2" class="step-content hidden">
-                <div class="upload-area" onclick="document.getElementById('file-upload').click()">
-                    <div class="upload-icon">⬆️</div>
-                    <div>Click to upload or drag and drop video files</div>
-                    <div style="font-size: 0.875rem; color: #6b7280;">MP4, MOV up to 2GB</div>
-                </div>
-                <input type="file" id="file-upload" accept="video/*" style="display: none" onchange="handleFileUpload(event)">
-                <div id="upload-progress" class="hidden upload-progress-container">
-                    <div class="upload-progress-header">
-                        <span id="filename"></span>
-                        <span id="progress-text">0%</span>
-                    </div>
-                    <div class="progress-bar" style="background: #e5e7eb;">
-                        <div id="upload-progress-bar" class="progress-bar-fill" style="width: 0%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Step 3: Preview & Edit -->
-            <div id="step-3" class="step-content hidden">
-                <div class="preview-container">
-                    <img src="/api/placeholder/800/450" alt="Video preview" class="preview-img">
-                    <div id="editing-overlay" class="editing-overlay">
-                        <div style="text-align: center;">
-                            ✂️
-                            <p>Editing Mode</p>
-                        </div>
-                    </div>
-                </div>
-                <button class="button button-outline" onclick="toggleEditing()">
-                    ✂️ <span id="edit-button-text">Edit Video</span>
-                </button>
-            </div>
-
-            <!-- Step 4: Draft Review -->
-            <div id="step-4" class="step-content hidden">
-                <div class="email-preview">
-                    <h3 style="font-weight: 600; margin-bottom: 0.5rem; color: var(--ica-blue);">Email Draft Preview</h3>
-                    <div style="color: #4b5563;">
-                        <p><strong>To:</strong> John Smith</p>
-                        <p><strong>Subject:</strong> Video Update for Training Video Update Request</p>
-                        <div style="border-top: 1px solid #e5e7eb; margin-top: 0.5rem; padding-top: 0.5rem;">
-                            Dear John Smith,<br><br>
-                            The requested video update has been processed and is ready for your review.
-                            Please find the updated video attached to this email.<br><br>
-                            Best regards,<br>
-                            Video Management Team
-                        </div>
-                    </div>
-                </div>
-                <div class="preview-container" style="margin-top: 1rem;">
-                    <img src="/api/placeholder/800/450" alt="Final video preview" class="preview-img">
-                </div>
-            </div>
-
-            <!-- Step 5: Approval -->
-            <div id="step-5" class="step-content hidden">
-                <div class="alert">
-                    Please review all details carefully before making your final decision.
-                </div>
-                <div class="grid">
-                    <button class="button button-primary" onclick="handleApprove()">
-                        ✓ Approve Request
-                    </button>
-                    <button class="button button-destructive" onclick="handleReject()">
-                        ✕ Reject Request
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="card-footer">
-            <button id="prev-button" class="button button-outline" onclick="previousStep()" disabled>
-                ← Previous
-            </button>
-            <button id="next-button" class="button button-primary" onclick="nextStep()">
-                Next →
-            </button>
-        </div>
-    </div>
-
-    <script>
-        let currentStep = 1;
-        let isEditing = false;
-        let uploadProgress = 0;
-
-        function updateUI() {
-            // Update progress bar
-            document.querySelector('.progress-bar-fill').style.width = `${(currentStep / 5) * 100}%`;
-            
-            // Update step counter
-            document.getElementById('current-step').textContent = currentStep;
-            
-            // Update step title
-            const titles = [
-                "View Request Details",
-                "Upload Video",
-                "Preview & Edit Video",
-                "Review Draft",
-                "Final Approval"
-            ];
-            document.getElementById('step-title').textContent = titles[currentStep - 1];
-            
-            // Show/hide step content
-            document.querySelectorAll('.step-content').forEach((el, index) => {
-                el.classList.toggle('hidden', index + 1 !== currentStep);
-            });
-            
-            // Update buttons
-            document.getElementById('prev-button').disabled = currentStep === 1;
-            const nextButton = document.getElementById('next-button');
-            nextButton.style.display = currentStep === 5 ? 'none' : 'inline-flex';
-        }
-
-        function nextStep() {
-            if (currentStep < 5) {
-                currentStep++;
-                updateUI();
-            }
-        }
-
-        function previousStep() {
-            if (currentStep > 1) {
-                currentStep--;
-                updateUI();
-            }
-        }
-
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                document.getElementById('upload-progress').classList.remove('hidden');
-                document.getElementById('filename').textContent = file.name;
-                
-                // Simulate upload progress
-                let progress = 0;
-                const interval = setInterval(() => {
-                    progress += 5;
-                    document.getElementById('progress-text').textContent = `${progress}%`;
-                    document.getElementById('upload-progress-bar').style.width = `${progress}%`;
-                    if (progress >= 100) {
-                        clearInterval(interval);
-                    }
-                }, 200);
-            }
-        }
-
-        function toggleEditing() {
-            isEditing = !isEditing;
-            const overlay = document.getElementById('editing-overlay');
-            overlay.classList.toggle('active', isEditing);
-            document.getElementById('edit-button-text').textContent = isEditing ? 'Exit Editing' : 'Edit Video';
-        }
-
-        function handleApprove() {
-            alert('Request approved successfully!');
-        }
-
-        function handleReject() {
-            alert('Request rejected');
-        }
-
-        // Initialize UI
-        updateUI();
     </script>
 </body>
 </html>
+
 
 
