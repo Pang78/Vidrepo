@@ -296,50 +296,17 @@
             }
             
             /* Enhanced Form Styles */
-	.form-section {
-            margin-bottom: 25px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: var(--border-radius);
-        }
-        
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        /* Accessibility improvements */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-
-        /* Dark mode styles */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --background-color: #1a1a1a;
-                --text-color: #f0f0f0;
-                --secondary-white: #2a2a2a;
+            .form-section {
+                margin-bottom: 25px;
+                padding: 20px;
+                background: #f8f9fa;
+                border-radius: var(--border-radius);
             }
-
-            .card, .metric-card {
-                background-color: #2a2a2a;
-            }
-
-            table {
-                background-color: #2a2a2a;
-            }
-
-            th, td {
-                border-color: #444;
+            
+            .form-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
             }
         }
     </style>
@@ -350,57 +317,119 @@
     <div class="container header-content">
         <div class="logo-container">
             <img src="https://file.go.gov.sg/icalogo.png" alt="ICA Logo" class="logo-image">
-            <span class="logo-text">ICA Video Enterprise Sharing Platform</span>
+            <span class="logo-text">ICA Video Platform</span>
         </div>
         <nav>
-		<ul>
-                    <li><a href="#" class="nav-link active" data-target="dashboard">Dashboard</a></li>
-                    <li><a href="#" class="nav-link" data-target="analytics">Analytics</a></li>
-                    <li><a href="#" class="nav-link" data-target="admin">Admin</a></li>
-                    <li><a href="#" id="logout">Logout</a></li>
-                </ul>
+            <ul>
+                <li><a href="#" class="nav-link active" data-target="dashboard">Dashboard</a></li>
+                <li><a href="#" class="nav-link" data-target="upload">Upload</a></li>
+                <li><a href="#" class="nav-link" data-target="requests">Requests</a></li>
+                <li><a href="#" class="nav-link" data-target="cases">Cases</a></li>
+                <li><a href="#" class="nav-link" data-target="analytics">Analytics</a></li>
+                <li><a href="#" class="nav-link" data-target="admin">Admin</a></li>
+                <li><a href="#" id="logout">Logout</a></li>
+            </ul>
         </nav>
     </div>
 </header>
 
-<div id="Dashboard" class="container tab-content">
-    <h2>Dashboard</h2>
+<div id="dashboard" class="container tab-content active">
+    <h1>Dashboard Overview</h1>
+    <div class="case-details">
+        <h3>Case: Unauthorized Exit Incident</h3>
+        <p>Case Number: ICA-2023-007</p>
+        <video controls>
+            <source src="videoplayback.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p>Status: <span class="badge badge-approved">Completed</span></p>
+    </div>
+</div>
+
+<div id="upload" class="container tab-content">
+    <h2>Upload Video</h2>
+    <div class="card">
+        <form id="upload-form" enctype="multipart/form-data">
+            <label for="upload-case-number">Case Number:</label>
+            <input type="text" id="upload-case-number" name="case-number" required>
+
+            <label for="video-file">Video File:</label>
+            <input type="file" id="video-file" name="video-file" accept="video/*" required>
+
+            <button type="submit">Upload Video</button>
+        </form>
+    </div>
+</div>
+
+<div id="requests" class="container tab-content">
+    <h2>Submit Evidence Request</h2>
+    <div class="card">
+        <form id="request-form">
+            <div class="form-section">
+                <h3>Officer Information</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="officer-name">Officer Name</label>
+                        <input type="text" id="officer-name" name="officer-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="officer-id">Officer ID</label>
+                        <input type="text" id="officer-id" name="officer-id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <select id="department" name="department" required>
+                            <option value="">Select Department</option>
+                            <option value="operations">Operations</option>
+                            <option value="enforcement">Enforcement</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rest of the form sections... -->
+        </form>
+    </div>
+</div>
+
+<div id="cases" class="container tab-content">
+    <h2>Active Cases</h2>
     <div class="card">
         <table>
             <thead>
                 <tr>
                     <th>Case Number</th>
                     <th>Description</th>
-                    <th>Priority</th> 
+                    <th>Priority</th> <!-- New Priority column -->
                     <th>Status</th>
                     <th>Last Updated</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr data-case="ICA-2024-001" data-description="Unauthorized Exit Incident">
-                    <td>ICA-2024-001</td>
+                <tr data-case="ICA-2023-007" data-description="Unauthorized Exit Incident">
+                    <td>ICA-2023-007</td>
                     <td>Unauthorized Exit Incident</td>
                     <td><span class="badge badge-high">High</span></td> <!-- Priority Badge -->
                     <td><span class="badge badge-approved">Completed</span></td>
-                    <td>2024-10-20</td>
-                    <td><button onclick="viewCase('ICA-2024-001')">View Details</button></td>
+                    <td>2023-04-20</td>
+                    <td><button onclick="viewCase('ICA-2023-008')">View Details</button></td>
                 </tr>
-                <tr data-case="ICA-2024-002" data-description="Security Breach Investigation">
-                    <td>ICA-2024-002</td>
+                <tr data-case="ICA-2023-008" data-description="Security Breach Investigation">
+                    <td>ICA-2023-008</td>
                     <td>Security Breach Investigation</td>
                     <td><span class="badge badge-medium">Medium</span></td> <!-- Priority Badge -->
                     <td><span class="badge badge-pending">Pending</span></td>
-                    <td>2024-10-01</td>
-                    <td><button onclick="viewCase('ICA-2024-002')">View Details</button></td>
+                    <td>2023-05-01</td>
+                    <td><button onclick="viewCase('ICA-2023-008')">View Details</button></td>
                 </tr>
-                <tr data-case="ICA-2024-003" data-description="Access Control Failure">
-                    <td>ICA-2024-003</td>
+                <tr data-case="ICA-2023-009" data-description="Access Control Failure">
+                    <td>ICA-2023-009</td>
                     <td>Access Control Failure</td>
                     <td><span class="badge badge-low">Low</span></td> <!-- Priority Badge -->
                     <td><span class="badge badge-rejected">Rejected</span></td>
-                    <td>2024-003</td>
-                    <td><button onclick="viewCase('ICA-2024-003')">View Details</button></td>
+                    <td>2023-03-28</td>
+                    <td><button onclick="viewCase('ICA-2023-009')">View Details</button></td>
                 </tr>
             </tbody>
         </table>
@@ -618,9 +647,6 @@ h3 {
     <div class="card">
         <h3>Manage Users</h3>
         <form id="admin-manage-users-form">
-             <label for="Name">Name of Officer:</label>
-            <input type="Name" id="user-name" name="user-name" required>
-            
             <label for="user-email">Email Address:</label>
             <input type="email" id="user-email" name="user-email" required>
 
@@ -669,131 +695,88 @@ h3 {
     </div>
 </div>
 <script>
-        // Check if login page exists
-        if (!document.getElementById('login-form')) {
-            const loginHTML = `
-                <div id="login-container" class="login-container" style="display: block;">
-                    <div class="login-logo">
-                        <img src="https://file.go.gov.sg/icalogo.png" alt="ICA Logo">
-                    </div>
-                    <form id="login-form">
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" id="password" name="password" required>
-                        </div>
-                        <button type="submit">Login</button>
-                    </form>
-                </div>
-            `;
-            document.body.insertAdjacentHTML('afterbegin', loginHTML);
+    document.addEventListener('DOMContentLoaded', () => {
+        // Check login status
+        const user = sessionStorage.getItem('user');
+        if (!user || !JSON.parse(user).loggedIn) {
+            window.location.href = 'login.html'; // Redirect if not logged in
+        } else {
+            // Display the main dashboard content
+            document.querySelector('header').style.display = 'block';
+            document.getElementById('dashboard').classList.add('active');
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const header = document.querySelector('header');
-            const loginContainer = document.getElementById('login-container');
-            const mainContent = document.querySelectorAll('.tab-content');
-
-            // Handle login
-            document.getElementById('login-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
-
-                // Simple validation - in practice, you'd want to verify credentials with a server
-                if (email && password) {
-                    // Store login state
-                    sessionStorage.setItem('user', JSON.stringify({ 
-                        loggedIn: true, 
-                        email: email 
-                    }));
-
-                    // Show dashboard
-                    loginContainer.style.display = 'none';
-                    header.style.display = 'block';
-                    document.getElementById('dashboard').classList.add('active');
-                    mainContent.forEach(content => content.style.display = 'block');
-                }
-            });
-
-            // Check login status
-            const user = sessionStorage.getItem('user');
-            if (user && JSON.parse(user).loggedIn) {
-                loginContainer.style.display = 'none';
-                header.style.display = 'block';
-                document.getElementById('dashboard').classList.add('active');
-                mainContent.forEach(content => content.style.display = 'block');
-            }
-
-            // Handle logout
-            document.getElementById('logout').addEventListener('click', (e) => {
-                e.preventDefault();
-                sessionStorage.removeItem('user');
-                loginContainer.style.display = 'block';
-                header.style.display = 'none';
-                mainContent.forEach(content => content.style.display = 'none');
-            });
-
-            // Tab switching
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetId = e.currentTarget.getAttribute('data-target');
-                    
-                    // Hide all sections and remove active class
-                    document.querySelectorAll('.tab-content').forEach(section => {
-                        section.classList.remove('active');
-                        section.style.display = 'none';
-                    });
-                    document.querySelectorAll('.nav-link').forEach(navLink => {
-                        navLink.classList.remove('active');
-                    });
-
-                    // Show selected section and add active class
-                    document.getElementById(targetId).style.display = 'block';
-                    document.getElementById(targetId).classList.add('active');
-                    e.currentTarget.classList.add('active');
-                });
-            });
-
-            // Initialize the dashboard as active
-            if (document.getElementById('dashboard')) {
-                document.getElementById('dashboard').style.display = 'block';
-            }
+        // Logout handling
+        document.getElementById('logout').addEventListener('click', (e) => {
+            e.preventDefault();
+            sessionStorage.removeItem('user'); // Clear stored user data
+            window.location.href = 'login.html';
         });
 
-        // Your existing functions
+        // Tab switching
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', showSection);
+        });
+
+        function showSection(event) {
+            event.preventDefault();
+            const targetId = event.currentTarget.getAttribute('data-target');
+            const sections = document.querySelectorAll('.container.tab-content');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            sections.forEach(section => section.classList.remove('active'));
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            document.getElementById(targetId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Other functionalities (e.g. viewCase, removeUser, enableTableSorting, etc.)
         function viewCase(caseId) {
-            console.log(`Viewing case: ${caseId}`);
+            // Add view case logic here
         }
 
         function removeUser(email) {
             const confirmRemoval = confirm(`Are you sure you want to remove the user with email: ${email}?`);
             if (confirmRemoval) {
-                const row = document.querySelector(`tr[data-email="${email}"]`);
-                if (row) row.remove();
                 alert(`User ${email} removed successfully.`);
+                const rows = document.querySelectorAll('#user-list tr');
+                rows.forEach(row => {
+                    if (row.textContent.includes(email)) {
+                        row.remove();
+                    }
+                });
             }
         }
 
-        // Add form submission handling for user management
-        const adminForm = document.getElementById('admin-manage-users-form');
-        if (adminForm) {
-            adminForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const name = document.getElementById('user-name').value;
-                const email = document.getElementById('user-email').value;
-                const role = document.getElementById('user-role').value;
-                
-                console.log(`New user added: ${name}, ${email}, ${role}`);
-                alert('New user added successfully.');
-                
-                this.reset();
+        const enableTableSorting = () => {
+            document.querySelectorAll('th').forEach(header => {
+                header.addEventListener('click', function() {
+                    const table = header.closest('table');
+                    const tbody = table.querySelector('tbody');
+                    const rowsArray = Array.from(tbody.querySelectorAll('tr'));
+                    const headerIndex = Array.from(header.parentNode.children).indexOf(header);
+                    const isAsc = header.getAttribute('data-sort') === 'asc';
+
+                    rowsArray.sort((a, b) => {
+                        const aText = a.children[headerIndex].innerText.trim();
+                        const bText = b.children[headerIndex].innerText.trim();
+                        return isAsc ? aText.localeCompare(bText) : bText.localeCompare(aText);
+                    });
+
+                    rowsArray.forEach(row => tbody.appendChild(row));
+                    header.setAttribute('data-sort', isAsc ? 'desc' : 'asc');
+                });
             });
-        }
-    </script>
+        };
+
+        enableTableSorting();
+
+        document.getElementById('request-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Video evidence request submitted.');
+        });
+    });
+</script>
 </body>
 </html>
