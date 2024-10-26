@@ -135,7 +135,7 @@
         .badge-pending { background-color: #FFA500; color: var(--secondary-white); }
         .badge-approved { background-color: #28A745; color: var(--secondary-white); }
         .badge-rejected { background-color: var(--primary-red); color: var(--secondary-white); }
-        .badge-completed { background-color: #5bc0de; color: var(--secondary-white); }
+        .badge-completed { background-color: #28A745; color: var(--secondary-white); }
         .badge-high { background-color: #d9534f; color: var(--secondary-white); }
         .badge-medium { background-color: #f0ad4e; color: var(--secondary-white); }
         .badge-low { background-color: #5bc0de; color: var(--secondary-white); }
@@ -239,6 +239,28 @@
             nav li {
                 margin-left: 0;
                 margin-right: 15px;
+            }
+                    .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            z-index: 1000;
+            }
+    
+            .popup h3 {
+                margin-top: 0;
+            }
+    
+            #emailContent {
+                width: 100%;
+                height: 200px;
+                margin-bottom: 10px;
             }
         }
     </style>
@@ -352,7 +374,7 @@
         </div>
     </div>
 
-    <div id="caseModal" class="modal">
+        <div id="caseModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Case Details</h2>
@@ -366,11 +388,26 @@
                 <input type="file" id="video-upload" accept="video/*">
             </div>
             <div class="action-buttons">
+                <button onclick="previewEmail()">Preview Email</button>
+                <button onclick="previewVideo()">Preview Video</button>
                 <button onclick="processCase('accept')">Accept</button>
                 <button onclick="processCase('reject')">Reject</button>
             </div>
         </div>
     </div>
+      <div id="emailPreview" class="popup">
+        <h3>Draft Email Preview</h3>
+        <textarea id="emailContent" readonly></textarea>
+        <button onclick="closeEmailPreview()">Close</button>
+    </div>
+
+    <div id="videoPopup" class="popup">
+        <h3>Video Preview</h3>
+        <video id="videoPlayer" controls width="400"></video>
+        <div id="requestData"></div>
+        <button onclick="closeVideoPopup()">Close</button>
+    </div>
+
 
     <script>
         // Sample data (replace with actual data fetching in a real application)
@@ -583,6 +620,100 @@
             alert('New user added successfully');
             document.getElementById('addUserForm').reset();
             populateUsersTable();
+        }
+          let currentCaseId = '';
+        let currentOfficerEmail = '';
+
+        function viewCase(caseId, officerEmail) {
+            currentCaseId = caseId;
+            currentOfficerEmail = officerEmail;
+            const modal = document.getElementById('caseModal');
+            document.getElementById('modalCaseId').textContent = caseId;
+            document.getElementById('modalOfficerEmail').textContent = officerEmail;
+            modal.style.display = "block";
+        }
+
+        function previewEmail() {
+            const emailContent = `Dear Officer,
+
+Your request (ID: ${currentCaseId}) has been accepted.
+
+Best regards,
+ICA VESP Team`;
+
+            document.getElementById('emailContent').value = emailContent;
+            document.getElementById('emailPreview').style.display = 'block';
+        }
+
+        function closeEmailPreview() {
+            document.getElementById('emailPreview').style.display = 'none';
+        }
+
+        function previewVideo() {
+            const videoPopup = document.getElementById('videoPopup');
+            const videoPlayer = document.getElementById('videoPlayer');
+            const requestData = document.getElementById('requestData');
+            
+            // Assume we have a function to get case details by ID
+            const caseDetails = getCaseDetails(currentCaseId);
+            
+            videoPlayer.src = caseDetails.videoUrl;
+            requestData.innerHTML = `
+                <p><strong>Request ID:</strong> ${caseDetails.id}</p>
+                <p><strong>Description:</strong> ${caseDetails.description}</p>
+                <p><strong>Officer Email:</strong> ${caseDetails.officerEmail}</p>
+                <p><strong>Status:</strong> ${caseDetails.status}</p>
+            `;
+            
+            videoPopup.style.display = 'block';
+        }
+
+        function closeVideoPopup() {
+            document.getElementById('videoPopup').style.display = 'none';
+        }
+
+        function processCase(action) {
+            if (action === 'accept') {
+                // Here you would typically update the case status in your backend
+                // and then send the email
+                sendEmail();
+            } else {
+                alert(`Case ${currentCaseId} has been ${action}ed.`);
+            }
+            
+            document.getElementById('caseModal').style.display = "none";
+            // Refresh the cases table
+            populateCasesTable();
+        }
+
+        function sendEmail() {
+            // Implement email sending logic here
+            alert(`Email sent successfully to ${currentOfficerEmail}`);
+        }
+
+        // Mock function to get case details
+        function getCaseDetails(caseId) {
+            // In a real application, this would be an API call
+            return {
+                id: caseId,
+                description: "Sample case description",
+                officerEmail: currentOfficerEmail,
+                status: "Pending",
+                videoUrl: "path/to/video.mp4" // Replace with actual video URL
+            };
+        }
+
+        function setupEventListeners() {
+            // ... (existing event listener setup) ...
+
+            // Add these new event listeners
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeEmailPreview();
+                    closeVideoPopup();
+                    document.getElementById('caseModal').style.display = "none";
+                }
+            });
         }
     </script>
 </body>
