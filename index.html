@@ -438,6 +438,155 @@
         .case-details {
             grid-template-columns: 1fr;
         }
+            .workflow-modal {
+              display: none;
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background-color: rgba(0, 0, 0, 0.5);
+              z-index: 1000;
+            }
+            
+            .workflow-content {
+              position: relative;
+              background-color: #fff;
+              margin: 2% auto;
+              padding: 20px;
+              width: 90%;
+              max-width: 1000px;
+              border-radius: var(--border-radius);
+              max-height: 90vh;
+              overflow-y: auto;
+            }
+            
+            .workflow-close {
+              position: absolute;
+              right: 20px;
+              top: 10px;
+              font-size: 28px;
+              cursor: pointer;
+            }
+            
+            .step-indicator {
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 30px;
+              position: relative;
+            }
+            
+            .step-indicator::before {
+              content: '';
+              position: absolute;
+              top: 50%;
+              left: 0;
+              right: 0;
+              height: 2px;
+              background-color: #ddd;
+              z-index: 1;
+            }
+            
+            .step {
+              position: relative;
+              background-color: #fff;
+              padding: 10px 20px;
+              border-radius: 20px;
+              font-weight: 500;
+              z-index: 2;
+              border: 2px solid #ddd;
+            }
+            
+            .step.active {
+              background-color: var(--primary-dark-blue);
+              color: white;
+              border-color: var(--primary-dark-blue);
+            }
+            
+            .step.completed {
+              background-color: var(--primary-dark-blue);
+              color: white;
+              border-color: var(--primary-dark-blue);
+            }
+            
+            .workflow-body {
+              min-height: 400px;
+              padding: 20px;
+            }
+            
+            .workflow-footer {
+              display: flex;
+              justify-content: space-between;
+              padding-top: 20px;
+              border-top: 1px solid #ddd;
+            }
+            
+            .details-grid {
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+              gap: 20px;
+              margin-bottom: 20px;
+            }
+            
+            .detail-item {
+              padding: 15px;
+              background-color: #f8f9fa;
+              border-radius: var(--border-radius);
+            }
+            
+            .upload-section {
+              text-align: center;
+              padding: 40px;
+              border: 2px dashed #ddd;
+              border-radius: var(--border-radius);
+            }
+            
+            .video-editor {
+              display: flex;
+              flex-direction: column;
+              gap: 20px;
+            }
+            
+            .editing-controls {
+              display: flex;
+              gap: 10px;
+              justify-content: center;
+            }
+            
+            .draft-review {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 20px;
+            }
+            
+            .email-preview,
+            .final-video-preview {
+              padding: 20px;
+              background-color: #f8f9fa;
+              border-radius: var(--border-radius);
+            }
+            
+            .approval-section {
+              text-align: center;
+            }
+            
+            .approval-buttons {
+              display: flex;
+              justify-content: center;
+              gap: 20px;
+              margin-top: 30px;
+            }
+            
+            @media (max-width: 768px) {
+              .draft-review {
+                grid-template-columns: 1fr;
+              }
+              
+              .step {
+                font-size: 12px;
+                padding: 8px 12px;
+              }
+            }
  
     </style>
 </head>
@@ -695,6 +844,10 @@
             });
         }
 
+        function viewCase(caseId) {
+          workflow.startWorkflow(caseId);
+        }
+
         function populateCasesTable() {
             const tableBody = document.querySelector('#casesTable tbody');
             tableBody.innerHTML = '';
@@ -813,99 +966,7 @@
             const emailPreview = document.getElementById('emailPreviewSection');
             emailPreview.style.display = emailPreview.style.display === 'none' ? 'block' : 'none';
         }
-        function viewCase(caseId, officerEmail) {
-            const caseDetails = getCaseDetails(caseId);
-            currentCaseId = caseDetails.id;
-            currentOfficerEmail = caseDetails.officerEmail;
-            
-            // Populate modal with case details
-            document.getElementById('modalCaseId').textContent = caseDetails.id;
-            document.getElementById('modalOfficerEmail').textContent = caseDetails.officerEmail;
-            document.getElementById('modalDescription').textContent = caseDetails.description;
-            document.getElementById('modalStatus').textContent = caseDetails.status;
-            
-            // Set video source
-            document.getElementById('video-player').src = caseDetails.videoUrl;
-            
-            // Populate email preview fields
-            document.getElementById('emailTo').textContent = caseDetails.officerEmail;
-            document.getElementById('emailSubject').textContent = caseDetails.id;
-            document.getElementById('officerName').textContent = caseDetails.officerEmail.split('@')[0];
-            document.getElementById('emailCaseId').textContent = caseDetails.id;
-            document.getElementById('emailCaseDescription').textContent = caseDetails.description;
-
-            // Hide email preview by default
-            document.getElementById('emailPreviewSection').style.display = 'none';
-            
-            // Show modal
-            document.getElementById('caseModal').style.display = "block";
-        }
-
-        function processCase(action) {
-            if (action === 'accept') {
-                sendEmail();
-            } else {
-                alert(`Case ${currentCaseId} has been ${action}ed.`);
-            }
-            
-           document.getElementById('caseModal').style.display = "none";
-            populateCasesTable();
-        }
-
-        function sendEmail() {
-            alert(`Email sent successfully to ${currentOfficerEmail}`);
-        }
-
-        function getCaseDetails(caseId) {
-            const caseItem = casesData.find(item => item.id === caseId);
-            return {
-                ...caseItem,
-                videoUrl: "https://example.com/sample-video.mp4" // Replace with actual video URL
-            };
-        }
-
-        function previewEmail() {
-            document.getElementById('email-preview').style.display = 'block';
-        }
-
-        function closeEmailPreview() {
-            document.getElementById('email-preview').style.display = 'none';
-        }
-
-        function previewVideo() {
-            const videoPopup = document.getElementById('videoPopup');
-            const videoPlayer = document.getElementById('videoPlayer');
-            const requestData = document.getElementById('requestData');
-            
-            const caseDetails = getCaseDetails(currentCaseId);
-            
-            videoPlayer.src = caseDetails.videoUrl;
-            requestData.innerHTML = `
-                <p><strong>Request ID:</strong> ${caseDetails.id}</p>
-                <p><strong>Description:</strong> ${caseDetails.description}</p>
-                <p><strong>Officer Email:</strong> ${caseDetails.officerEmail}</p>
-                <p><strong>Status:</strong> ${caseDetails.status}</p>
-                <p><strong>Priority:</strong> ${caseDetails.priority}</p>
-                <p><strong>Last Updated:</strong> ${caseDetails.lastUpdated}</p>
-            `;
-            
-            videoPopup.style.display = 'block';
-        }
-
-        function closeVideoPopup() {
-            document.getElementById('videoPopup').style.display = 'none';
-        }
-
-        function approveRequest() {
-            processCase('accept');
-            closeVideoPopup();
-        }
-
-        function rejectRequest() {
-            processCase('reject');
-            closeVideoPopup();
-        }
-
+  
         function editUser(email) {
             alert(`Editing user: ${email}`);
             // Implement edit user functionality here
@@ -938,7 +999,389 @@
             document.getElementById('addUserForm').reset();
             populateUsersTable();
         }
+        const WORKFLOW_STEPS = {
+                  VIEW_DETAILS: 0,
+                  UPLOAD: 1,
+                  VIDEO_PREVIEW: 2,
+                  DRAFT_REVIEW: 3,
+                  APPROVAL: 4
+                };
+                
+                class RequestWorkflow {
+                  constructor() {
+                    this.currentStep = WORKFLOW_STEPS.VIEW_DETAILS;
+                    this.currentRequest = null;
+                    this.uploadedFiles = [];
+                    this.videoEdits = null;
+                  }
+                
+                  init() {
+                    this.modal = document.getElementById('workflowModal');
+                    this.content = document.getElementById('workflowContent');
+                    this.setupNavigation();
+                  }
+                
+                  setupNavigation() {
+                    const nextBtn = document.getElementById('nextStep');
+                    const prevBtn = document.getElementById('prevStep');
+                    const closeBtn = document.querySelector('.workflow-close');
+                
+                    nextBtn.addEventListener('click', () => this.nextStep());
+                    prevBtn.addEventListener('click', () => this.previousStep());
+                    closeBtn.addEventListener('click', () => this.closeWorkflow());
+                  }
+                
+                  startWorkflow(requestId) {
+                    this.currentRequest = this.getRequestDetails(requestId);
+                    this.currentStep = WORKFLOW_STEPS.VIEW_DETAILS;
+                    this.renderCurrentStep();
+                    this.modal.style.display = 'block';
+                  }
+                
+                  renderCurrentStep() {
+                    this.content.innerHTML = '';
+                    const stepContent = this.getStepContent();
+                    this.content.innerHTML = stepContent;
+                    this.updateNavigationButtons();
+                    this.initializeStepFunctionality();
+                  }
+                
+                  getStepContent() {
+                    switch (this.currentStep) {
+                      case WORKFLOW_STEPS.VIEW_DETAILS:
+                        return `
+                          <h3>Request Details</h3>
+                          <div class="details-grid">
+                            <div class="detail-item">
+                              <strong>Request ID:</strong>
+                              <span>${this.currentRequest.id}</span>
+                            </div>
+                            <div class="detail-item">
+                              <strong>Description:</strong>
+                              <span>${this.currentRequest.description}</span>
+                            </div>
+                            <div class="detail-item">
+                              <strong>Priority:</strong>
+                              <span class="badge badge-${this.currentRequest.priority.toLowerCase()}">${this.currentRequest.priority}</span>
+                            </div>
+                            <div class="detail-item">
+                              <strong>Status:</strong>
+                              <span class="badge badge-${this.currentRequest.status.toLowerCase()}">${this.currentRequest.status}</span>
+                            </div>
+                          </div>
+                        `;
+                
+                      case WORKFLOW_STEPS.UPLOAD:
+                        return `
+                          <h3>Upload Files</h3>
+                          <div class="upload-section">
+                            <input type="file" id="videoUpload" accept="video/*">
+                            <div class="upload-preview" id="uploadPreview"></div>
+                          </div>
+                        `;
+                
+                      case WORKFLOW_STEPS.VIDEO_PREVIEW:
+                        return `
+                          <h3>Video Preview & Editing</h3>
+                          <div class="video-editor">
+                            <video id="videoPlayer" controls>
+                              <source src="${this.currentRequest.videoUrl}" type="video/mp4">
+                            </video>
+                            <div class="editing-controls">
+                              <button onclick="workflow.cropVideo()">Crop Video</button>
+                              <button onclick="workflow.trimVideo()">Trim Video</button>
+                            </div>
+                          </div>
+                        `;
+                
+                      case WORKFLOW_STEPS.DRAFT_REVIEW:
+                        return `
+                          <h3>Draft Review</h3>
+                          <div class="draft-review">
+                            <div class="email-preview">
+                              <h4>Email Preview</h4>
+                              <div class="email-content">
+                                <div class="email-header">
+                                  <p><strong>To:</strong> ${this.currentRequest.officerEmail}</p>
+                                  <p><strong>Subject:</strong> Video Request ${this.currentRequest.id}</p>
+                                </div>
+                                <div class="email-body">
+                                  <p>Dear Officer,</p>
+                                  <p>Your video request has been processed as attached in this email</p>
+                                  <p>For official use only</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="final-video-preview">
+                              <h4>Final Video Preview</h4>
+                              <video controls>
+                                <source src="${this.currentRequest.videoUrl}" type="video/mp4">
+                              </video>
+                            </div>
+                          </div>
+                        `;
+                
+                      case WORKFLOW_STEPS.APPROVAL:
+                        return `
+                          <h3>Request Approval</h3>
+                          <div class="approval-section">
+                            <div class="summary">
+                              <h4>Request Summary</h4>
+                              <p><strong>ID:</strong> ${this.currentRequest.id}</p>
+                              <p><strong>Description:</strong> ${this.currentRequest.description}</p>
+                              <p><strong>Files:</strong> ${this.uploadedFiles.length} uploaded</p>
+                            </div>
+                            <div class="approval-buttons">
+                              <button class="btn-approve" onclick="workflow.approveRequest()">Approve Request</button>
+                              <button class="btn-reject" onclick="workflow.rejectRequest()">Reject Request</button>
+                            </div>
+                          </div>
+                        `;
+                
+                      default:
+                        return '<p>Unknown step</p>';
+                    }
+                  }
+                
+                  initializeStepFunctionality() {
+                    switch (this.currentStep) {
+                      case WORKFLOW_STEPS.UPLOAD:
+                        this.initializeFileUpload();
+                        break;
+                      case WORKFLOW_STEPS.VIDEO_PREVIEW:
+                        this.initializeVideoEditor();
+                        break;
+                    }
+                  }
+                
+                  nextStep() {
+                    if (this.currentStep < WORKFLOW_STEPS.APPROVAL) {
+                      this.currentStep++;
+                      this.renderCurrentStep();
+                    }
+                  }
+                
+                  previousStep() {
+                    if (this.currentStep > WORKFLOW_STEPS.VIEW_DETAILS) {
+                      this.currentStep--;
+                      this.renderCurrentStep();
+                    }
+                  }
+                
+                  updateNavigationButtons() {
+                    const nextBtn = document.getElementById('nextStep');
+                    const prevBtn = document.getElementById('prevStep');
+                
+                    prevBtn.style.display = this.currentStep === WORKFLOW_STEPS.VIEW_DETAILS ? 'none' : 'block';
+                    nextBtn.style.display = this.currentStep === WORKFLOW_STEPS.APPROVAL ? 'none' : 'block';
+                  }
+                
+                  approveRequest() {
+                    // Implement approval logic
+                    this.updateDashboard('approved');
+                    this.closeWorkflow();
+                  }
+                
+                  rejectRequest() {
+                    // Implement rejection logic
+                    this.updateDashboard('rejected');
+                    this.closeWorkflow();
+                  }
+                
+                  updateDashboard(status) {
+                    // Update the cases table with new status
+                    const caseRow = document.querySelector(`tr[data-case-id="${this.currentRequest.id}"]`);
+                    if (caseRow) {
+                      const statusCell = caseRow.querySelector('.status-badge');
+                      statusCell.className = `badge badge-${status}`;
+                      statusCell.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+                    }
+                  }
+                
+                  closeWorkflow() {
+                    this.modal.style.display = 'none';
+                    this.currentRequest = null;
+                    this.currentStep = WORKFLOW_STEPS.VIEW_DETAILS;
+                  }
+                }
+                
+                // Initialize workflow
+                const workflow = new RequestWorkflow();
+                document.addEventListener('DOMContentLoaded', () => workflow.init());
         
     </script>
+<!-- Add this HTML right before the closing body tag -->
+<div id="workflowModal" class="workflow-modal">
+  <div class="workflow-content">
+    <span class="workflow-close">&times;</span>
+    <div class="workflow-header">
+      <div class="step-indicator">
+        <div class="step" data-step="0">Details</div>
+        <div class="step" data-step="1">Upload</div>
+        <div class="step" data-step="2">Preview</div>
+        <div class="step" data-step="3">Review</div>
+        <div class="step" data-step="4">Approval</div>
+      </div>
+    </div>
+    <div id="workflowContent" class="workflow-body"></div>
+    <div class="workflow-footer">
+      <button id="prevStep" class="btn-secondary">Previous</button>
+      <button id="nextStep" class="btn-primary">Next</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.workflow-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.workflow-content {
+  position: relative;
+  background-color: #fff;
+  margin: 2% auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 1000px;
+  border-radius: var(--border-radius);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.workflow-close {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.step-indicator {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.step-indicator::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #ddd;
+  z-index: 1;
+}
+
+.step {
+  position: relative;
+  background-color: #fff;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: 500;
+  z-index: 2;
+  border: 2px solid #ddd;
+}
+
+.step.active {
+  background-color: var(--primary-dark-blue);
+  color: white;
+  border-color: var(--primary-dark-blue);
+}
+
+.step.completed {
+  background-color: var(--primary-dark-blue);
+  color: white;
+  border-color: var(--primary-dark-blue);
+}
+
+.workflow-body {
+  min-height: 400px;
+  padding: 20px;
+}
+
+.workflow-footer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.detail-item {
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: var(--border-radius);
+}
+
+.upload-section {
+  text-align: center;
+  padding: 40px;
+  border: 2px dashed #ddd;
+  border-radius: var(--border-radius);
+}
+
+.video-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.editing-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.draft-review {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.email-preview,
+.final-video-preview {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: var(--border-radius);
+}
+
+.approval-section {
+  text-align: center;
+}
+
+.approval-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+  .draft-review {
+    grid-template-columns: 1fr;
+  }
+  
+  .step {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+}
+</style>
 </body>
+    
 </html>
