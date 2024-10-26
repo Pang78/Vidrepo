@@ -103,7 +103,9 @@
             box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
         }
 
-        h1, h2, h3 {
+        h1,
+        h2,
+        h3 {
             color: var(--primary-dark-blue);
             margin-bottom: 15px;
         }
@@ -114,7 +116,8 @@
             margin-top: 20px;
         }
 
-        th, td {
+        th,
+        td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
@@ -185,40 +188,145 @@
         }
 
         /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
+       .modal-content {
+            max-width: 800px;
+            width: 90%;
+            padding: 30px;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background-color: #e0e0e0;
+            border-radius: 3px;
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar-fill {
             height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
+            background-color: var(--primary-dark-blue);
+            border-radius: 3px;
+            transition: width 0.3s ease;
         }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
+        
+        .step-content {
+            margin-bottom: 30px;
         }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
+        
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
         }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
+        
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            background-color: #f8f8f8;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .upload-label {
+            font-size: 18px;
+            color: #666;
+        }
+        
+        .upload-label i {
+            font-size: 48px;
+            margin-bottom: 10px;
+            color: var(--primary-dark-blue);
+        }
+        
+        .video-editor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        #video-preview {
+            width: 100%;
+            max-height: 400px;
+            margin-bottom: 20px;
+            background-color: #000;
+        }
+        
+        .editing-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .editing-controls button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        
+        .review-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        #final-preview {
+            width: 100%;
+            max-height: 400px;
+            margin-bottom: 20px;
+        }
+        
+        .review-details {
+            width: 100%;
+            text-align: left;
+        }
+        
+        .approval-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .approve-btn, .reject-btn {
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+        
+        .approve-btn {
+            background-color: #28A745;
+        }
+        
+        .reject-btn {
+            background-color: var(--primary-red);
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .nav-btn {
+            font-size: 24px;
+            padding: 10px 20px;
+            background-color: var(--primary-dark-blue);
+            color: white;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
         }
+        
+        .nav-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
 
         /* Responsive Styles */
         @media (max-width: 768px) {
@@ -238,6 +346,11 @@
 
             .stats-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
             }
         }
     </style>
@@ -436,7 +549,6 @@
             casesData.forEach(caseItem => {
                 const row = `
                     <tr>
-                        <td>${caseItem.id}</td>
                         <td>${caseItem.description}</td>
                         <td><span class="badge badge-${caseItem.priority.toLowerCase()}">${caseItem.priority}</span></td>
                         <td><span class="badge badge-${caseItem.status.toLowerCase()}">${caseItem.status}</span></td>
@@ -467,7 +579,8 @@
                 tableBody.innerHTML += row;
             });
         }
-	       // Charts Initialization
+
+        // Charts Initialization
         function initCharts() {
             const statusCtx = document.getElementById('requestStatusChart').getContext('2d');
             new Chart(statusCtx, {
@@ -525,50 +638,183 @@
 
         // Event Listeners
         function setupEventListeners() {
-            document.getElementById('addUserForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                addNewUser();
-            });
+	            document.getElementById('addUserForm').addEventListener('submit', function(e) {
+	                e.preventDefault();
+	                addNewUser();
+	            });
+	
+	            document.getElementById('logout').addEventListener('click', function(e) {
+	                e.preventDefault();
+	                logout();
+	            });
+	        }
+	
+	        // Case Management
+	function viewCase(caseId) {
+	    const modal = document.createElement('div');
+	    modal.className = 'modal';
+	    modal.style.display = 'block';
+	    
+	    const caseDetails = casesData.find(c => c.id === caseId);
+	    if (!caseDetails) return;
 
-            document.getElementById('logout').addEventListener('click', function(e) {
-                e.preventDefault();
-                logout();
-            });
-        }
-
-        // Case Management
-        function viewCase(caseId) {
-            const modal = document.createElement('div');
-            modal.className = 'modal';
-            modal.style.display = 'block';
-            
-            const caseDetails = casesData.find(c => c.id === caseId);
-            if (!caseDetails) return;
-
-            modal.innerHTML = `
-                <div class="modal-content card">
-                    <span class="close">&times;</span>
-                    <h2>Case Details - ${caseId}</h2>
-                    <div class="details-grid">
-                        <div><strong>Description:</strong> ${caseDetails.description}</div>
-                        <div><strong>Priority:</strong> ${caseDetails.priority}</div>
-                        <div><strong>Status:</strong> ${caseDetails.status}</div>
-                        <div><strong>Officer:</strong> ${caseDetails.officerEmail}</div>
-                        <div><strong>Last Updated:</strong> ${caseDetails.lastUpdated}</div>
-                    </div>
-                    <button onclick="editCase('${caseId}')">Edit Case</button>
-                </div>
-            `;
-
-            document.body.appendChild(modal);
-
-            modal.querySelector('.close').addEventListener('click', () => modal.remove());
-        }
-
-        function editCase(caseId) {
-            // Implement edit case functionality
-            console.log(`Editing case ${caseId}`);
-        }
+	    modal.innerHTML = `
+	        <div class="modal-content card">
+	            <span class="close">&times;</span>
+	            <h2>Case Details - ${caseId}</h2>
+	            <div class="progress-bar">
+	                <div class="progress-bar-fill" style="width: 20%"></div>
+	            </div>
+	            <div class="steps">
+	                <div id="step-1" class="step-content">
+	                    <h3>User Story</h3>
+	                    <div class="details-grid">
+	                        <div><strong>Requestor:</strong> John Tan</div>
+	                        <div><strong>NRIC:</strong> S1234567A</div>
+	                        <div><strong>Department:</strong> Immigration & Checkpoints Authority</div>
+	                        <div><strong>Reason for Request:</strong> Investigation of unauthorized exit incident</div>
+	                    </div>
+	                    <h3>Case Details</h3>
+	                    <div class="details-grid">
+	                        <div><strong>Description:</strong> ${caseDetails.description}</div>
+	                        <div><strong>Priority:</strong> ${caseDetails.priority}</div>
+	                        <div><strong>Status:</strong> ${caseDetails.status}</div>
+	                        <div><strong>Officer:</strong> ${caseDetails.officerEmail}</div>
+	                        <div><strong>Last Updated:</strong> ${caseDetails.lastUpdated}</div>
+	                    </div>
+	                </div>
+	                <div id="step-2" class="step-content hidden">
+	                    <h3>Upload Video</h3>
+	                    <div class="upload-area">
+	                        <input type="file" accept="video/*" id="video-upload" class="file-input">
+	                        <label for="video-upload" class="upload-label">
+	                            <i class="fas fa-cloud-upload-alt"></i>
+	                            <span>Click to upload or drag and drop</span>
+	                        </label>
+	                    </div>
+	                    <div id="upload-status"></div>
+	                </div>
+	                <div id="step-3" class="step-content hidden">
+	                    <h3>Preview & Edit</h3>
+	                    <div class="video-editor">
+	                        <video id="video-preview" controls></video>
+	                        <div class="editing-controls">
+	                            <button onclick="trimVideo()">Trim</button>
+	                            <input type="range" id="trim-start" min="0" max="100" value="0">
+	                            <input type="range" id="trim-end" min="0" max="100" value="100">
+	                        </div>
+	                    </div>
+	                </div>
+	                <div id="step-4" class="step-content hidden">
+	                    <h3>Email Review</h3>
+	                    <div class="email-content">
+	                        <p>Dear Officer,</p>
+	                        <p>This is your requested video for Case ${caseId}.</p>
+	                        <p>Please review the attached video and provide your approval or rejection.</p>
+	                        <p>Best regards,<br>ICA Video Enterprise Sharing Platform</p>
+	                    </div>
+	                </div>
+	                <div id="step-5" class="step-content hidden">
+	                    <h3>Approval</h3>
+	                    <div id="approval-video-container"></div>
+	                    <div class="approval-buttons">
+	                        <button onclick="approveCase('${caseId}')" class="approve-btn">Approve</button>
+	                        <button onclick="rejectCase('${caseId}')" class="reject-btn">Reject</button>
+	                    </div>
+	                    <div id="rejection-reason" class="hidden">
+	                        <h4>Reason for Rejection:</h4>
+	                        <textarea id="rejection-text" rows="4" cols="50"></textarea>
+	                        <button onclick="submitRejection('${caseId}')">Submit Rejection</button>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="modal-footer">
+	                <button id="prev-step" class="nav-btn" disabled>&lt;</button>
+	                <button id="next-step" class="nav-btn">&gt;</button>
+	            </div>
+	        </div>
+	
+	    document.body.appendChild(modal);
+	
+	    // Modal Navigation Logic
+	    let currentStep = 1;
+	    const totalSteps = 5;
+	    const prevButton = modal.querySelector('#prev-step');
+	    const nextButton = modal.querySelector('#next-step');
+	    const progressBar = modal.querySelector('.progress-bar-fill');
+	
+	    function updateModalStep() {
+	        progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
+	    
+	        modal.querySelectorAll('.step-content').forEach((step, index) => {
+	            step.classList.toggle('hidden', index + 1 !== currentStep);
+	        });
+	    
+	        prevButton.disabled = currentStep === 1;
+	        nextButton.disabled = currentStep === totalSteps;
+	    }
+	
+	    prevButton.addEventListener('click', () => {
+	        if (currentStep > 1) {
+	            currentStep--;
+	            updateModalStep();
+	        }
+	    });
+	
+	    nextButton.addEventListener('click', () => {
+	        if (currentStep < totalSteps) {
+	            currentStep++;
+	            updateModalStep();
+	        }
+	    });
+	
+	    // File upload logic
+	    const fileInput = modal.querySelector('#video-upload');
+	    fileInput.addEventListener('change', handleFileUpload);
+	
+	    // Close modal logic
+	    modal.querySelector('.close').addEventListener('click', () => modal.remove());
+	
+	    updateModalStep();
+	}
+	
+	// Other necessary functions
+	function handleFileUpload(event) {
+	    const file = event.target.files[0];
+	    if (file) {
+	        document.getElementById('upload-status').textContent = `File selected: ${file.name}`;
+	        const videoPreview = document.getElementById('video-preview');
+	        videoPreview.src = URL.createObjectURL(file);
+	    }
+	}
+	
+	function trimVideo() {
+	    const video = document.getElementById('video-preview');
+	    const startTime = document.getElementById('trim-start').value / 100 * video.duration;
+	    const endTime = document.getElementById('trim-end').value / 100 * video.duration;
+	    
+	    console.log(`Trimming video from ${startTime}s to ${endTime}s`);
+	    // In a real application, you would send these values to a server for processing
+	}
+	
+	function approveCase(caseId) {
+	    const approvalContainer = document.getElementById('approval-video-container');
+	    const videoPreview = document.getElementById('video-preview');
+	    approvalContainer.innerHTML = `<video controls src="${videoPreview.src}"></video>`;
+	    console.log(`Case ${caseId} approved`);
+	    // In a real application, you would send this approval to a server
+	}
+	
+	function rejectCase(caseId) {
+	    document.getElementById('rejection-reason').classList.remove('hidden');
+	}
+	
+	function submitRejection(caseId) {
+	    const reason = document.getElementById('rejection-text').value;
+	    console.log(`Case ${caseId} rejected. Reason: ${reason}`);
+	    // In a real application, you would send this rejection to a server
+	}
+	
 
         // User Management
         function editUser(email) {
@@ -579,20 +825,68 @@
             modal.className = 'modal';
             modal.style.display = 'block';
             modal.innerHTML = `
-                <div class="modal-content card">
-                    <span class="close">&times;</span>
-                    <h2>Edit User</h2>
-                    <form id="editUserForm">
-                        <input type="text" id="editName" value="${user.name}" required>
-                        <input type="email" id="editEmail" value="${user.email}" required>
-                        <select id="editRole" required>
-                            <option value="admin" ${user.role === 'Admin' ? 'selected' : ''}>Admin</option>
-                            <option value="officer" ${user.role === 'Officer' ? 'selected' : ''}>Officer</option>
-                        </select>
-                        <button type="submit">Save Changes</button>
-                    </form>
-                </div>
-            `;
+                    <div class="modal-content card">
+                        <span class="close">&times;</span>
+                        <h2>Case Details - ${caseId}</h2>
+                        <div class="progress-bar">
+                            <div class="progress-bar-fill" style="width: 20%"></div>
+                        </div>
+                        <div class="steps">
+                            <div id="step-1" class="step-content">
+                                <h3>Request Details</h3>
+                                <div class="details-grid">
+                                    <div><strong>Description:</strong> ${caseDetails.description}</div>
+                                    <div><strong>Priority:</strong> ${caseDetails.priority}</div>
+                                    <div><strong>Status:</strong> ${caseDetails.status}</div>
+                                    <div><strong>Officer:</strong> ${caseDetails.officerEmail}</div>
+                                    <div><strong>Last Updated:</strong> ${caseDetails.lastUpdated}</div>
+                                </div>
+                            </div>
+                            <div id="step-2" class="step-content hidden">
+                                <h3>Upload Video</h3>
+                                <div class="upload-area">
+                                    <input type="file" accept="video/*" id="video-upload" class="file-input">
+                                    <label for="video-upload" class="upload-label">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <span>Click to upload or drag and drop</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="step-3" class="step-content hidden">
+                                <h3>Preview & Edit</h3>
+                                <div class="video-editor">
+                                    <div id="video-preview"></div>
+                                    <div class="editing-controls">
+                                        <button onclick="trimVideo()">Trim</button>
+                                        <button onclick="cropVideo()">Crop</button>
+                                        <button onclick="addCaptions()">Add Captions</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="step-4" class="step-content hidden">
+                                <h3>Review</h3>
+                                <div class="review-content">
+                                    <video id="final-preview" controls></video>
+                                    <div class="review-details">
+                                        <p><strong>Duration:</strong> <span id="video-duration"></span></p>
+                                        <p><strong>File Size:</strong> <span id="file-size"></span></p>
+                                        <p><strong>Format:</strong> <span id="video-format"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="step-5" class="step-content hidden">
+                                <h3>Approval</h3>
+                                <div class="approval-buttons">
+                                    <button onclick="approveCase('${caseId}')" class="approve-btn">Approve</button>
+                                    <button onclick="rejectCase('${caseId}')" class="reject-btn">Reject</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="prev-step" class="nav-btn">&lt;</button>
+                            <button id="next-step" class="nav-btn">&gt;</button>
+                        </div>
+                    </div>
 
             document.body.appendChild(modal);
 
@@ -645,9 +939,8 @@
 
         function logout() {
             // In a real application, implement proper logout logic
-            alert('Logout functionality would be implemented here.');
+            window.location.href = 'login.html';
         }
     </script>
 </body>
 </html>
-        
