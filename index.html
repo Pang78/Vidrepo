@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ICA VESP Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --primary-dark-blue: #00264d;
@@ -383,13 +384,91 @@
 </div>
 
 <div id="analytics" class="container tab-content">
-    <!-- Analytics content (unchanged) -->
+    <h2>Analytics Dashboard</h2>
+    <div class="stats-grid">
+        <div class="card">
+            <h3>Total Requests</h3>
+            <p class="stat-number">1,245</p>
+            <p>Last 30 days</p>
+        </div>
+        <div class="card">
+            <h3>Average Response Time</h3>
+            <p class="stat-number">2.3 hours</p>
+            <p>Last 30 days</p>
+        </div>
+        <div class="card">
+            <h3>Completion Rate</h3>
+            <p class="stat-number">87%</p>
+            <p>Last 30 days</p>
+        </div>
+        <div class="card">
+            <h3>Pending Requests</h3>
+            <p class="stat-number">32</p>
+            <p>Current</p>
+        </div>
+    </div>
+    <div class="card">
+        <h3>Request Status Breakdown</h3>
+        <canvas id="requestStatusChart"></canvas>
+    </div>
+    <div class="card">
+        <h3>Monthly Request Trend</h3>
+        <canvas id="monthlyTrendChart"></canvas>
+    </div>
 </div>
 
 <div id="admin" class="container tab-content">
-    <!-- Admin content (unchanged) -->
+    <h2>Admin Panel</h2>
+    <div class="card">
+        <h3>User Management</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Last Login</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Doe</td>
+                    <td>john.doe@ica.gov.sg</td>
+                    <td>Admin</td>
+                    <td>2024-10-25 09:30</td>
+                    <td>
+                        <button class="secondary" onclick="editUser('john.doe@ica.gov.sg')">Edit</button>
+                        <button class="secondary" onclick="deleteUser('john.doe@ica.gov.sg')">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>jane.smith@ica.gov.sg</td>
+                    <td>Officer</td>
+                    <td>2024-10-24 14:15</td>
+                    <td>
+                        <button class="secondary" onclick="editUser('jane.smith@ica.gov.sg')">Edit</button>
+                        <button class="secondary" onclick="deleteUser('jane.smith@ica.gov.sg')">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="card">
+        <h3>Add New User</h3>
+        <form id="add-user-form">
+            <input type="text" placeholder="Name" required>
+            <input type="email" placeholder="Email" required>
+            <select required>
+                <option value="">Select Role</option>
+                <option value="admin">Admin</option>
+                <option value="officer">Officer</option>
+            </select>
+            <button type="submit">Add User</button>
+        </form>
+    </div>
 </div>
-
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById('caseModal');
@@ -444,6 +523,75 @@
         alert(`Case ${caseId} has been ${action}ed.`);
         document.getElementById('caseModal').style.display = "none";
     }
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // ... (previous JavaScript code remains unchanged)
+
+    // Analytics Charts
+    document.addEventListener('DOMContentLoaded', () => {
+        // Request Status Chart
+        const statusCtx = document.getElementById('requestStatusChart').getContext('2d');
+        new Chart(statusCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Completed', 'Pending', 'Rejected'],
+                datasets: [{
+                    data: [65, 25, 10],
+                    backgroundColor: ['#28A745', '#FFA500', '#DC3545']
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Request Status Distribution'
+                }
+            }
+        });
+
+        // Monthly Trend Chart
+        const trendCtx = document.getElementById('monthlyTrendChart').getContext('2d');
+        new Chart(trendCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Number of Requests',
+                    data: [65, 59, 80, 81, 56, 55],
+                    borderColor: '#00264d',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+
+    // Admin functions
+    function editUser(email) {
+        alert(`Editing user: ${email}`);
+        // Implement edit user functionality
+    }
+
+    function deleteUser(email) {
+        if (confirm(`Are you sure you want to delete user: ${email}?`)) {
+            alert(`User ${email} deleted`);
+            // Implement delete user functionality
+        }
+    }
+
+    document.getElementById('add-user-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('New user added successfully');
+        this.reset();
+    });
+
 </script>
 
 </body>
