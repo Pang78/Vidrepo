@@ -789,90 +789,9 @@
 	            <span class="close">&times;</span>
 	            <h2>Case Details - ${caseId}</h2>
 	            <div class="progress-bar">
-	                <div class="progress-bar-fill" style="width: 20%"></div>
+	                <div class="progress-bar-fill" style="width: 16.67%"></div>
 	            </div>
-	            <div class="steps">
-	                <div id="step-1" class="step-content">
-	                    <h3>Case Information</h3>
-	                    <div class="details-grid">
-	                        <div><strong>Requestor:</strong> ${caseDetails.requestor}</div>
-	                        <div><strong>NRIC:</strong> ${caseDetails.nric}</div>
-	                        <div><strong>Department:</strong> ${caseDetails.department}</div>
-	                        <div><strong>Reason for Request:</strong> ${caseDetails.reason}</div>
-	                        <div><strong>Description:</strong> ${caseDetails.description}</div>
-	                        <div><strong>Priority:</strong> ${caseDetails.priority}</div>
-	                        <div><strong>Status:</strong> ${caseDetails.status}</div>
-	                        <div><strong>Officer:</strong> ${caseDetails.officerEmail}</div>
-	                        <div><strong>Last Updated:</strong> ${caseDetails.lastUpdated}</div>
-	                    </div>
-	                </div>
-	                <div id="step-2" class="step-content hidden">
-	                    <h3>Submit Video</h3>
-	                    <div class="upload-area">
-	                        <input type="file" accept="video/*" id="video-upload" class="file-input">
-	                        <label for="video-upload" class="upload-label">
-	                            <i class="fas fa-cloud-upload-alt"></i>
-	                            <span>Click to upload or drag and drop</span>
-	                        </label>
-	                    </div>
-	                    <div id="upload-status"></div>
-	                </div>
-	                <div id="step-3" class="step-content hidden">
-	                    <h3>Edit Video</h3>
-	                    <div class="video-editor">
-	                        <video id="video-preview" controls></video>
-	                        <div class="editing-controls">
-	                            <button onclick="trimVideo()">Trim</button>
-	                            <input type="range" id="trim-start" min="0" max="100" value="0">
-	                            <input type="range" id="trim-end" min="0" max="100" value="100">
-	                            <button onclick="addWatermark()">Add Watermark</button>
-	                            <button onclick="addCaptions()">Add Captions</button>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div id="step-4" class="step-content hidden">
-	                    <h3>Review Email</h3>
-	                    <div class="email-content">
-	                        <p>Dear Officer,</p>
-	                        <p>This is your requested video for Case ${caseId}.</p>
-	                        <p>Case Details:</p>
-	                        <ul>
-	                            <li>Requestor: ${caseDetails.requestor}</li>
-	                            <li>Department: ${caseDetails.department}</li>
-	                            <li>Reason: ${caseDetails.reason}</li>
-	                        </ul>
-	                        <p>Please review the attached video and provide your approval or rejection.</p>
-	                        <p>Best regards,<br>ICA Video Enterprise Sharing Platform</p>
-	                    </div>
-	                </div>
-	                <div id="step-5" class="step-content hidden">
-	                    <h3>Summary</h3>
-	                    <div class="summary-content">
-	                        <h4>Case Details:</h4>
-	                        <p><strong>ID:</strong> ${caseId}</p>
-	                        <p><strong>Requestor:</strong> ${caseDetails.requestor}</p>
-	                        <p><strong>Department:</strong> ${caseDetails.department}</p>
-	                        <p><strong>Reason:</strong> ${caseDetails.reason}</p>
-	                        <h4>Video Information:</h4>
-	                        <p><strong>Duration:</strong> <span id="video-duration"></span></p>
-	                        <p><strong>Size:</strong> <span id="video-size"></span></p>
-	                        <p><strong>Edits Applied:</strong> <span id="video-edits"></span></p>
-	                    </div>
-	                </div>
-	                <div id="step-6" class="step-content hidden">
-	                    <h3>Approval</h3>
-	                    <div id="approval-video-container"></div>
-	                    <div class="approval-buttons">
-	                        <button onclick="approveCase('${caseId}')" class="approve-btn">Approve</button>
-	                        <button onclick="rejectCase('${caseId}')" class="reject-btn">Reject</button>
-	                    </div>
-	                    <div id="rejection-reason" class="hidden">
-	                        <h4>Reason for Rejection:</h4>
-	                        <textarea id="rejection-text" rows="4" cols="50"></textarea>
-	                        <button onclick="submitRejection('${caseId}')">Submit Rejection</button>
-	                    </div>
-	                </div>
-	            </div>
+	            <div id="step-container"></div>
 	            <div class="modal-footer">
 	                <button id="prev-step" class="nav-btn" disabled>&lt; Previous</button>
 	                <button id="next-step" class="nav-btn">Next &gt;</button>
@@ -882,50 +801,150 @@
 	
 	    document.body.appendChild(modal);
 	
-	    // Modal Navigation Logic
-	    let currentStep = 1;
-	    const totalSteps = 6;
+	    const stepContainer = modal.querySelector('#step-container');
+	    const steps = [
+	        // Step 1: Case Information
+	        `
+	        <div class="step-content">
+	            <h3>Case Information</h3>
+	            <div class="details-grid">
+	                <div><strong>Requestor:</strong> ${caseDetails.requestor}</div>
+	                <div><strong>NRIC:</strong> ${caseDetails.nric}</div>
+	                <div><strong>Department:</strong> ${caseDetails.department}</div>
+	                <div><strong>Reason for Request:</strong> ${caseDetails.reason}</div>
+	                <div><strong>Description:</strong> ${caseDetails.description}</div>
+	                <div><strong>Priority:</strong> ${caseDetails.priority}</div>
+	                <div><strong>Status:</strong> ${caseDetails.status}</div>
+	                <div><strong>Officer:</strong> ${caseDetails.officerEmail}</div>
+	                <div><strong>Last Updated:</strong> ${caseDetails.lastUpdated}</div>
+	            </div>
+	        </div>
+	        `,
+	        // Step 2: Submit Video
+	        `
+	        <div class="step-content">
+	            <h3>Submit Video</h3>
+	            <div class="upload-area">
+	                <input type="file" accept="video/*" id="video-upload" class="file-input">
+	                <label for="video-upload" class="upload-label">
+	                    <i class="fas fa-cloud-upload-alt"></i>
+	                    <span>Click to upload or drag and drop</span>
+	                </label>
+	            </div>
+	            <div id="upload-status"></div>
+	        </div>
+	        `,
+	        // Step 3: Edit Video
+	        `
+	        <div class="step-content">
+	            <h3>Edit Video</h3>
+	            <div class="video-editor">
+	                <video id="video-preview" controls></video>
+	                <div class="editing-controls">
+	                    <button onclick="trimVideo()">Trim</button>
+	                    <input type="range" id="trim-start" min="0" max="100" value="0">
+	                    <input type="range" id="trim-end" min="0" max="100" value="100">
+	                    <button onclick="addWatermark()">Add Watermark</button>
+	                    <button onclick="addCaptions()">Add Captions</button>
+	                </div>
+	            </div>
+	        </div>
+	        `,
+	        // Step 4: Review Email
+	        `
+	        <div class="step-content">
+	            <h3>Review Email</h3>
+	            <div class="email-content">
+	                <p>Dear Officer,</p>
+	                <p>This is your requested video for Case ${caseId}.</p>
+	                <p>Case Details:</p>
+	                <ul>
+	                    <li>Requestor: ${caseDetails.requestor}</li>
+	                    <li>Department: ${caseDetails.department}</li>
+	                    <li>Reason: ${caseDetails.reason}</li>
+	                </ul>
+	                <p>Please review the attached video. The video will be deleted after 3 days.</p>
+	                <p>Best regards,<br>ICA Video Enterprise Sharing Platform</p>
+	            </div>
+	        </div>
+	        `,
+	        // Step 5: Summary
+	        `
+	        <div class="step-content">
+	            <h3>Summary</h3>
+	            <div class="summary-content">
+	                <h4>Case Details:</h4>
+	                <p><strong>ID:</strong> ${caseId}</p>
+	                <p><strong>Requestor:</strong> ${caseDetails.requestor}</p>
+	                <p><strong>Department:</strong> ${caseDetails.department}</p>
+	                <p><strong>Reason:</strong> ${caseDetails.reason}</p>
+	                <h4>Video Information:</h4>
+	                <p><strong>Duration:</strong> <span id="video-duration"></span></p>
+	                <p><strong>Size:</strong> <span id="video-size"></span></p>
+	                <p><strong>Edits Applied:</strong> <span id="video-edits"></span></p>
+	            </div>
+	        </div>
+	        `,
+	        // Step 6: Approval
+	        `
+	        <div class="step-content">
+	            <h3>Approval</h3>
+	            <div id="approval-video-container"></div>
+	            <div class="approval-buttons">
+	                <button onclick="approveCase('${caseId}')" class="approve-btn">Approve</button>
+	                <button onclick="rejectCase('${caseId}')" class="reject-btn">Reject</button>
+	            </div>
+	            <div id="rejection-reason" class="hidden">
+	                <h4>Reason for Rejection:</h4>
+	                <textarea id="rejection-text" rows="4" cols="50"></textarea>
+	                <button onclick="submitRejection('${caseId}')">Submit Rejection</button>
+	            </div>
+	        </div>
+	        `
+	    ];
+	
+	    let currentStep = 0;
+	    const totalSteps = steps.length;
 	    const prevButton = modal.querySelector('#prev-step');
 	    const nextButton = modal.querySelector('#next-step');
 	    const progressBar = modal.querySelector('.progress-bar-fill');
 	
-	    function updateModalStep() {
-	        progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
-	    
-	        modal.querySelectorAll('.step-content').forEach((step, index) => {
-	            step.classList.toggle('hidden', index + 1 !== currentStep);
-	        });
-	    
-	        prevButton.disabled = currentStep === 1;
-	        nextButton.textContent = currentStep === totalSteps ? 'Finish' : 'Next >';
+	    function updateStep() {
+	        stepContainer.innerHTML = steps[currentStep];
+	        progressBar.style.width = `${((currentStep + 1) / totalSteps) * 100}%`;
+	        prevButton.disabled = currentStep === 0;
+	        nextButton.textContent = currentStep === totalSteps - 1 ? 'Finish' : 'Next >';
+	
+	        if (currentStep === 1) {
+	            const fileInput = modal.querySelector('#video-upload');
+	            fileInput.addEventListener('change', handleFileUpload);
+	        }
 	    }
 	
 	    prevButton.addEventListener('click', () => {
-	        if (currentStep > 1) {
+	        if (currentStep > 0) {
 	            currentStep--;
-	            updateModalStep();
+	            updateStep();
 	        }
 	    });
 	
 	    nextButton.addEventListener('click', () => {
-	        if (currentStep < totalSteps) {
+	        if (currentStep < totalSteps - 1) {
 	            currentStep++;
-	            updateModalStep();
+	            updateStep();
 	        } else {
 	            modal.remove(); // Close the modal on finish
 	        }
 	    });
 	
-	    // File upload logic
-	    const fileInput = modal.querySelector('#video-upload');
-	    fileInput.addEventListener('change', handleFileUpload);
-	
 	    // Close modal logic
 	    modal.querySelector('.close').addEventListener('click', () => modal.remove());
 	
-	    updateModalStep();
+	    // Initialize first step
+	    updateStep();
 	}
 
+		
 
         // User Management
         function editUser(email) {
