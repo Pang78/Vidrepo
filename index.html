@@ -240,6 +240,23 @@
                 margin-left: 0;
                 margin-right: 15px;
             }
+            .modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            }
+            .modal .card {
+                max-width: 64rem;
+                width: 90%;
+                max-height: 90vh;
+                overflow-y: auto;
         }
     </style>
 </head>
@@ -490,9 +507,110 @@
             });
         }
 
-        function viewCase(caseId) {
-            // Implement case viewing functionality
-            console.log(`Viewing case: ${caseId}`);
+                function viewCase(caseId) {
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.innerHTML = `
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>ICA Video Sharing Repository</h2>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: 20%"></div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div id="step-1">
+                                <h3>Request Details</h3>
+                                <div class="grid">
+                                    <div>
+                                        <strong>Request ID:</strong> ${caseId}
+                                    </div>
+                                    <div>
+                                        <strong>Status:</strong> In Progress
+                                    </div>
+                                    <div>
+                                        <strong>Requester:</strong> John Smith
+                                    </div>
+                                    <div>
+                                        <strong>Department:</strong> Field Operations
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="step-2" class="hidden">
+                                <h3>Upload Video</h3>
+                                <input type="file" id="file-upload" accept="video/*">
+                            </div>
+                            <div id="step-3" class="hidden">
+                                <h3>Preview & Edit</h3>
+                                <div id="video-preview"></div>
+                                <button class="button" onclick="toggleEditing()">Edit Video</button>
+                            </div>
+                            <div id="step-4" class="hidden">
+                                <h3>Review</h3>
+                                <div id="email-preview"></div>
+                            </div>
+                            <div id="step-5" class="hidden">
+                                <h3>Approval</h3>
+                                <button class="button button-primary" onclick="approveRequest()">Approve</button>
+                                <button class="button" onclick="rejectRequest()">Reject</button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button id="prev-button" class="button" onclick="previousStep()" disabled>Previous</button>
+                            <button id="next-button" class="button button-primary" onclick="nextStep()">Next</button>
+                        </div>
+                    </div>
+                `;
+            
+                document.body.appendChild(modal);
+            
+                let currentStep = 1;
+                const totalSteps = 5;
+            
+                function updateUI() {
+                    modal.querySelector('.progress-bar-fill').style.width = `${(currentStep / totalSteps) * 100}%`;
+                    for (let i = 1; i <= totalSteps; i++) {
+                        modal.querySelector(`#step-${i}`).classList.toggle('hidden', i !== currentStep);
+                    }
+                    modal.querySelector('#prev-button').disabled = currentStep === 1;
+                    modal.querySelector('#next-button').style.display = currentStep === totalSteps ? 'none' : 'inline-block';
+                }
+            
+                function nextStep() {
+                    if (currentStep < totalSteps) {
+                        currentStep++;
+                        updateUI();
+                    }
+                }
+            
+                function previousStep() {
+                    if (currentStep > 1) {
+                        currentStep--;
+                        updateUI();
+                    }
+                }
+            
+                function toggleEditing() {
+                    // Implement video editing logic
+                }
+            
+                function approveRequest() {
+                    alert('Request approved');
+                    modal.remove();
+                }
+            
+                function rejectRequest() {
+                    alert('Request rejected');
+                    modal.remove();
+                }
+            
+                modal.querySelector('#next-button').addEventListener('click', nextStep);
+                modal.querySelector('#prev-button').addEventListener('click', previousStep);
+            
+                updateUI();
+            }
+
+
         }
 
         function editUser(email) {
