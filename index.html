@@ -84,7 +84,8 @@
             transition: background-color 0.3s;
         }
 
-        nav a:hover, nav a.active {
+        nav a:hover,
+        nav a.active {
             background-color: var(--primary-red);
         }
 
@@ -102,7 +103,9 @@
             box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
         }
 
-        h1, h2, h3 {
+        h1,
+        h2,
+        h3 {
             color: var(--primary-dark-blue);
             margin-bottom: 15px;
         }
@@ -113,7 +116,8 @@
             margin-top: 20px;
         }
 
-        th, td {
+        th,
+        td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
@@ -183,40 +187,37 @@
             background-color: #001f3d;
         }
 
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
-            z-index: 1;
-            left: 0;
             top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
         }
 
         .modal-content {
-            background-color: #fefefe;
+            background-color: var(--secondary-white);
             margin: 15% auto;
             padding: 20px;
-            border: 1px solid #888;
+            border-radius: var(--border-radius);
             width: 80%;
             max-width: 600px;
-            border-radius: var(--border-radius);
         }
 
         .close {
-            color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
+            color: #aaa;
         }
 
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
+        .close:hover {
+            color: #000;
         }
 
         #video-preview {
@@ -226,6 +227,36 @@
             margin-bottom: 10px;
         }
 
+        /* Form Styles */
+        form input,
+        form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--primary-dark-blue);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        /* Responsive Styles */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -234,37 +265,30 @@
 
             nav ul {
                 margin-top: 10px;
+                flex-wrap: wrap;
             }
 
             nav li {
-                margin-left: 0;
-                margin-right: 15px;
+                margin: 5px 15px 5px 0;
             }
-            .modal {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 1000;
+
+            .stats-grid {
+                grid-template-columns: 1fr;
             }
-            .modal .card {
-                max-width: 64rem;
-                width: 90%;
-                max-height: 90vh;
-                overflow-y: auto;
+
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Header Section -->
     <header>
         <div class="container header-content">
             <div class="logo-container">
-                <img src="https://file.go.gov.sg/icalogo.png" alt="ICA Logo" class="logo-image">
+                <img src="/api/placeholder/40/40" alt="ICA Logo" class="logo-image">
                 <span class="logo-text">ICA Video Enterprise Sharing Platform</span>
             </div>
             <nav>
@@ -278,7 +302,9 @@
         </div>
     </header>
 
+    <!-- Main Content -->
     <div class="container">
+        <!-- Cases Tab -->
         <div id="cases" class="tab-content active">
             <h2>Cases</h2>
             <div class="card">
@@ -300,6 +326,7 @@
             </div>
         </div>
 
+        <!-- Analytics Tab -->
         <div id="analytics" class="tab-content">
             <h2>Analytics Dashboard</h2>
             <div class="stats-grid">
@@ -334,6 +361,7 @@
             </div>
         </div>
 
+        <!-- Admin Tab -->
         <div id="admin" class="tab-content">
             <h2>Admin Panel</h2>
             <div class="card">
@@ -370,18 +398,50 @@
     </div>
 
     <script>
-        // Sample data (replace with actual data fetching in a real application)
+        // Sample Data
         const casesData = [
-            { id: 'ICA-2024-001', description: 'Unauthorized Exit Incident', priority: 'High', status: 'Completed', lastUpdated: '2024-10-20', officerEmail: 'officer1@ica.gov.sg' },
-            { id: 'ICA-2024-002', description: 'Security Breach Investigation', priority: 'Medium', status: 'Pending', lastUpdated: '2024-10-01', officerEmail: 'officer2@ica.gov.sg' },
-            { id: 'ICA-2024-003', description: 'Access Control Failure', priority: 'Low', status: 'Rejected', lastUpdated: '2024-09-15', officerEmail: 'officer3@ica.gov.sg' },
+            {
+                id: 'ICA-2024-001',
+                description: 'Unauthorized Exit Incident',
+                priority: 'High',
+                status: 'Completed',
+                lastUpdated: '2024-10-20',
+                officerEmail: 'officer1@ica.gov.sg'
+            },
+            {
+                id: 'ICA-2024-002',
+                description: 'Security Breach Investigation',
+                priority: 'Medium',
+                status: 'Pending',
+                lastUpdated: '2024-10-01',
+                officerEmail: 'officer2@ica.gov.sg'
+            },
+            {
+                id: 'ICA-2024-003',
+                description: 'Access Control Failure',
+                priority: 'Low',
+                status: 'Rejected',
+                lastUpdated: '2024-09-15',
+                officerEmail: 'officer3@ica.gov.sg'
+            }
         ];
 
         const usersData = [
-            { name: 'John Doe', email: 'john.doe@ica.gov.sg', role: 'Admin', lastLogin: '2024-10-25 09:30' },
-            { name: 'Jane Smith', email: 'jane.smith@ica.gov.sg', role: 'Officer', lastLogin: '2024-10-24 14:15' },
+            {
+                name: 'John Doe',
+                email: 'john.doe@ica.gov.sg',
+                role: 'Admin',
+                lastLogin: '2024-10-25 09:30'
+            },
+            {
+                name: 'Jane Smith',
+                email: 'jane.smith@ica.gov.sg',
+                role: 'Officer',
+                lastLogin: '2024-10-24 14:15'
+            }
         ];
 
+        // Initialize Application
         document.addEventListener('DOMContentLoaded', () => {
             initTabs();
             populateCasesTable();
@@ -390,6 +450,7 @@
             setupEventListeners();
         });
 
+        // Tab Navigation
         function initTabs() {
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', (e) => {
@@ -409,13 +470,13 @@
             });
         }
 
+        // Table Population
         function populateCasesTable() {
             const tableBody = document.querySelector('#casesTable tbody');
             tableBody.innerHTML = '';
             casesData.forEach(caseItem => {
                 const row = `
                     <tr>
-                        <td>${caseItem.id}</td>
                         <td>${caseItem.description}</td>
                         <td><span class="badge badge-${caseItem.priority.toLowerCase()}">${caseItem.priority}</span></td>
                         <td><span class="badge badge-${caseItem.status.toLowerCase()}">${caseItem.status}</span></td>
@@ -447,12 +508,13 @@
             });
         }
 
+        // Charts Initialization
         function initCharts() {
             const statusCtx = document.getElementById('requestStatusChart').getContext('2d');
             new Chart(statusCtx, {
                 type: 'pie',
                 data: {
-                                       labels: ['Completed', 'Pending', 'Rejected'],
+                    labels: ['Completed', 'Pending', 'Rejected'],
                     datasets: [{
                         data: [65, 25, 10],
                         backgroundColor: ['#28A745', '#FFA500', '#DC3545']
@@ -460,9 +522,11 @@
                 },
                 options: {
                     responsive: true,
-                    title: {
-                        display: true,
-                        text: 'Request Status Distribution'
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Request Status Distribution'
+                        }
                     }
                 }
             });
@@ -489,12 +553,18 @@
                 }
             });
 
+            // Update statistics
+            updateStatistics();
+        }
+
+        function updateStatistics() {
             document.getElementById('totalRequests').textContent = '1,245';
             document.getElementById('avgResponseTime').textContent = '2.3 hours';
             document.getElementById('completionRate').textContent = '87%';
             document.getElementById('pendingRequests').textContent = '32';
         }
 
+        // Event Listeners
         function setupEventListeners() {
             document.getElementById('addUserForm').addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -507,114 +577,158 @@
             });
         }
 
+        // Case Management
         function viewCase(caseId) {
             const modal = document.createElement('div');
             modal.className = 'modal';
-            modal.style.display = 'block'; // Make sure the modal is visible
+            modal.style.display = 'block';
+            
+            const caseDetails = casesData.find(c => c.id === caseId);
+            if (!caseDetails) return;
+
             modal.innerHTML = `
-                <div class="card">
-                    <div class="card-header">
-                        <h2>ICA Video Sharing Repository</h2>
-                        <div class="progress-bar">
-                            <div class="progress-bar-fill" style="width: 20%"></div>
-                        </div>
+                <div class="modal-content card">
+                    <span class="close">&times;</span>
+                    <h2>Case Details - ${caseId}</h2>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: 20%"></div>
                     </div>
-                    <div class="card-content">
-                        <div id="step-1">
+                    <div class="steps">
+                        <div id="step-1" class="step-content">
                             <h3>Request Details</h3>
-                            <div class="grid">
-                                <div>
-                                    <strong>Request ID:</strong> ${caseId}
-                                </div>
-                                <div>
-                                    <strong>Status:</strong> In Progress
-                                </div>
-                                <div>
-                                    <strong>Requester:</strong> John Tan
-                                </div>
-                                <div>
-                                    <strong>Department:</strong> Enforcement Division
-                                </div>
+                            <div class="details-grid">
+                                <div><strong>Description:</strong> ${caseDetails.description}</div>
+                                <div><strong>Priority:</strong> ${caseDetails.priority}</div>
+                                <div><strong>Status:</strong> ${caseDetails.status}</div>
+                                <div><strong>Officer:</strong> ${caseDetails.officerEmail}</div>
+                                <div><strong>Last Updated:</strong> ${caseDetails.lastUpdated}</div>
                             </div>
                         </div>
-                        <div id="step-2" class="hidden">
+                        <div id="step-2" class="step-content hidden">
                             <h3>Upload Video</h3>
-                            <input type="file" id="file-upload" accept="video/*">
+                            <input type="file" accept="video/*" class="file-input">
                         </div>
-                        <div id="step-3" class="hidden">
+                        <div id="step-3" class="step-content hidden">
                             <h3>Preview & Edit</h3>
                             <div id="video-preview"></div>
-                            <button class="button" onclick="toggleEditing()">Edit Video</button>
+                            <button onclick="toggleEditing()">Edit Video</button>
                         </div>
-                        <div id="step-4" class="hidden">
+                        <div id="step-4" class="step-content hidden">
                             <h3>Review</h3>
-                            <div id="email-preview"></div>
+                            <div class="review-content"></div>
                         </div>
-                        <div id="step-5" class="hidden">
+                        <div id="step-5" class="step-content hidden">
                             <h3>Approval</h3>
-                            <button class="button button-primary" onclick="approveRequest()">Approve</button>
-                            <button class="button" onclick="rejectRequest()">Reject</button>
+                            <div class="approval-buttons">
+                                <button onclick="approveCase('${caseId}')" class="approve-btn">Approve</button>
+                                <button onclick="rejectCase('${caseId}')" class="reject-btn">Reject</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <button id="prev-button" class="button" onclick="previousStep()" disabled>Previous</button>
-                        <button id="next-button" class="button button-primary" onclick="nextStep()">Next</button>
+                    <div class="modal-footer">
+                        <button id="prev-step" disabled>Previous</button>
+                        <button id="next-step">Next</button>
                     </div>
                 </div>
             `;
-        
+
             document.body.appendChild(modal);
-        
+
+            // Modal Navigation Logic
             let currentStep = 1;
             const totalSteps = 5;
-        
-            function updateUI() {
-                modal.querySelector('.progress-bar-fill').style.width = `${(currentStep / totalSteps) * 100}%`;
-                for (let i = 1; i <= totalSteps; i++) {
-                    modal.querySelector(`#step-${i}`).classList.toggle('hidden', i !== currentStep);
-                }
-                modal.querySelector('#prev-button').disabled = currentStep === 1;
-                modal.querySelector('#next-button').style.display = currentStep === totalSteps ? 'none' : 'inline-block';
+            const prevButton = modal.querySelector('#prev-step');
+            const nextButton = modal.querySelector('#next-step');
+            const progressBar = modal.querySelector('.progress-bar-fill');
+
+            function updateModalStep() {
+                // Update progress bar
+                progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
+
+                // Show/hide steps
+                modal.querySelectorAll('.step-content').forEach((step, index) => {
+                    step.classList.toggle('hidden', index + 1 !== currentStep);
+                });
+
+                // Update buttons
+                prevButton.disabled = currentStep === 1;
+                nextButton.textContent = currentStep === totalSteps ? 'Finish' : 'Next';
             }
-        
-            function nextStep() {
-                if (currentStep < totalSteps) {
-                    currentStep++;
-                    updateUI();
-                }
-            }
-        
-            function previousStep() {
+
+            prevButton.addEventListener('click', () => {
                 if (currentStep > 1) {
                     currentStep--;
-                    updateUI();
+                    updateModalStep();
                 }
-            }
-        
-            function toggleEditing() {
-                // Implement video editing logic
-                console.log('Toggling editing mode');
-            }
-        
-            function approveRequest() {
-                alert('Request approved');
+            });
+
+            nextButton.addEventListener('click', () => {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateModalStep();
+                } else {
+                    modal.remove();
+                }
+            });
+
+            // Close modal
+            modal.querySelector('.close').addEventListener('click', () => {
                 modal.remove();
-            }
-        
-            function rejectRequest() {
-                alert('Request rejected');
-                modal.remove();
-            }
-        
-            modal.querySelector('#next-button').addEventListener('click', nextStep);
-            modal.querySelector('#prev-button').addEventListener('click', previousStep);
-        
-            updateUI();
+            });
+
+            // Close modal on outside click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
         }
 
+        // User Management
         function editUser(email) {
-            // Implement user editing functionality
-            console.log(`Editing user: ${email}`);
+            const user = usersData.find(u => u.email === email);
+            if (!user) return;
+
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content card">
+                    <span class="close">&times;</span>
+                    <h2>Edit User</h2>
+                    <form id="editUserForm">
+                        <input type="text" value="${user.name}" id="editName" required>
+                        <input type="email" value="${user.email}" id="editEmail" required readonly>
+                        <select id="editRole" required>
+                            <option value="Admin" ${user.role === 'Admin' ? 'selected' : ''}>Admin</option>
+                            <option value="Officer" ${user.role === 'Officer' ? 'selected' : ''}>Officer</option>
+                        </select>
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            const form = modal.querySelector('#editUserForm');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const updatedUser = {
+                    name: form.querySelector('#editName').value,
+                    email: form.querySelector('#editEmail').value,
+                    role: form.querySelector('#editRole').value,
+                    lastLogin: user.lastLogin
+                };
+
+                const index = usersData.findIndex(u => u.email === email);
+                if (index !== -1) {
+                    usersData[index] = updatedUser;
+                    populateUsersTable();
+                    modal.remove();
+                }
+            });
+
+            modal.querySelector('.close').addEventListener('click', () => modal.remove());
         }
 
         function deleteUser(email) {
@@ -623,7 +737,6 @@
                 if (index !== -1) {
                     usersData.splice(index, 1);
                     populateUsersTable();
-                    alert(`User ${email} deleted`);
                 }
             }
         }
@@ -634,23 +747,19 @@
             const role = document.getElementById('newUserRole').value;
 
             usersData.push({
-                name: name,
-                email: email,
-                role: role,
+                name,
+                email,
+                role,
                 lastLogin: 'N/A'
             });
 
-            alert('New user added successfully');
-            document.getElementById('addUserForm').reset();
             populateUsersTable();
+            document.getElementById('addUserForm').reset();
         }
 
         function logout() {
-            console.log('Logging out...');
-            // Redirect to the login page
+            // In a real application, implement proper logout logic
             window.location.href = 'login.html';
-        }
-
         }
     </script>
 </body>
