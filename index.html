@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+		<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -344,7 +344,7 @@
             background-color: var(--primary-red);
         }
 
-        .modal-footer {
+        .modal-footer {			
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
@@ -364,7 +364,7 @@
             background-color: #ccc;
             cursor: not-allowed;
         }
-						@media (max-width: 768px) {
+				@media (max-width: 768px) {
 			        .header-content {
 			            flex-direction: column;
 			            align-items: flex-start;
@@ -552,10 +552,10 @@
                 priority: 'High',
                 status: 'In Progress',
                 lastUpdated: '2024-10-20',
-                officerEmail: 'officer1@ica.gov.sg',
+                officerEmail: 'John_Tan@ica.gov.sg',
                 requestor: 'John Tan',
                 nric: 'S1234567A',
-                department: 'Airport Security Division',
+                department: 'Air Checkpoint Division (ICC AIR)',
                 reason: 'Investigation of security breach and unauthorized exit',
                 timeline: [
                     { date: '2024-10-19 14:30', action: 'Incident reported' },
@@ -570,10 +570,10 @@
                 priority: 'Medium',
                 status: 'Pending',
                 lastUpdated: '2024-10-01',
-                officerEmail: 'officer2@ica.gov.sg',
+                officerEmail: 'Sarah_Lim@ica.gov.sg',
                 requestor: 'Sarah Lim',
                 nric: 'S9876543B',
-                department: 'Land Checkpoints Division',
+                department: 'Land Checkpoints Division (ICC Land)',
                 reason: 'Review of potential security breach at vehicle inspection area',
                 timeline: [
                     { date: '2024-10-01 08:15', action: 'Suspicious activity reported' },
@@ -586,7 +586,7 @@
                 priority: 'Low',
                 status: 'Completed',
                 lastUpdated: '2024-09-15',
-                officerEmail: 'officer3@ica.gov.sg',
+                officerEmail: 'Micheal_Ng@ica.gov.sg',
                 requestor: 'Michael Ng',
                 nric: 'S7654321C',
                 department: 'Facilities Management',
@@ -803,6 +803,9 @@
 			
 			    let uploadedVideo = null;
 			    let videoEdits = [];
+			    let trimmedVideo = null;
+			    let trimStart = 0;
+			    let trimEnd = 100;
 			
 			    const stepContainer = modal.querySelector('#step-container');
 			    const steps = [
@@ -843,26 +846,36 @@
 			        `,
 			        // Step 3: Edit Video (with real-time preview)
 							        `
-				        <div class="step-content">
+				    <div class="step-content">
 				            <h3>Edit Video</h3>
 				            <div class="video-editor">
-				                <div class="video-container" style="max-width: 640px; margin: 0 auto;">
-				                    <video id="edit-preview" controls style="width: 100%; max-height: 360px; object-fit: contain;"></video>
+				                <div class="video-preview-container">
+				                    <video id="edit-preview" controls style="width: 100%; max-height: 480px; object-fit: contain;"></video>
+				                    <div class="time-display">
+				                        <span id="current-time">0:00</span> / <span id="total-duration">0:00</span>
+				                    </div>
 				                </div>
-				                <div class="editing-controls" style="margin-top: 20px;">
+				                <div class="editing-controls">
 				                    <div class="trim-controls">
 				                        <h4>Trim Video</h4>
-				                        <div class="range-controls">
-				                            <label>Start: <span id="trim-start-value">0:00</span></label>
-				                            <input type="range" id="trim-start" min="0" max="100" value="0">
-				                            <label>End: <span id="trim-end-value">0:00</span></label>
-				                            <input type="range" id="trim-end" min="0" max="100" value="100">
+				                        <div class="range-container">
+				                            <div class="range-labels">
+				                                <span>Start: <span id="trim-start-value">0:00</span></span>
+				                                <span>End: <span id="trim-end-value">0:00</span></span>
+				                            </div>
+				                            <div class="double-range-slider">
+				                                <input type="range" id="trim-start" min="0" max="100" value="0" step="0.1">
+				                                <input type="range" id="trim-end" min="0" max="100" value="100" step="0.1">
+				                            </div>
 				                        </div>
+				                        <button id="apply-trim" class="edit-btn">Apply Trim</button>
 				                    </div>
-				                    <button onclick="addWatermark()" class="edit-btn">Add Watermark</button>
-				                    <button onclick="addCaptions()" class="edit-btn">Add Captions</button>
+				                    <div class="edit-buttons">
+				                        <button onclick="addWatermark()" class="edit-btn">Add Watermark</button>
+				                        <button onclick="addCaptions()" class="edit-btn">Add Captions</button>
+				                    </div>
 				                </div>
-				                <div id="edits-list"></div>
+				                <div id="edits-list" class="edits-list"></div>
 				            </div>
 				        </div>
 				        `,
@@ -888,28 +901,48 @@
 				        `
 				        <div class="step-content">
 				            <h3>Final Review</h3>
-				            <div class="final-review-container">
-				                <div class="final-video-container" style="max-width: 640px; margin: 0 auto;">
-				                    <video id="final-preview" controls style="width: 100%; max-height: 360px; object-fit: contain;"></video>
-				                </div>
-				                <div class="video-summary" style="margin: 20px 0;">
-				                    <h4>Video Information:</h4>
-				                    <p><strong>Duration:</strong> <span id="final-duration"></span></p>
-				                    <p><strong>Size:</strong> <span id="final-size"></span></p>
-				                    <p><strong>Applied Edits:</strong></p>
-				                    <ul id="final-edits-list"></ul>
-				                </div>
-				                <div class="approval-section" style="text-align: center; margin-top: 20px;">
-				                    <div class="approval-buttons">
-				                        <button onclick="approveCase('${caseId}')" class="approve-btn">Approve</button>
-				                        <button onclick="rejectCase('${caseId}')" class="reject-btn">Reject</button>
-				                    </div>
-				                </div>
-				            </div>
-				        </div>
-				        `
-				    ];
-			
+						<div class="step-content final-review">
+					            <h3>Final Review</h3>
+					            <div class="final-review-container">
+					                <div class="final-review-grid">
+					                    <div class="final-video-section">
+					                        <div class="video-preview-container">
+					                            <video id="final-preview" controls style="width: 100%; max-height: 480px; object-fit: contain;"></video>
+					                        </div>
+					                    </div>
+					                    <div class="final-details-section">
+					                        <div class="video-summary">
+					                            <h4>Video Information</h4>
+					                            <div class="info-grid">
+					                                <div class="info-item">
+					                                    <strong>Duration:</strong>
+					                                    <span id="final-duration">0:00</span>
+					                                </div>
+					                                <div class="info-item">
+					                                    <strong>Size:</strong>
+					                                    <span id="final-size">0 MB</span>
+					                                </div>
+					                                <div class="info-item">
+					                                    <strong>Format:</strong>
+					                                    <span id="final-format">-</span>
+					                                </div>
+					                            </div>
+					                            <div class="edits-summary">
+					                                <h4>Applied Edits:</h4>
+					                                <ul id="final-edits-list"></ul>
+					                            </div>
+					                        </div>
+					                        <div class="approval-section">
+					                            <button onclick="approveCase('${caseId}')" class="approve-btn">Approve</button>
+					                            <button onclick="rejectCase('${caseId}')" class="reject-btn">Reject</button>
+					                        </div>
+					                    </div>
+					                </div>
+					            </div>
+					        </div>
+					        `
+					    ];	
+								
 			    let currentStep = 0;
 			    const totalSteps = steps.length;
 			    const prevButton = modal.querySelector('#prev-step');
@@ -967,47 +1000,193 @@
 			            setupFinalPreview();
 			        }
 			    }
-			
-			    function setupVideoEditor() {
-			        const editPreview = modal.querySelector('#edit-preview');
-			        editPreview.src = URL.createObjectURL(uploadedVideo);
-			        
-			        // Set up trim controls
-			        const trimStart = modal.querySelector('#trim-start');
-			        const trimEnd = modal.querySelector('#trim-end');
-			        const trimStartValue = modal.querySelector('#trim-start-value');
-			        const trimEndValue = modal.querySelector('#trim-end-value');
-			
-			        editPreview.onloadedmetadata = () => {
-			            const duration = editPreview.duration;
-			            
-			            trimStart.addEventListener('input', (e) => {
-			                const time = (duration * e.target.value) / 100;
-			                trimStartValue.textContent = formatTime(time);
-			                editPreview.currentTime = time;
-			            });
-			
-			            trimEnd.addEventListener('input', (e) => {
-			                const time = (duration * e.target.value) / 100;
-			                trimEndValue.textContent = formatTime(time);
-			            });
-			        };
-			    }
-			
-			    function setupFinalPreview() {
-			        const finalPreview = modal.querySelector('#final-preview');
-			        finalPreview.src = URL.createObjectURL(uploadedVideo);
-			        
-			        const duration = document.querySelector('#final-duration');
-			        const size = document.querySelector('#final-size');
-			        const editsList = document.querySelector('#final-edits-list');
-			
-			        finalPreview.onloadedmetadata = () => {
-			            duration.textContent = formatTime(finalPreview.duration);
-			            size.textContent = `${(uploadedVideo.size / (1024 * 1024)).toFixed(2)} MB`;
-			            editsList.innerHTML = videoEdits.map(edit => `<li>${edit}</li>`).join('');
-			        };
-			    }
+			        const additionalStyles = `
+					        .video-preview-container {
+					            background: #000;
+					            border-radius: 8px;
+					            overflow: hidden;
+					            margin-bottom: 20px;
+					            position: relative;
+					        }
+					
+					        .time-display {
+					            position: absolute;
+					            bottom: 50px;
+					            right: 20px;
+					            background: rgba(0, 0, 0, 0.7);
+					            color: white;
+					            padding: 4px 8px;
+					            border-radius: 4px;
+					            font-size: 14px;
+					        }
+					
+					        .range-container {
+					            background: #f5f5f5;
+					            padding: 20px;
+					            border-radius: 8px;
+					            margin: 15px 0;
+					        }
+					
+					        .range-labels {
+					            display: flex;
+					            justify-content: space-between;
+					            margin-bottom: 10px;
+					        }
+					
+					        .double-range-slider {
+					            position: relative;
+					            height: 40px;
+					        }
+					
+					        .double-range-slider input[type="range"] {
+					            position: absolute;
+					            width: 100%;
+					            -webkit-appearance: none;
+					            pointer-events: none;
+					            background: transparent;
+					        }
+					
+					        .double-range-slider input[type="range"]::-webkit-slider-thumb {
+					            -webkit-appearance: none;
+					            pointer-events: auto;
+					            width: 16px;
+					            height: 16px;
+					            border-radius: 50%;
+					            background: #2196F3;
+					            cursor: pointer;
+					        }
+					
+					        .final-review-grid {
+					            display: grid;
+					            grid-template-columns: 3fr 2fr;
+					            gap: 30px;
+					            margin: 20px 0;
+					        }
+					
+					        .info-grid {
+					            display: grid;
+					            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+					            gap: 15px;
+					            margin: 15px 0;
+					        }
+					
+					        .info-item {
+					            background: #f5f5f5;
+					            padding: 10px;
+					            border-radius: 4px;
+					        }
+					
+					        .edits-summary {
+					            margin-top: 20px;
+					        }
+					
+					        .approval-section {
+					            margin-top: 30px;
+					            display: flex;
+					            gap: 10px;
+					            justify-content: center;
+					        }
+					
+					        @media (max-width: 768px) {
+					            .final-review-grid {
+					                grid-template-columns: 1fr;
+					            }
+					        }
+					    `;
+					
+					    // Append additional styles
+					    const style = document.createElement('style');
+					    style.textContent += additionalStyles;
+					    document.head.appendChild(style);
+					
+					    function setupVideoEditor() {
+					        const editPreview = modal.querySelector('#edit-preview');
+					        const videoUrl = URL.createObjectURL(uploadedVideo);
+					        editPreview.src = videoUrl;
+					        
+					        const trimStartInput = modal.querySelector('#trim-start');
+					        const trimEndInput = modal.querySelector('#trim-end');
+					        const trimStartValue = modal.querySelector('#trim-start-value');
+					        const trimEndValue = modal.querySelector('#trim-end-value');
+					        const currentTimeDisplay = modal.querySelector('#current-time');
+					        const totalDurationDisplay = modal.querySelector('#total-duration');
+					        const applyTrimButton = modal.querySelector('#apply-trim');
+					
+					        editPreview.onloadedmetadata = () => {
+					            const duration = editPreview.duration;
+					            totalDurationDisplay.textContent = formatTime(duration);
+					
+					            trimStartInput.addEventListener('input', (e) => {
+					                trimStart = parseFloat(e.target.value);
+					                const time = (duration * trimStart) / 100;
+					                trimStartValue.textContent = formatTime(time);
+					                if (trimStart >= parseFloat(trimEndInput.value)) {
+					                    trimStartInput.value = parseFloat(trimEndInput.value) - 0.1;
+					                }
+					                editPreview.currentTime = time;
+					            });
+					
+					            trimEndInput.addEventListener('input', (e) => {
+					                trimEnd = parseFloat(e.target.value);
+					                const time = (duration * trimEnd) / 100;
+					                trimEndValue.textContent = formatTime(time);
+					                if (trimEnd <= parseFloat(trimStartInput.value)) {
+					                    trimEndInput.value = parseFloat(trimStartInput.value) + 0.1;
+					                }
+					            });
+					
+					            editPreview.addEventListener('timeupdate', () => {
+					                currentTimeDisplay.textContent = formatTime(editPreview.currentTime);
+					                const currentPercent = (editPreview.currentTime / duration) * 100;
+					                if (currentPercent >= trimEnd) {
+					                    editPreview.pause();
+					                }
+					            });
+					
+					            applyTrimButton.addEventListener('click', () => {
+					                const startTime = (duration * trimStart) / 100;
+					                const endTime = (duration * trimEnd) / 100;
+					                videoEdits.push(`Trimmed: ${formatTime(startTime)} to ${formatTime(endTime)}`);
+					                updateEditsList();
+					                // In a real implementation, you would process the video here
+					                trimmedVideo = {
+					                    startTime,
+					                    endTime,
+					                    duration: endTime - startTime
+					                };
+					            });
+					        };
+					    }
+					
+					    function setupFinalPreview() {
+					        const finalPreview = modal.querySelector('#final-preview');
+					        const finalDuration = modal.querySelector('#final-duration');
+					        const finalSize = modal.querySelector('#final-size');
+					        const finalFormat = modal.querySelector('#final-format');
+					        const editsList = modal.querySelector('#final-edits-list');
+					
+					        const videoUrl = URL.createObjectURL(uploadedVideo);
+					        finalPreview.src = videoUrl;
+					
+					        finalPreview.onloadedmetadata = () => {
+					            const duration = trimmedVideo ? trimmedVideo.duration : finalPreview.duration;
+					            finalDuration.textContent = formatTime(duration);
+					            finalSize.textContent = `${(uploadedVideo.size / (1024 * 1024)).toFixed(2)} MB`;
+					            finalFormat.textContent = uploadedVideo.type;
+					            editsList.innerHTML = videoEdits.map(edit => `<li>${edit}</li>`).join('');
+					
+					            if (trimmedVideo) {
+					                finalPreview.currentTime = trimmedVideo.startTime;
+					            }
+					        };
+					
+					        finalPreview.addEventListener('timeupdate', () => {
+					            if (trimmedVideo && finalPreview.currentTime >= trimmedVideo.endTime) {
+					                finalPreview.pause();
+					                finalPreview.currentTime = trimmedVideo.startTime;
+					            }
+					        });
+					    }			  
 			
 			    // Helper function to format time
 			    function formatTime(seconds) {
