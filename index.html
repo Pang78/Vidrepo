@@ -364,42 +364,42 @@
 	            background-color: #ccc;
 	            cursor: not-allowed;
 	        }
-				@media (max-width: 768px) {
-			        .header-content {
-			            flex-direction: column;
-			            align-items: flex-start;
-			        }
-			
-			        nav ul {
-			            margin-top: 10px;
-			            flex-wrap: wrap;
-			        }
-			
-			        nav li {
-			            margin: 5px 15px 5px 0;
-			        }
-			
-			        .stats-grid {
-			            grid-template-columns: 1fr;
-			        }
-			
-			        .modal-content {
-			            width: 95%;
-			            margin: 5% auto;
-			            max-height: 90vh; /* Limit modal height */
-			            overflow-y: auto; /* Allow scrolling within modal */
-			        }
-			    }
-			
-			    /* Add these new styles for scrollable content areas */
-			    .tab-content {
-			        max-height: calc(100vh - 100px); /* Adjust based on your header height */
-			        overflow-y: auto;
-			    }
-			
-			    .card {
-			        overflow-x: auto; /* Allow horizontal scrolling for tables if needed */
-			    }
+		@media (max-width: 768px) {
+		.header-content {
+		    flex-direction: column;
+		    align-items: flex-start;
+		}
+	
+		nav ul {
+		    margin-top: 10px;
+		    flex-wrap: wrap;
+		}
+	
+		nav li {
+		    margin: 5px 15px 5px 0;
+		}
+	
+		.stats-grid {
+		    grid-template-columns: 1fr;
+		}
+	
+		.modal-content {
+		    width: 95%;
+		    margin: 5% auto;
+		    max-height: 90vh; /* Limit modal height */
+		    overflow-y: auto; /* Allow scrolling within modal */
+		}
+	    }
+	
+	    /* Add these new styles for scrollable content areas */
+	    .tab-content {
+		max-height: calc(100vh - 100px); /* Adjust based on your header height */
+		overflow-y: auto;
+	    }
+	
+	    .card {
+		overflow-x: auto; /* Allow horizontal scrolling for tables if needed */
+	    }
             }
         }
     </style>
@@ -999,192 +999,192 @@
 			        }
 			    }
 			        const additionalStyles = `
-						        .video-preview-container {
-						            background: #000;
-						            border-radius: 8px;
-						            overflow: hidden;
-						            margin-bottom: 20px;
-						            position: relative;
-						        }
-						
-						        .time-display {
-						            position: absolute;
-						            bottom: 50px;
-						            right: 20px;
-						            background: rgba(0, 0, 0, 0.7);
-						            color: white;
-						            padding: 4px 8px;
-						            border-radius: 4px;
-						            font-size: 14px;
-						        }
-						
-						        .range-container {
-						            background: #f5f5f5;
-						            padding: 20px;
-						            border-radius: 8px;
-						            margin: 15px 0;
-						        }
-						
-						        .range-labels {
-						            display: flex;
-						            justify-content: space-between;
-						            margin-bottom: 10px;
-						        }
-						
-						        .double-range-slider {
-						            position: relative;
-						            height: 40px;
-						        }
-						
-						        .double-range-slider input[type="range"] {
-						            position: absolute;
-						            width: 100%;
-						            -webkit-appearance: none;
-						            pointer-events: none;
-						            background: transparent;
-						        }
-						
-						        .double-range-slider input[type="range"]::-webkit-slider-thumb {
-						            -webkit-appearance: none;
-						            pointer-events: auto;
-						            width: 16px;
-						            height: 16px;
-						            border-radius: 50%;
-						            background: #2196F3;
-						            cursor: pointer;
-						        }
-						
-						        .final-review-grid {
-						            display: grid;
-						            grid-template-columns: 3fr 2fr;
-						            gap: 30px;
-						            margin: 20px 0;
-						        }
-						
-						        .info-grid {
-						            display: grid;
-						            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-						            gap: 15px;
-						            margin: 15px 0;
-						        }
-						
-						        .info-item {
-						            background: #f5f5f5;
-						            padding: 10px;
-						            border-radius: 4px;
-						        }
-						
-						        .edits-summary {
-						            margin-top: 20px;
-						        }
-						
-						        .approval-section {
-						            margin-top: 30px;
-						            display: flex;
-						            gap: 10px;
-						            justify-content: center;
-						        }
-						
-						        @media (max-width: 768px) {
-						            .final-review-grid {
-						                grid-template-columns: 1fr;
-						            }
-						        }
-						    `;
-						
-						    // Append additional styles
-						    const style = document.createElement('style');
-						    style.textContent += additionalStyles;
-						    document.head.appendChild(style);
-						
-						    function setupVideoEditor() {
-						        const editPreview = modal.querySelector('#edit-preview');
-						        const videoUrl = URL.createObjectURL(uploadedVideo);
-						        editPreview.src = videoUrl;
-						        
-						        const trimStartInput = modal.querySelector('#trim-start');
-						        const trimEndInput = modal.querySelector('#trim-end');
-						        const trimStartValue = modal.querySelector('#trim-start-value');
-						        const trimEndValue = modal.querySelector('#trim-end-value');
-						        const currentTimeDisplay = modal.querySelector('#current-time');
-						        const totalDurationDisplay = modal.querySelector('#total-duration');
-						        const applyTrimButton = modal.querySelector('#apply-trim');
-						
-						        editPreview.onloadedmetadata = () => {
-						            const duration = editPreview.duration;
-						            totalDurationDisplay.textContent = formatTime(duration);
-						
-						            trimStartInput.addEventListener('input', (e) => {
-						                trimStart = parseFloat(e.target.value);
-						                const time = (duration * trimStart) / 100;
-						                trimStartValue.textContent = formatTime(time);
-						                if (trimStart >= parseFloat(trimEndInput.value)) {
-						                    trimStartInput.value = parseFloat(trimEndInput.value) - 0.1;
-						                }
-						                editPreview.currentTime = time;
-						            });
-						
-						            trimEndInput.addEventListener('input', (e) => {
-						                trimEnd = parseFloat(e.target.value);
-						                const time = (duration * trimEnd) / 100;
-						                trimEndValue.textContent = formatTime(time);
-						                if (trimEnd <= parseFloat(trimStartInput.value)) {
-						                    trimEndInput.value = parseFloat(trimStartInput.value) + 0.1;
-						                }
-						            });
-						
-						            editPreview.addEventListener('timeupdate', () => {
-						                currentTimeDisplay.textContent = formatTime(editPreview.currentTime);
-						                const currentPercent = (editPreview.currentTime / duration) * 100;
-						                if (currentPercent >= trimEnd) {
-						                    editPreview.pause();
-						                }
-						            });
-						
-						            applyTrimButton.addEventListener('click', () => {
-						                const startTime = (duration * trimStart) / 100;
-						                const endTime = (duration * trimEnd) / 100;
-						                videoEdits.push(`Trimmed: ${formatTime(startTime)} to ${formatTime(endTime)}`);
-						                updateEditsList();
-						                // In a real implementation, you would process the video here
-						                trimmedVideo = {
-						                    startTime,
-						                    endTime,
-						                    duration: endTime - startTime
-						                };
-						            });
-						        };
-						    }
-						
-						    function setupFinalPreview() {
-						        const finalPreview = modal.querySelector('#final-preview');
-						        const finalDuration = modal.querySelector('#final-duration');
-						        const finalSize = modal.querySelector('#final-size');
-						        const finalFormat = modal.querySelector('#final-format');
-						        const editsList = modal.querySelector('#final-edits-list');
-						
-						        const videoUrl = URL.createObjectURL(uploadedVideo);
-						        finalPreview.src = videoUrl;
-						
-						        finalPreview.onloadedmetadata = () => {
-						            const duration = trimmedVideo ? trimmedVideo.duration : finalPreview.duration;
-						            finalDuration.textContent = formatTime(duration);
-						            finalSize.textContent = `${(uploadedVideo.size / (1024 * 1024)).toFixed(2)} MB`;
-						            finalFormat.textContent = uploadedVideo.type;
-						            editsList.innerHTML = videoEdits.map(edit => `<li>${edit}</li>`).join('');
-						
-						            if (trimmedVideo) {
-						                finalPreview.currentTime = trimmedVideo.startTime;
-						            }
-						        };
-						
-						        finalPreview.addEventListener('timeupdate', () => {
-						            if (trimmedVideo && finalPreview.currentTime >= trimmedVideo.endTime) {
-						                finalPreview.pause();
-						                finalPreview.currentTime = trimmedVideo.startTime;
-						            }
-						        });
-						    }			  
+				.video-preview-container {
+				    background: #000;
+				    border-radius: 8px;
+				    overflow: hidden;
+				    margin-bottom: 20px;
+				    position: relative;
+				}
+			
+				.time-display {
+				    position: absolute;
+				    bottom: 50px;
+				    right: 20px;
+				    background: rgba(0, 0, 0, 0.7);
+				    color: white;
+				    padding: 4px 8px;
+				    border-radius: 4px;
+				    font-size: 14px;
+				}
+			
+				.range-container {
+				    background: #f5f5f5;
+				    padding: 20px;
+				    border-radius: 8px;
+				    margin: 15px 0;
+				}
+			
+				.range-labels {
+				    display: flex;
+				    justify-content: space-between;
+				    margin-bottom: 10px;
+				}
+			
+				.double-range-slider {
+				    position: relative;
+				    height: 40px;
+				}
+			
+				.double-range-slider input[type="range"] {
+				    position: absolute;
+				    width: 100%;
+				    -webkit-appearance: none;
+				    pointer-events: none;
+				    background: transparent;
+				}
+			
+				.double-range-slider input[type="range"]::-webkit-slider-thumb {
+				    -webkit-appearance: none;
+				    pointer-events: auto;
+				    width: 16px;
+				    height: 16px;
+				    border-radius: 50%;
+				    background: #2196F3;
+				    cursor: pointer;
+				}
+			
+				.final-review-grid {
+				    display: grid;
+				    grid-template-columns: 3fr 2fr;
+				    gap: 30px;
+				    margin: 20px 0;
+				}
+			
+				.info-grid {
+				    display: grid;
+				    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+				    gap: 15px;
+				    margin: 15px 0;
+				}
+			
+				.info-item {
+				    background: #f5f5f5;
+				    padding: 10px;
+				    border-radius: 4px;
+				}
+			
+				.edits-summary {
+				    margin-top: 20px;
+				}
+			
+				.approval-section {
+				    margin-top: 30px;
+				    display: flex;
+				    gap: 10px;
+				    justify-content: center;
+				}
+			
+				@media (max-width: 768px) {
+				    .final-review-grid {
+					grid-template-columns: 1fr;
+				    }
+				}
+			    `;
+			
+			    // Append additional styles
+			    const style = document.createElement('style');
+			    style.textContent += additionalStyles;
+			    document.head.appendChild(style);
+			
+			    function setupVideoEditor() {
+				const editPreview = modal.querySelector('#edit-preview');
+				const videoUrl = URL.createObjectURL(uploadedVideo);
+				editPreview.src = videoUrl;
+				
+				const trimStartInput = modal.querySelector('#trim-start');
+				const trimEndInput = modal.querySelector('#trim-end');
+				const trimStartValue = modal.querySelector('#trim-start-value');
+				const trimEndValue = modal.querySelector('#trim-end-value');
+				const currentTimeDisplay = modal.querySelector('#current-time');
+				const totalDurationDisplay = modal.querySelector('#total-duration');
+				const applyTrimButton = modal.querySelector('#apply-trim');
+			
+				editPreview.onloadedmetadata = () => {
+				    const duration = editPreview.duration;
+				    totalDurationDisplay.textContent = formatTime(duration);
+			
+				    trimStartInput.addEventListener('input', (e) => {
+					trimStart = parseFloat(e.target.value);
+					const time = (duration * trimStart) / 100;
+					trimStartValue.textContent = formatTime(time);
+					if (trimStart >= parseFloat(trimEndInput.value)) {
+					    trimStartInput.value = parseFloat(trimEndInput.value) - 0.1;
+					}
+					editPreview.currentTime = time;
+				    });
+			
+				    trimEndInput.addEventListener('input', (e) => {
+					trimEnd = parseFloat(e.target.value);
+					const time = (duration * trimEnd) / 100;
+					trimEndValue.textContent = formatTime(time);
+					if (trimEnd <= parseFloat(trimStartInput.value)) {
+					    trimEndInput.value = parseFloat(trimStartInput.value) + 0.1;
+					}
+				    });
+			
+				    editPreview.addEventListener('timeupdate', () => {
+					currentTimeDisplay.textContent = formatTime(editPreview.currentTime);
+					const currentPercent = (editPreview.currentTime / duration) * 100;
+					if (currentPercent >= trimEnd) {
+					    editPreview.pause();
+					}
+				    });
+			
+				    applyTrimButton.addEventListener('click', () => {
+					const startTime = (duration * trimStart) / 100;
+					const endTime = (duration * trimEnd) / 100;
+					videoEdits.push(`Trimmed: ${formatTime(startTime)} to ${formatTime(endTime)}`);
+					updateEditsList();
+					// In a real implementation, you would process the video here
+					trimmedVideo = {
+					    startTime,
+					    endTime,
+					    duration: endTime - startTime
+					};
+				    });
+				};
+			    }
+			
+			    function setupFinalPreview() {
+				const finalPreview = modal.querySelector('#final-preview');
+				const finalDuration = modal.querySelector('#final-duration');
+				const finalSize = modal.querySelector('#final-size');
+				const finalFormat = modal.querySelector('#final-format');
+				const editsList = modal.querySelector('#final-edits-list');
+			
+				const videoUrl = URL.createObjectURL(uploadedVideo);
+				finalPreview.src = videoUrl;
+			
+				finalPreview.onloadedmetadata = () => {
+				    const duration = trimmedVideo ? trimmedVideo.duration : finalPreview.duration;
+				    finalDuration.textContent = formatTime(duration);
+				    finalSize.textContent = `${(uploadedVideo.size / (1024 * 1024)).toFixed(2)} MB`;
+				    finalFormat.textContent = uploadedVideo.type;
+				    editsList.innerHTML = videoEdits.map(edit => `<li>${edit}</li>`).join('');
+			
+				    if (trimmedVideo) {
+					finalPreview.currentTime = trimmedVideo.startTime;
+				    }
+				};
+			
+				finalPreview.addEventListener('timeupdate', () => {
+				    if (trimmedVideo && finalPreview.currentTime >= trimmedVideo.endTime) {
+					finalPreview.pause();
+					finalPreview.currentTime = trimmedVideo.startTime;
+				    }
+				});
+			    }			  
 			
 			    // Helper function to format time
 			    function formatTime(seconds) {
