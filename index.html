@@ -904,7 +904,7 @@
 				        // Step 4: Review Email (unchanged)
 				        `
 				        <div class="step-content">
-				            <h3>Review Email</h3>
+				            <h3>Review Email [Will be Sent to Requesting Officer's Email]</h3>
 				            <div class="email-content">
 				                <p>Dear Officer,</p>
 				                <p>This is your requested video for Case ${caseId}.</p>
@@ -1072,7 +1072,7 @@
 			    window.approveCase = (caseId) => {
 			        // Handle case approval
 			        // Add your API call here
-			        alert('Case approved successfully!');
+			        alert('You have approved the case successfully! Kindly remind the officer that the link will expire within 3 working days.');
 			        modal.remove();
 			        // Add your routing logic here
 			        window.location.href = '/Vidrepo/'; // or your desired route
