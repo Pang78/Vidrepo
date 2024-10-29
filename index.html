@@ -61,6 +61,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+ 	    padding: 10px 20px;
+            background-color: white;
+    	    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .logo-container {
@@ -68,15 +71,30 @@
             align-items: center;
         }
 
-        .logo-image {
-            height: 40px;
-            margin-right: 10px;
-        }
+	.logo-container.left {
+    	flex: 1;
+	}
 
-        .logo-text {
-            font-size: 20px;
-            font-weight: 700;
-        }
+	.platform-name {
+	    flex: 2;
+	    text-align: center;
+	    font-size: 20px;
+	    font-weight: 700;
+	    margin: 0 20px;
+	}
+
+	logo-container.right {
+	    flex: 1;
+	    justify-content: flex-end;
+	}
+
+        .logo-image.left {
+	    margin-right: 10px;
+	}
+	
+	.logo-image.right {
+	    margin-left: 10px;
+	}
 
         nav ul {
             list-style: none;
@@ -409,10 +427,13 @@
 <body>
     <header>
         <div class="container header-content">
-            <div class="logo-container">
-                <img src="https://file.go.gov.sg/icalogo.png" alt="ICA Logo" class="logo-image">
+            <div class="logo-container left">
+                <img src="https://file.go.gov.sg/icalogo.png" alt="ICA Logo" class="logo-image left">
                 <span class="logo-text">ICA Video Enterprise Sharing Platform</span>
             </div>
+	    <div class="logo-container right">
+	        <img src="https://file.go.gov.sg/htxlogo.png" alt="HTX Logo" class="logo-image right">
+	    </div>
             <nav>
                 <ul>
                     <li><a href="#" class="nav-link active" data-target="dashboard">Dashboard</a></li>
