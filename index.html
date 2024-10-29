@@ -46,23 +46,21 @@
   	  }
 
    	 header {
-        background-color: var(--primary-dark-blue);
-        color: var(--secondary-white);
-        padding: 1rem 0;
-        box-shadow: var(--box-shadow);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-    }
-
-
+	        background-color: var(--primary-dark-blue);
+	        color: var(--secondary-white);
+	        padding: 1rem 0;
+	        box-shadow: var(--box-shadow);
+	        position: sticky;
+	        top: 0;
+	        z-index: 1000;
+        }
 
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
  	    padding: 10px 20px;
-            background-color: white;
+            background-color: blue;
     	    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
@@ -87,6 +85,10 @@
 	    flex: 1;
 	    justify-content: flex-end;
 	}
+	
+	.logo-image {
+            height: 40px;
+        }
 
         .logo-image.left {
 	    margin-right: 10px;
@@ -429,7 +431,9 @@
         <div class="container header-content">
             <div class="logo-container left">
                 <img src="https://file.go.gov.sg/icalogo.png" alt="ICA Logo" class="logo-image left">
-                <span class="logo-text">ICA Video Enterprise Sharing Platform</span>
+	    </div>	
+            <div class="platform-name">
+            	ICA Video Enterprise Sharing Platform
             </div>
 	    <div class="logo-container right">
 	        <img src="https://file.go.gov.sg/htxlogo.PNG" alt="HTX Logo" class="logo-image right">
